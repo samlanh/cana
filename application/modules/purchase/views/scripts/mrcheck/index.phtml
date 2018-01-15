@@ -89,7 +89,7 @@
 							if(!empty($this->rs)){
 								foreach ($this->rs as $key=>$rs){
 									$edit_status = '';
-									if($rs["pedding_stat"]>3){
+									if($rs["pedding_stat"]>3 && $rs['re_edit']==1){ //$rs["pedding_stat"]>3
 										$edit_status = "style='pointer-events: none;cursor: default;color: #ccc;'";
 									}
 							?>

@@ -117,12 +117,14 @@ class Purchase_Model_DbTable_DbPriceCompareApprove extends Zend_Db_Table_Abstrac
 				$is_approve =1;
 				$is_edit = 0;
 				$reject_count = $data["appr_reject_count"];
+				$re_edit=1;
 			}else{
 				$pedding = 5;
 				$appr_status=2;
 				$is_approve =0;
 				$is_edit = 1;
 				$reject_count = $data["appr_reject_count"]+1;
+				$re_edit=0;
 			}
 				$arr = array(
 					'is_approve'			=>	$is_approve,
@@ -141,6 +143,7 @@ class Purchase_Model_DbTable_DbPriceCompareApprove extends Zend_Db_Table_Abstrac
 				
 				
 			$arr_re = array(
+					're_edit'		=>	$re_edit,
 					'pedding'		=>	$pedding,
 					'appr_status'	=>	$appr_status,
 					'appr_user'		=>	$GetUserId,
