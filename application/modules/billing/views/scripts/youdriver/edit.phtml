@@ -1,0 +1,92 @@
+<?php 
+	$url_new = $this->url(array('module'=>'billing','controller'=>'youdriver','action'=>'edit',));
+	$url_cancel = $this->url(array('module'=>'billing','controller'=>'youdriver','action'=>'index',),null,true);
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->frmAdd;
+?>
+<title><?php echo $tr->translate("CATEGORY");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("EDIT_DRIVER");?>
+			</div>
+			<div class="tools"  >
+				<a  href="<?php echo $url_cancel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" method="post" action="" >
+				<div class="form-body ">
+					<div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("DRIVER_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_name');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("ID_CARD");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_national');?>
+								</div>
+												
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("SEX");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('sex');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PHONE");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_phone');?>
+								</div>
+												
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("DOB");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_dob');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("EMAIL");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_email');?>
+								</div>
+												
+							</div>
+							<div class="form-group">
+							    <label class="col-md-2 control-label"><?php echo $tr->translate("POSITION");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_position');?>
+								</div>
+								<label class="col-md-2 control-label"><?php echo $tr->translate("ADDRESS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_address');?>
+								</div>				
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php //echo $tr->translate("ADDRESS");?></label>
+								<div class="col-md-4">
+									<?php //echo $formFilter->getElement('dri_address');?>
+								</div>				
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('status');?>
+								</div>
+							</div>
+			 
+						<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<a href="<?php echo $this->baseUrl();?>/billing/youdriver/index"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
+									<button type="submit" name="saveclose" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									
+								</label>
+							</div>
+				
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

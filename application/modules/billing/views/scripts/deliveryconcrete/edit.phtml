@@ -1,0 +1,531 @@
+<?php 
+	$url_new = $this->url(array('module'=>'billing','controller'=>'deliveryconcrete','action'=>'add',),null,true);
+	$url_cancel = $this->url(array('module'=>'billing','controller'=>'deliveryconcrete','action'=>'index',),null,true);
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->frmAdd;
+	$frm_cus=$this->cus_form;
+	$frm_pro=$this->pro_form;
+	$frm_car=$this->car_form;
+?>
+<style>
+       td.quater-input select {
+		    height: 32px;
+		}
+		
+		.page-content-wrapper .page-content {
+		    margin-left: 235px;
+		    margin-top: 0px;
+		    min-height: 600px;
+		    padding: 0px 0px 0px 0px;  
+		}
+		
+		.col-xs-1,.col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+		    position: relative;
+		    min-height: 1px;
+		    padding-right: 0px; 
+		    padding-left: 0px;  
+		}
+		table, th, td {
+			padding: 2px 5px 2px 10px;
+			font-family:'Khmer OS Battambang';font-size: 13px;
+		}
+		  .table_reciept td{
+			padding:2px 2px;
+			font-family:'Khmer OS Battambang';font-size: 12px;
+		    line-height: 17px;
+		}
+		#tds{
+           border:1px solid #000;
+           
+        }
+		.form-control {
+		    height: 37px;
+		}
+		legend {
+		    margin-bottom: 0px;
+		}
+		.form .form-body {
+		    padding: 0px 10px 10px 10px;
+		}
+
+</style>
+<title><?php echo $tr->translate("CATEGORY");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ADD_BILLING");?>
+			</div>
+			<div class="tools"  >
+				<a  href="<?php echo $url_cancel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" method="post" action="" id="form_billing" name="form_billing" >
+				<div class="form-body ">
+					<div>
+						<div class="form-group">
+					        <fieldset style="padding-left: 10px;">
+						       <table width="100%"  >
+						           <tr>
+						              <td colspan="6"><legend style="font-family:'Khmer OS Battambang';font-size: 14px;">
+  							 			 <strong><?php echo $tr->translate("CUSTOMER_INFO");?></strong></legend>
+  							 	     </td>
+  							 	    </tr>
+					               <tr>
+					                   <td align="right"><?php echo $tr->translate("CUSTOMER_NO");?></td>
+					                   <td><?php echo $frm_cus->getElement('cus_no');?></td>
+					                   <td align="right"><?php echo $tr->translate("CUSTOMER_NAME");?></td>
+					                   <td><?php echo $frm_cus->getElement('cus_names');?></td>
+					                   <td align="right"><?php echo $tr->translate("DELIVERY_TO");?></td>
+					                   <td><?php echo $frm_cus->getElement('delivery_to');?></td>
+					               </tr>
+					               <tr>
+					                   <td align="right"><?php echo $tr->translate("NUMBER_NO");?></td>
+					                   <td><?php echo $frm_cus->getElement('auto_num_no');?></td>
+					                   <td align="right"><?php echo $tr->translate("SERAIL_NO");?></td>
+					                   <td><?php echo $frm_cus->getElement('serial_no');?></td>
+					                   <td align="right"><?php echo $tr->translate("START_DATE");?></td>
+					                   <td><?php echo $frm_cus->getElement('auto_date');?></td>
+					               </tr>
+					               
+					               <tr>
+						              <td colspan="6"><legend style="font-family:'Khmer OS Battambang';font-size: 14px;">
+  							 			 <strong><?php echo $tr->translate("PRODUCT_INFO");?></strong></legend>
+  							 	     </td>
+  							 	    </tr>
+					               <tr>
+					                   <td align="right"><?php echo $tr->translate("CONCRETE_TYPE");?></td>
+					                   <td><?php echo $frm_pro->getElement('type_concrete');?></td>
+					                   <td align="right"><?php echo $tr->translate("PRODUCT_CODE");?></td>
+					                   <td><?php echo $frm_pro->getElement('pro_no');?></td>
+					                   <td align="right"><?php echo $tr->translate("PRODUCT_NAME");?></td>
+					                   <td><?php echo $frm_pro->getElement('pro_name');?></td>
+					               </tr>
+					               <tr>
+					                   <td align="right"><?php echo $tr->translate("STRENGTH");?></td>
+					                   <td><?php echo $frm_pro->getElement('strength');?></td>
+					                   <td align="right"><?php echo $tr->translate("SLUMP");?></td>
+					                   <td><?php echo $frm_pro->getElement('slump');?></td>
+					                   <td align="right"><?php echo $tr->translate("DILIVERY_QTY");?>(m<sup>3</sup>)</td>
+					                   <td><?php echo $frm_pro->getElement('del_qty');?></td>
+					               </tr>
+					               <tr>
+					                   <td align="right"><?php //echo $tr->translate("STRENGTH");?></td>
+					                   <td><?php //echo $frm_cus->getElement('strength');?></td>
+					                   <td align="right"><?php echo $tr->translate("TRIP_NO");?></td>
+					                   <td><?php echo $frm_pro->getElement('trip_no');?></td>
+					                   <td align="right"><?php echo $tr->translate("TOTAL_DILIVERY_QTY");?>(m<sup>3</sup>)</td>
+					                   <td><?php echo $frm_pro->getElement('delivery_qty');?></td>
+					                   
+					               </tr>
+					               
+					                 <tr>
+						              <td colspan="6"><legend style="font-family:'Khmer OS Battambang';font-size: 14px;">
+  							 			 <strong><?php echo $tr->translate("TRUCK_INFO");?></strong></legend>
+  							 	     </td>
+  							 	    </tr>
+					               <tr>
+					                   <td align="right"><?php echo $tr->translate("TRUCK_NO");?></td>
+					                   <td><?php echo $frm_car->getElement('tru_code');?></td>
+					                    <td align="right"><?php echo $tr->translate("TRUCK_NAME");?></td>
+					                   <td><?php echo $frm_car->getElement('truck_name');?></td>
+					                   <td align="right"><?php echo $tr->translate("DRIVER_NAME");?></td>
+					                   <td><?php echo $frm_car->getElement('driver_name');?></td>
+					               </tr>
+					               <tr>
+					                    
+					                    <td align="right"><?php echo $tr->translate("DEPART_TIME");?></td>
+					                   <td><?php echo $frm_car->getElement('depart_time');?></td>
+					                   <td align="right"><?php echo $tr->translate("ARRIVE_TIME");?></td>
+					                   <td><?php echo $frm_car->getElement('arrive_time');?></td>
+					                   <td align="right"><?php echo $tr->translate("DRIVER_PHONE");?></td>
+					                   <td><?php echo $frm_car->getElement('driver_phone');?></td>
+					               </tr>
+					               
+					               <tr>
+					                    <td align="right"><?php echo $tr->translate("EMPTY_WEIGHT");?>(kg)</td>
+					                   <td><?php echo $frm_car->getElement('emp_weidth');?></td>
+					                   <td align="right"><?php echo $tr->translate("NET_WEIGHT");?>(kg)</td>
+					                   <td><?php echo $frm_car->getElement('net_weight');?></td>
+					                   <td align="right"><?php echo $tr->translate("TOTAL_WEIGHT");?>(kg)</td>
+					                   <td><?php echo $frm_car->getElement('total_weight');?></td>
+					               </tr>
+					               
+					               <tr>
+					                    <td align="right"><?php echo $tr->translate("REMARK");?></td>
+					                   <td><?php echo $frm_car->getElement('remark');?></td>
+					                   <td align="right"><?php echo $frm_car->getElement('pump_truck');?><?php echo $tr->translate("PUMPING_TRUCK");?></td>
+					                   <td align="right"><?php echo $frm_car->getElement('pump_machine');?><?php echo $tr->translate("PUMPING_MACHINE");?></td>
+					                   <td align="right"><?php echo $tr->translate("STATUS");?></td>
+					                   <td><?php echo $frm_car->getElement('status');?></td>
+					               </tr>
+					               
+						       </table>
+					        </fieldset>
+						</div>
+						 
+						<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<!--  <a href="<?php //echo $this->baseUrl();?>/billing/billingproduct"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php //echo $tr->translate("EXIT")?></button></a>
+									-->
+									<button type="submit" name="saveclose" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="button" name="btnsprint"  onclick="printSave();" class="btn red"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_PRINT")?> </button>
+									
+								</label>
+							</div>
+				
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+function printSave(){
+	//set value customer 
+	 $('#lb_code_cus').text($("option:selected",$("#cus_no")).text());
+	 $('#lb_cus_name').text($('#cus_names').val());
+	 $('#lb_delivery_to').text($('#delivery_to').val());
+
+	 //set value on time 
+	 $('#lb_depart_time').text($("option:selected",$("#depart_time")).text());
+	 $('#lb_arive_time').text($("option:selected",$("#arrive_time")).text());
+	 $('#lb_total_weight').text($("#total_weight").val());
+	 $('#lb_empty_weight').text($("#emp_weidth").val());
+	 $('#lb_net_weight').text($("#net_weight").val());
+	// $('#pum_truck').text($("check:checked",$("#pump_truck")).text());
+	
+	//set value product 
+	 $('#lb_product_code').text($("option:selected",$("#pro_no")).text());
+	 $('#lb_type_con').text($("option:selected",$("#type_concrete")).text());
+	 $('#lb_strength').text($("#strength").val());	
+	 $('#lb_slump').text($("#slump").val());
+	 $('#lb_delivery_qty').text($("#delivery_qty").val());
+	 $('#lb_total_delivery_qty').text($("#delivery_qty").val());
+	 $('#lb_trip_no').text($("#trip_no").val());
+	 
+	 
+	//set value truck info
+	 $('#lb_truck_no').text($("option:selected",$("#tru_code")).text());
+	 $('#lb_driver_name').text($("option:selected",$("#driver_name")).text());
+	 $('#lb_tel').text($("#driver_phone").val());
+
+	//set aotu number 
+	 $('#lb_aotu_num').text($("#auto_num_no").val());
+	 $('#lb_serail_no').text($("#serial_no").val());
+	 $('#lb_auto_date').text($("#auto_date").val());
+	 
+    if ($("#form_billing").validate() !=''){
+    	getCustReciept();
+    	
+    }
+	    	
+}
+    
+</script>
+
+<!-- popup form customer receipt  -->
+
+<div id="customer_receipt" class="modal fade" tabindex="-1" data-width="110px">
+      <div class="modal-dialog" style="width: 65%;">
+      
+           <div class="modal-content" >
+               <div class="portlet box blue ">
+               		<div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                           
+                           <div class="portlet-body form">
+                   <form id="frmvendor" method="post" name="frmvendor">
+                    <div class="form-body"   >
+                      <div class="form-group"  >
+					     <div id="divPrint" style="width: 23cm !important; height: 14cm ; padding: 0px; margin: 0px;">  
+					           <style>
+										#tds{
+								           border:1px solid #000;
+								        }
+										.style{
+											line-height: 20px;font-size: 9px !important;
+											font-family: 'Khmer OS Battambang';
+										}
+										ul{margin: 0;padding:0;}
+										table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
+										ul.pur_info li{line-height:18px; 
+												font-weight: normal !important;}
+										ul.pur_info li strong{font-weight: bold;}
+								       .hover:hover{background: #ccc;}
+										label {
+										    font-weight: bold;
+										    font-size: 12px;
+										}
+								</style>
+					           
+					       <table  class="table_reciept" style="border-collapse: collapse;font-family:'Khmer OS Battambang';font-size: 12px;"  >
+					             <tr >
+					               <td > <img style="width:100px;height:50px;" alt="No Images " src="<?php echo $this->baseUrl();?>/images/logos.png"><br /></td>
+				                   <td colspan="5" class="tdnone"><h4 class="modal-title center" style="text-align:center; font-size:13px;font-weight:10px; font-family:'Khmer MEF2'"><strong><?php echo $tr->translate("ប័ណ្ណដឹកជញ្ខូនបេតុង");?>
+				                                     <br/><?php echo $tr->translate("READY CONCRETE DELIVERY SLIP");?>
+				                                </strong></h4>
+				                   </td>
+				                   <td nowrap >  
+				                     <h4 class="modal-title center" style="text-align:center; font-size:13px;font-weight:10px; font-family:'Khmer MEF2'"><strong><?php echo $tr->translate("សាខាកោះពេជ្រ");?>
+				                       <br/><?php echo $tr->translate("DIAMOND BRANCH");?></strong></h4>
+				                   </td>
+				               </tr>
+				               <tr style="line-height: 14px;">
+				                   <td colspan="2" style="padding:2px 2px;">
+				                      <table style="border-collapse: collapse;font-family:'Khmer OS Battambang';font-size: 12px;width:100%;"  >
+				                          <tr >
+				                              <td id="tds" nowrap>លេខ No.: <b style="font-size: 24px;"><label id="lb_aotu_num"></label></b></td><td id="tds" nowrap>SEAL No:<label id="lb_serail_no"></label></td>
+				                          </tr>
+				                          <tr>
+				                              <td id="tds" nowrap>ថ្ងៃខែឆ្នាំ / Date : </td><td id="tds"> <label id="lb_auto_date"></label></td>
+				                          </tr>
+				                      </table>
+				                    </td>
+				                   <td align="right"></td>
+				                   <td></td>
+				                   <td colspan="3" >
+				                        <table style="border-collapse: collapse;font-family:'Khmer OS Battambang';font-size: 12px; width:100%;">
+				                          <tr>
+				                              <td id="tds" style="padding:2px 2px;">
+				                                  Company :  Diamond Island Batching Plant <br/>
+				                                  Adddress:  Diamond Island City<br/>
+				                                  Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  023 69 21 777 <br/>
+				                                  H/P&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  077 566 678, 077 577 678
+				                              </td>
+				                          </tr>
+				                        </table>
+				                   </td>
+				                    
+				               </tr>
+				               <tr ><td colspan="7" style="line-height: 10px;"></td></tr>
+				               <tr align="center">
+					               <td id="tds">កូដអតិថិជន <br/> Customer Code</td>
+				                   <td colspan="2" id="tds">អតិថិជន <br/>Customer </td>
+				                    
+				                   <td colspan="4" id="tds">ដឹកជញ្ជូនទៅកាន់ <br/> Delivery To</td>
+				               </tr>
+				               <tr align="center">
+					               <td id="tds">            <label id="lb_code_cus"> </label> </td>
+				                   <td colspan="2" id="tds"><label id="lb_cus_name"> </label></td>
+				                   <td colspan="4" id="tds"><label id="lb_delivery_to"> </label></td>
+				               </tr>
+				               <tr ><td colspan="7" style="line-height: 10px;"></td></tr>
+				               <tr align="center">
+				                   <td id="tds" nowrap>ម៉ោងចេញ <br/>Depart Time</td>
+				                   <td id="tds" nowrap>ម៉ោងទៅដល់ <br/>Arive Time</td>
+				                   <td id="tds" nowrap>ទម្ងន់សរុប <br/>Total Weight(kg)</td>
+				                   <td id="tds" nowrap>ទម្ងន់ទទេ <br/>Empty Weight(kg)</td>
+				                   <td id="tds" nowrap>ទម្ងន់ផាត់សម្បក <br/>Net Weight(kg)</td>
+				                   <td id="tds" nowrap>ឡានបាញ់ា <br/>Pumping Truck</td>
+				                   <td id="tds" nowrap>ម៉ាស៊ីនបាញ់ <br/>Pump Machine</td>
+				               </tr>
+				               <tr align="center">
+				                   <td id="tds"><label id="lb_depart_time"></label></td>
+				                   <td id="tds"><label id="lb_arive_time"></label> </td>
+				                   <td id="tds"><label id="lb_total_weight"></label> </td>
+				                   <td id="tds"><label id="lb_empty_weight"> </label></td>
+				                   <td id="tds"> <label id="lb_net_weight"> </label></td>
+				                   <td id="tds" nowrap>Yes<label id="pum_truck"></label></td>
+				                   <td id="tds" nowrap>Yes<label id="pum_machin"></label></td>
+				               </tr>
+				               <tr ><td colspan="7" style="line-height: 10px;"></td></tr>
+                               <tr align="center">
+				                   <td id="tds" nowrap>កូដទំនិញ <br/>Product Code</td>
+				                   <td id="tds" nowrap>ប្រភេទបេតុង<br/>Type of concrete</td>
+				                   <td id="tds" nowrap>កំលាំងបេតុង<br/>Strength</td>
+				                   <td id="tds" nowrap>កំលាំងសំរុត<br/>Slump</td>
+				                   <td id="tds" nowrap>បរិមាណដឹក <br/>Delivery Qty</td>
+				                   <td id="tds" nowrap>បរិមាណដឹកសរុប<br/>Total Delivery Qty</td>
+				                   <td id="tds" nowrap>ចំនួនជើង<br/>Trip No</td>
+				               </tr>				               
+				               <tr align="center">
+				                   <td id="tds" nowrap><label id="lb_product_code"> </label>b</td>
+				                   <td id="tds" nowrap><label id="lb_type_con"> </label> </td>
+				                   <td id="tds" nowrap><label id="lb_strength"> </label>  </td>
+				                   <td id="tds" nowrap><label id="lb_slump"> </label> </td>
+				                   <td id="tds" nowrap><label id="lb_delivery_qty"> </label> M<sup>3</sup></td>
+				                   <td id="tds" nowrap><label id="lb_total_delivery_qty"> </label> m<sup>3</sup></td>
+				                   <td id="tds" nowrap><label id="lb_trip_no"> </label> </td>
+				               </tr>		 
+				                
+				               <tr ><td colspan="7" style="line-height: 10px;"></td></tr>
+                               <tr align="center">
+				                   <td colspan="2" id="tds" nowrap>លេខឡានអង្គភាព / Truck No.</td>
+				                   <td colspan="3" id="tds" nowrap>ឈ្មោះអ្នកបើក / Driver Name</td>
+				                   <td colspan="2" id="tds" nowrap>ទូរស័ព្ទ / TEL </td>
+				               </tr>
+					           <tr align="center">
+				                   <td colspan="2" id="tds"><label id="lb_truck_no"> </label></td>
+				                   <td colspan="3" id="tds"><label id="lb_driver_name"> </label></td>
+				                   <td colspan="2" id="tds"><label id="lb_tel"> </label></td>
+				               </tr>
+				               <tr>
+				                   <td colspan="7" id="tds">
+				                       		នៅពេលចាប់ផ្តើមចាក់បេតុង &sbnp;បើសិនជាមានការបន្ថែមទឹកឲ្យហួសពីកំរិតរបស់វានោះអ្នកលក់មិនទទួលខុសត្រូវឡើយ<br/>
+				                       		It is not responsible for by seller if add water in construct scene and 
+				                       		influence cube or cylinder compressive strength . 
+				                   </td>
+				               </tr>
+				                <tr ><td colspan="7" style="line-height: 10px;"></td></tr>
+                               <tr align="center">
+				                   <td colspan="2" id="tds" nowrap>ទទួលដោយ <br/> Received by</td>
+				                   <td colspan="2" id="tds"> </td>
+				                   <td id="tds" nowrap>បញ្ចេញទំនិញដោយ  <br/>Issued by </td>
+				                   <td colspan="2" id="tds">  </td>
+				               </tr>
+				               <tr>
+				                   <td colspan="6" ><u><b>សំគាល់ៈ </b></u> សៈ &nbsp;ត្រឡប់វិញ ; ឈូកៈ&nbsp;សំរាប់អតិថិជន ; លឿងៈ &nbsp;សំរាបេ់VCL; ខៀវៈ &nbsp;រក្សាទុកច្បាប់ដើម</td>
+				                   <td nowrap>
+				                     <?php $session_user=new Zend_Session_Namespace('auth');
+								           //$last_name=$session_user->username;
+								           $username = $session_user->fullname;
+						       			?>
+				                      <br/><br/><?php echo $tr->translate("USER_NAME");?>:<?php echo $username ?> <br/>
+				                       <?php echo  date("F j, Y, g:i a");?>
+				                   </td>
+				                </tr>
+						       </table>
+					        </div>
+					        
+					</div>
+					<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+								   <button type="button" class="btn red" onclick="hideDialog();"><i class="fa fa-times"></i> បោះបង់/Cancel</button> 
+								  <button type="button" name="btnsprint" onclick="doPrint();printSubmit();" class="btn blue"><i class="fa fa-save"></i>បោះពុម្ព/Print</button>
+								</label>
+					</div>
+                                <!--     <label class="control-label"></label><input  id="btn_add" Onclick="addNewVendor()" type="button" class="btn default blue col-md-12" value="<?php echo $tr->translate("ADD_NEW");?>" />
+                             
+                                --> 
+                       </div>
+                     </form>
+                    </div>
+                 </div>
+           </div>
+        </div>
+    </div>
+ </div>
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		 
+		jQuery('#frm').validationEngine('attach', {promptPosition : "centerRight"});
+		
+	});
+
+	//function popup form 
+	function getCustReciept(){
+		cus_id = $("#cus_no").val();
+		if(cus_id >0){
+			$('#customer_receipt').modal('show');
+             //alert('hello');
+	    }
+	}
+	function hideDialog(){
+		$('#customer_receipt').modal('hide');
+	}
+	function printSubmit(){
+		 //$('#form_billing').submit();
+		 document.getElementById("form_billing").submit();
+	}
+	
+	function doPrint() {
+		window.frames["print_frame"].document.body.innerHTML=document.getElementById('divPrint').innerHTML;
+	    window.frames["print_frame"].window.focus();
+	    window.frames["print_frame"].window.print();
+	    //hideDialog();
+	}
+    //select customer by id 
+	<?php $url_code =  $this->url(array('module'=>'billing','controller'=>'deliveryconcrete','action'=>'getcustomer')); ?>
+	function getCustomer(){
+		//alert('hello');
+		cus_no=$("#cus_no").val();
+					if(cus_no=="" || cus_no ==null || cus_no==-1){
+						return false;
+					}
+					else{
+					$.ajax({
+							url:"<?php echo $url_code;?>",
+							type:"post",
+							data:{'cus_id':cus_no},
+							success: function(data){
+								//alert(data);
+								so = $.parseJSON(data);
+								$("#cus_names").val(so.cust_name);
+							},
+							error:function(){
+							}
+						});
+					}	
+	}
+
+	//select product no
+	<?php $url_pro_no =  $this->url(array('module'=>'billing','controller'=>'deliveryconcrete','action'=>'productinfo')); ?>
+	function getProName(){
+		//alert('hello');
+		pro_no=$("#pro_no").val();
+					if(pro_no=="" || pro_no ==null || pro_no==-1){
+						return false;
+					}
+					else{
+					$.ajax({
+							url:"<?php echo $url_pro_no;?>",
+							type:"post",
+							data:{'pro_id':pro_no},
+							success: function(data){
+								so = $.parseJSON(data);
+								$("#pro_name").val(so.item_name);
+							},
+							error:function(){
+							}
+						});
+					}	
+	}
+
+	//select truck info
+	<?php $url_truckinfo =  $this->url(array('module'=>'billing','controller'=>'deliveryconcrete','action'=>'truckinfo')); ?>
+	function getTruckName(){
+		tru_code=$("#tru_code").val();
+					if(tru_code=="" || tru_code ==null || tru_code==-1){
+						return false;
+					}
+					else{
+					$.ajax({
+							url:"<?php echo $url_truckinfo;?>",
+							type:"post",
+							data:{'tru_id':tru_code},
+							success: function(data){
+								so = $.parseJSON(data);
+								$("#truck_name").val(so.name);
+							},
+							error:function(){
+							}
+						});
+					}	
+	}
+
+	//select driver name 
+	<?php $url_driver_name =  $this->url(array('module'=>'billing','controller'=>'deliveryconcrete','action'=>'driverinfo')); ?>
+	function getDriverPhone(){
+		driver_name=$("#driver_name").val();
+					if(driver_name=="" || driver_name ==null || driver_name==-1){
+						return false;
+					}
+					else{
+					$.ajax({
+							url:"<?php echo $url_driver_name;?>",
+							type:"post",
+							data:{'driver_id':driver_name},
+							success: function(data){
+								//alert(data);
+								so = $.parseJSON(data);
+								$("#driver_phone").val(so.phone);
+							},
+							error:function(){
+							}
+						});
+					}	
+	}
+</script>

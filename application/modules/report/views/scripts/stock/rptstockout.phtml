@@ -1,0 +1,249 @@
+<?php 
+$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+$brach_name =  $this->branch;
+$result = $this->stockin;
+$category ='';
+if(!empty($result)){
+	$category = $result[0]["cattegory"];
+}
+//print_r($result);
+?>
+<?php $formFilter = $this->formFilter; ?>
+<title><?php echo $tr->translate("STOCK_OUT");?></title>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("STOCK_OUT");?>
+				</div>
+						<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							   <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
+							 </button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#" onclick="doPrint();">
+											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
+										</a>
+									</li>
+									<li>
+										<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+									</li>
+									
+								</ul>
+					</div>
+			</div>
+            <div class="portlet-body form frmfilter">
+				<form method="post" style="border-bottom: 1px solid #ccc;" action="<?php //echo $formFilter->getAction(); ?>">
+					<div class="form-group" style="padding-top: 6px;">
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('ad_search');?></label>
+						<label class="control-label col-md-3">
+								<select data-placeholder="Select..." class="form-control select2me " style="text-align: left;" id="add_item" name="add_item" Onchange="getItemOrder();" >
+								<?php echo $this->items; ?>
+								</select>
+						</label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('category');?></label>
+					</div>
+					<div class="form-group" style="padding-top: 6px;">
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('start_date');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-3 pull-right">
+							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+						</label>
+					</div>
+					<div style="clear:both;"></div>	
+				</form> 
+	<div style=" min-height:28cm; margin:25 0 0 0; padding:0px 0.2cm">
+	<div id="divPrint" style="width: 100%;">
+		<style>
+			.style{
+					line-height: 20px;font-size: 9px !important;
+					font-family: 'Khmer OS Battambang';
+				}
+				ul{margin: 0;padding:0;}
+				table tr td ul li{text-align: center;list-style: none;line-height: 25px; }
+				th{padding: 0px;}
+				table thead tr th{
+					line-height:30px;
+					background:#ccc;
+					font-size:15px;
+					padding:3px;
+				}
+				table tr td{
+					font-size:12px;
+				}
+				ul.pur_info li{line-height:18px; 
+						font-weight: normal !important;}
+				ul.pur_info li strong{font-weight: bold;}
+			   .hover:hover{background: #ccc;}
+				table.collape td {
+				    border: 1px solid #000 !important;
+				    font-family: "Open Sans", sans-serif,'Kh Battambang','Khmer Battambang';
+				    font-size: 11px;
+				}
+				table tr.noborder td{border: 1px solid #fff !important;
+				border-bottom: 1px solid #000 !important;}
+		
+		</style>
+		<table style="font-family: 'Khmer OS Content'; width:100%;">
+			<tbody>
+			<tr>
+		    	<td align="center">
+		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
+		            	<tbody>
+						<tr style="margin-bottom:10px;"> 
+								<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logo/<?php echo $this->title_reprot["logo"]?>"></td>
+								<td width="60%" valign="top" style="line-height:30px">
+									<ul>
+									<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
+									<li style="text-align:center; font-size:16px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
+		                			<li style="text-align:center; font-size:16px;margin: 10px 0px 0px 0px;font-family:'Khmer OS Muol Light',serif,header-font;"> <?php echo $tr->translate("STOCK_OUT");?></li>
+									<li style="text-align:center; font-size:12px;"><?php echo date("d-M-Y",strtotime($this->start_date));?> ដល់ <?php echo date("d-M-Y",strtotime($this->end_date));?></li>
+		                		</ul>
+								</td>
+								<td width="20%" style="text-align:center; font-size: 11px;white-space: nowrap;">
+									<ul>
+										<li style="text-align:left; font-size:12px;"><span style=" font-family:'Khmer OS Muol Light'">ឃ្លាំង : </span><label id="lbl_branch"></label></li>
+										<li style="text-align:left; font-size:12px;"><span style=" font-family:'Khmer OS Muol Light'">ផ្នែក : </span><label id="lbl_category"></label></li>
+									</ul>
+								</td>
+							</tr> 
+						
+		                <tr>
+		                	<td colspan="3" valign="top">
+		                		<table width="100%" cellpadding="0" cellspacing="0">
+		                			<tbody><tr>
+		                				<td style="font-size: 11px;">
+		                				    <span style="white-space: nowrap;"><?php //echo $tr->translate("ADDRESS_COMPANY");?></span>
+		                					<br><?php //echo $tr->translate("TEL_COMPANY");?> 
+		                				</td>
+		                				<td width="65%"></td>
+		                			</tr>
+				                </tbody></table>
+				              </td>
+				           </tr>   
+						</tbody>
+					</table>
+		        </td>
+		    </tr>
+		    <tr>
+		    	<td id="exportExcel">
+		            <table class="collape tablesorter" style="border-collapse:collapse;border:0px solid #000; font-size:12px;" width="100%" cellspacing="0" border="1">
+		                 <tbody>
+						  <?php 
+						  $type = array("1"=>"លក់",2=>"ស្នើសម្ភារៈ");
+						  $num=1; 
+			               $total_qty = 0;
+						   $total_price =0;
+						   $total_amount = 0;
+						   $currency ='';
+						   if(!empty($this->stockin)){
+							   foreach ($this->stockin AS $index => $rs){
+								   $total_qty =  $total_qty+ $rs["qty_order"];
+								   $total_price =  $total_price+$rs["price"];
+								   $total_amount= $total_amount+$rs["sub_total"];
+								   $currency =$rs["currency"];
+							   }
+						   }
+						  ?>
+						 <tr class='row-format<?php echo $num; $num=1-$num;?> hover noborder' style="border:none;">
+						   <td align="center" style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap; text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;border: none;font-family:'Khmer OS Muol Light'">&nbsp;<?php echo $tr->translate("TOTAL");?></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail;">&nbsp;<?php echo $total_qty;?></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail;">&nbsp;$<span style="float:right"><span style="float:right"><?php echo  number_format($total_price,2);?></span></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail;">&nbsp;$<span style="float:right"><span style="float:right"><?php echo number_format($total_amount,2);?></span></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						</tr>
+						<tr bgcolor="#ccc" class="style tdborder" align="center" style="font-weight:bold; line-height: 35px;border:1px solid #000; font-size:12px; padding:1px 0px; white-space: nowrap;font-family:'Khmer OS Muol Light' ">
+		                    <td class="tdheader">&nbsp;<?php echo $tr->translate("DATE");?></td>
+							<td class="tdheader"><?php echo $tr->translate("CODE");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("ITEM_NAME");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("QTY");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("PACKING");?></td>
+							<td class="tdheader"><?php echo $tr->translate("U/PRICE");?></td>
+							<td class="tdheader"><?php echo $tr->translate("AMOUNT");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("SALE_NO");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("SELLER");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("TYPE");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("REMARK");?></td>
+		                </tr> 
+		                <?php if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){?>
+						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-M-Y',strtotime($rs["date_sold"]))?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty_order"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["measure"];?></td>
+						<td style="white-space: nowrap;">&nbsp;$<span style="float:right"><span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
+						   <td style="white-space: nowrap;">&nbsp;$<span style="float:right"><?php echo $rs["sub_total"];?></span></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["sale_no"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["user"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $type[$rs["type"]];?></td>
+						   <td>&nbsp;<?php echo $rs["note_sale"];?></td>
+						</tr>
+						<?php 
+							 
+						}?>
+		                </tbody>
+		           </table>
+		            
+		              <br>
+		              <table align="center" width="100%">
+						   <tbody>
+					   <tr style="font-size: 11px;">
+					        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">អនុម័តដោយ</td>
+					        <td></td>
+							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ត្រួតពិនិត្យដោយ</td>
+							<td></td>
+							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">រៀបចំដោយ</td>
+					   </tr>
+					   <tr height="70px">
+					   		<td colspan="5"> </td>
+					   </tr>
+					   <tr style="font-size: 11px;">
+					        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ប្រធានឃ្លាំង</td>
+					        <td></td>
+							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">អ្នកត្រួតពិនិត្យឃ្លាំង</td>
+							<td></td>
+							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ឃ្លាំង</td>
+					   </tr>
+						</tbody>
+					</table>	
+		    		</td>
+		    	</tr>
+			</tbody>
+		</table>
+		</div>
+	  </div>		
+	</div>
+	 </div>
+   </div>
+</div>
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<script>
+$( document ).ready(function() {
+	label = jQuery('#category option:selected').text();
+	cate_id = $("#category").val();
+	if(cate_id>0){		
+		$("#lbl_category").html(label);
+	}
+	labelbrnach = jQuery('#branch option:selected').text();
+	branch = $("#branch").val();
+	if(branch>0){		
+		$("#lbl_branch").html(labelbrnach);
+	}
+});
+function doPrint() {
+	var printContents = document.getElementById('divPrint').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+</script>

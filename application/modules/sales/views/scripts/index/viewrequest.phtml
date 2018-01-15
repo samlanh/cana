@@ -1,0 +1,289 @@
+<?php 
+$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+?>
+<title><?php echo $tr->translate("REQUEST_ITEM_FROM_STOCK");?></title>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("REQUEST_ITEM_FROM_STOCK");?>
+				</div>
+						<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							   Actions <i class="fa fa-angle-down"></i>
+							 </button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#" onclick="doPrint();">
+											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
+										</a>
+									</li>
+									<!--<li>
+										<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+									</li>-->
+									
+								</ul>
+					</div>
+			</div>
+            <div class="portlet-body form frmfilter">
+					<div style="clear:both;"></div>	
+	<div style="width:280mm; min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm">
+	<div id="divPrint" style="width: 100%;    margin: 10px 0;">
+	<style>
+		.style{
+			line-height: 20px;font-size: 9px !important;
+			font-family: 'Khmer OS Battambang';
+		}
+		ul{margin: 0;padding:0;}
+		table tr td ul li{text-align: center;list-style: none;line-height: 25px;}
+		th{padding: 5px;}
+		ul.pur_info li{line-height:18px; 
+				font-weight: normal !important;}
+		ul.pur_info li strong{font-weight: bold;}
+       .hover:hover{background: #ccc;}
+	</style>
+		<table style="font-family: 'Khmer OS Content'; width:100%; font-size:12px !important;">
+			<tbody>
+			<tr>
+		    	<td align="center">
+		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
+		            	<tbody>
+						<tr>
+		                	<td width="20%" valign="middle"><img src="<?php echo $this->baseUrl();?>/images/logo/<?php echo $this->title_reprot["logo"]?>" height="55px"></td>
+								<td width="60%" valign="middle">
+									<ul>
+										<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
+										<li style="text-align:center; font-size:18px; font-family:serif,header-font;"><?php echo $this->title_reprot["title_report_en"]?></li>
+										<li style="text-align:center;line-height:40px; font-size:17px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("REQUEST_ITEM_FROM_STOCK");?></li>
+									</ul>
+								</td>
+								<td width="20%"></td>
+		                </tr>
+		                <tr>
+		                	<td colspan="3" valign="top" >
+		                		<table width="100%" cellpadding="0" cellspacing="0" style="font-size:12px !important;">
+									<tr>
+										<td colspan="3" style="width:100%">
+											<table width="100%" cellpadding="0" cellspacing="0" style="font-size:12px !important;">
+												<tr>
+													<!--<td style="font-size:12px !important;">
+														<div >
+															<label  style="float:left; white-space:nowrap; padding-right: 18px;" ><input <?php if($this->product[0]['re_type']==1){echo 'checked="cheched"';} ?> type="checkbox" name="" style="float:left !important;"/>E</label>
+															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input <?php if($this->product[0]['re_type']==2){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>W</label>
+															<label  style="float:left; white-space:nowrap; padding-right: 18px;"><input <?php if($this->product[0]['re_type']==3){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>G</label>
+															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==4){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>M</label>
+															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==5){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>P</label>
+															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==6){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>S</label>
+															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==7){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>MT</label>
+															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==8){echo 'checked="cheched"';}?>type="checkbox" name="" style="float:left !important;"/>K</label>
+															<label  style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==9){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>OT................................................ថ្ងៃទី :   .............<?php echo $this->product[0]['date_sold'];?>............</label>
+															
+														</div>
+														
+													</td>-->
+													<td width="80%"></td>
+													<td width="5%"><?php echo $tr->translate("REQUEST_NO");?> : </td>
+													<td width="15%"><?php echo $this->product[0]['sale_no']?></td>
+												</tr>
+												<tr>
+													<td width="75%"></td>
+													<td width="10%"><?php echo $tr->translate("REQUEST_DATE");?> : </td>
+													<td width="15%"><?php echo date("d-M-Y",strtotime($this->product[0]['date_sold']));?></td>
+												</tr>
+											</table>
+										</td>
+										
+									</tr>
+									<tr>
+										<td style="width:40%">
+											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
+												<tr>
+													<td>
+														<?php echo $tr->translate("NUMBER_WORK_SPACE");?> : 
+													</td>
+													<td style="border-bottom:1px dotted #000; width:60%;">
+														<?php echo $this->product[0]['number_work_request'];?>
+													</td>
+												</tr>
+											</table>
+										</td>
+										<td width="20%"></td>
+										<td style="width:40%">
+											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
+												<tr>
+													<td>
+														<?php echo $tr->translate("DATE_REQUEST_WORK_SPACE");?> : 
+													</td>
+													<td style="border-bottom:1px dotted #000; width:60%;">
+														<?php echo date("d-M-Y",strtotime($this->product[0]['date_work_request']));?>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+		                			<tr>
+										<td style="width:40%">
+											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
+												<tr>
+													<td>
+														<?php echo $tr->translate("REQUEST_NAME");?> : 
+													</td>
+													<td style="border-bottom:1px dotted #000; width:60%;">
+														<?php echo $this->product[0]['request_name'];?>
+													</td>
+												</tr>
+											</table>
+										</td>
+										<td width="20%"></td>
+										<td style="width:40%">
+											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
+												<tr>
+													<td>
+														<?php echo $tr->translate("POSITION");?> :
+													</td>
+													<td style="border-bottom:1px dotted #000; width:60%;">
+														<?php echo $this->product[0]['position'];?>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										
+										<td style="width:40%">
+											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
+												<tr>
+													<td>
+														<?php echo $tr->translate("PLAN");?> : 
+													</td>
+													<td style="border-bottom:1px dotted #000; width:60%;">
+														<?php echo $this->product[0]['plant'];?>
+													</td>
+												</tr>
+											</table>
+											
+										</td>
+										<td width="20%"></td>
+										<td style="width:40%">
+											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
+												<tr>
+													<td>
+														<?php echo $tr->translate("DEPARTMENT");?> : 
+													</td>
+													<td style="border-bottom:1px dotted #000; width:60%;">
+														<?php echo $this->product[0]['work_plan'];?>
+													</td>
+												</tr>
+											</table>
+										</td>
+								​	</tr>
+				                </table>
+				              </td>
+				           </tr> 
+		            </tbody></table>
+		        </td>
+		    </tr>
+		    <tr>
+		    	<td id="exportExcel"><br />
+		            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
+		                 <tbody>
+		                 <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 30px; font-size:13px !important; padding:1px 0px; white-space: nowrap; ">
+		                    <th width="4%">&nbsp;<?php echo $tr->translate("NUM");?></th>
+							<th>&nbsp;<?php echo $tr->translate("ITEM_CODE");?></th>
+							<th><?php echo $tr->translate("ITEM_NAME");?></th>
+							<th  width="8%">&nbsp;<?php echo $tr->translate("QTY");?></th>
+							<th width="5%"> <?php echo $tr->translate("MEASURE");?></th>
+							<th width="8%">&nbsp;<?php echo $tr->translate("UNIT_PRICE_CAP");?></th>
+							<th width="8%">&nbsp;<?php echo $tr->translate("SUB_TOTAL_CAP");?></th>
+							<th width="10%"> <?php echo $tr->translate("WORK_TYPE");?></th>
+							<th><?php echo $tr->translate("NOTE_WORK");?></th>
+							<th width="5%"> <?php echo $tr->translate("NUM_REMARK");?></th>
+		                </tr>
+		                <?php $num=1; 
+		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
+		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
+		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
+						$count = count($this->product);
+		                if(!empty($this->product))foreach ($this->product AS $index => $rs){ $inx = $index+1;?>
+						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["qty_order"],2);?></td>
+						   <td>&nbsp;<?php echo $rs["measure"];?></td>
+						   <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
+						    <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"]*$rs["qty_order"],2);?></span></td>
+						   <td>&nbsp;<?php echo $rs["work_type"];?></td>
+						   <td>&nbsp;<?php echo $rs["remark"];?></td>
+						   <td>&nbsp;<?php echo $rs["note"];?></td>
+						</tr>
+						   <?php 
+                    }?>
+                   <?php if($count<10){
+						$loop = 10 - $count;
+						for($i=1;$i<=$loop;$i++){
+					?>
+							<tr class='hover' style="border:1px solid #000;">
+						   <td align="center">&nbsp;<?php echo $inx+$i?></td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td>&nbsp;</td>
+						   <td align="center">&nbsp;<?php //echo $inx+$i?></td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td>&nbsp;</td>
+						</tr>
+					<?php 
+							
+						}
+					}
+					?>
+		            </tbody>
+		           </table>
+		              
+		    		</td>
+		    	</tr>
+			</tbody>
+		</table>
+		<br>
+		              <table align="center" width="100%" >
+						   <tbody>
+						   <tr style="font-size: 12px;">
+						        <td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'">ប្រធានឃ្លាំង</td>
+						        <th></th>
+						        <td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'">អ្នកប្រគល់</td>
+						        <th></th>
+						        <td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'">ប្រធានផ្នែក</td>
+								<th></th>
+								<td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'">អ្នកទទួល</td>
+						   </tr>
+						    <tr style="font-size: 11px; height: 75px;">
+						        <td valign="bottom" style="width:20%;text-align:center;font-family:'Khmer OS Muol Light';white-space: nowrap;border-bottom:1px solid #000;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center;font-family:'Khmer OS Muol Light';white-space: nowrap;border-bottom:1px solid #000;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center;font-family:'Khmer OS Muol Light';white-space: nowrap;border-bottom:1px solid #000;"></td>
+								<td></td>
+						        <td valign="bottom" style="width:20%;text-align:center;font-family:'Khmer OS Muol Light';white-space: nowrap;border-bottom:1px solid #000;"></td>
+						   </tr>
+						</tbody>
+					</table>
+		</div>
+	  </div>		
+	</div>
+	 </div>
+   </div>
+</div>
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<script>
+function doPrint() {
+	window.frames["print_frame"].document.body.innerHTML=document.getElementById('divPrint').innerHTML;
+    window.frames["print_frame"].window.focus();
+    window.frames["print_frame"].window.print();
+    //hideDialog();
+}
+
+</script>

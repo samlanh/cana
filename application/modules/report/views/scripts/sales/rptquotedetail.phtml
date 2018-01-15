@@ -1,0 +1,191 @@
+<?php 
+$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+$brach_name =  $this->branch;
+$formFilter = $this->formFilter;
+function secondsToTime($seconds) {
+	$dtF = new DateTime("@0");
+	$dtT = new DateTime("@$seconds");
+	return $dtF->diff($dtT)->format('%a');
+}
+?>
+<title><?php echo $tr->translate("RPT_QUOTE_LIST");?></title>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("RPT_QUOTE_LIST");?>
+				</div>
+						<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							    <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
+							 </button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#" onclick="doPrint();">
+										<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
+									</a>
+								</li>
+							</ul>
+						</div>
+			</div>
+            <div class="portlet-body form frmfilter">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+					<div class="form-group" style="padding-top: 6px;">
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('customer_id');?></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-2">
+							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+						</label>
+					</div>		
+				</form> 
+			<div id="divPrint">	
+			<style>
+				.style{
+					line-height: 20px;font-size: 9px !important;
+					font-family: 'Khmer OS Battambang';
+				}
+				ul{margin: 0;padding:0;}
+				table tr td ul li{text-align: center;list-style: none;line-height: 25px; }
+				th{padding: 0px;}
+				table thead tr th{
+					line-height:30px;
+					background:#ccc;
+					font-family:18px;
+					padding:3px;
+				}
+				table tr td{
+					line-height:20px;
+					padding:5px;
+					font-size:12px;
+				}
+				ul.pur_info li{line-height:18px; 
+						font-weight: normal !important;}
+				ul.pur_info li strong{font-weight: bold;}
+			   .hover:hover{background: #ccc;}
+			</style>
+			<table style="font-family: 'Khmer OS Content'; width:100%;">
+				<tbody>
+				<tr>
+					<td align="center">
+						<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
+							<tbody>
+							<tr style="margin-bottom:10px;"> 
+								<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logo/<?php echo $this->title_reprot["logo"]?>"></td>
+								<td width="60%" valign="top" style="line-height:30px">
+									<ul>
+										<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
+										<li style="text-align:center; font-size:18px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
+										<li style="text-align:center; font-size:20px; margin-top:25px; font-family:'Khmer OS Muol Light',serif,header-font; "><?php echo $tr->translate("RPT_QUOTE_LIST");?></li>
+									</ul>
+								</td>
+								<td width="20%" style="text-align:center; font-size: 11px;white-space: nowrap;">
+									<!--<div  style=" border:1px solid #000; border-radius:5px !important;line-height: 11px;padding: 5px 5px">
+										<p>ក្រុមហ៊ុន កាណាខនគ្រីត </p><p>ផ្នែកបញ្ជាទិញ និងគ្រប់គ្រងតម្លៃ</p>
+									</div>-->
+								</td>
+							</tr> 
+						</tbody></table>
+					</td>
+				</tr>
+				<tr>
+					<table  border="1"  class="collape tablesorter" style="border-collapse:collapse;border:1px solid #000; font-family: 'Khmer OS Battambang';" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("QUOATATION_DATE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("QUOTATION_NO");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("CUSTOMER");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("LOCATION_NAME");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("ITEM_CODE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("ITEM_NAME");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("QTY");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("MEASURE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("COST_PRICE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("BENEFIT_PLUS");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("TOTAL");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("VALID_DATE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("USER");?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							
+							if(!empty($this->rs)){
+								foreach ($this->rs as $key=>$rs){
+									$edit_status = '';
+									if($rs["pedding_stat"]>1 and $rs["appr_stat"]!=2){
+										$edit_status = "style='pointer-events: none;cursor: default;color: #ccc;'";
+									}
+									$date_now =  date("Y-m-d");
+									
+									$valid_date = strtotime($rs["valid_date"])-strtotime($date_now);
+									$valid_day = secondsToTime($valid_date);
+									$color='';
+									if($valid_day <=7){
+										$color = "style='background:rgba(255, 0, 0, 0.32)'";
+									}
+							?>
+								<tr class="normal" <?php echo $color;?>>
+									<td class="items-no"><?php echo $key+1;?> </td>
+									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_order"]));?></td>
+									<td class="items"><?php echo $rs["quoat_number"];?></td>
+									<td class="items"><?php echo $rs["customer_name"];?></td>
+									<td class="items"><?php echo $rs["branch"];?></td>
+									<td class="items"><?php echo $rs["item_code"];?></td>
+									<td class="items"><?php echo $rs["item_name"];?></td>
+									<td class="items"><?php echo $rs["qty_order"];?></td>
+									<td class="items"><?php echo $rs["measure"];?></td>
+									<td class="items">$<span style="float:right"><?php echo $rs["price"];?></span></td>
+									<td class="items"><?php echo $rs["benefit_plus"];?></td>
+									<td class="items">$<span style="float:right"><?php echo $rs["sub_total"];?></span></td>
+									<td class="items"><?php echo date('d-M-Y',strtotime($rs["valid_date"]));?></td>
+									<td class="items"><?php echo $rs["user_name"];?></td>
+								</tr>
+							<?php 
+							}}?>
+						</tbody>
+					</table>
+					<br>
+		            <table align="center" width="100%" >
+						   <tbody>
+						   <tr style="font-size: 11px;">
+						        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">អនុម័តដោយ</td>
+						        <td></td>
+								<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ត្រួតពិនិត្យដោយ</td>
+								<td></td>
+								<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">រៀបចំដោយ</td>
+						   
+						   </tr>
+						    <tr style="font-size: 11px; height: 55px;">
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000;  font-family:'Khmer MEF2'; white-space: nowrap;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000; font-family:'Khmer MEF2';white-space: nowrap;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000; font-family:'Khmer MEF2';white-space: nowrap;"></td>
+						   </tr>
+
+						</tbody>
+					</table>
+				</tr>
+			</tbody>
+		</table>	
+			    </div>
+		   </div>
+		</div>  
+	 </div>
+   </div>
+</div>
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<script>
+function doPrint() {
+	var printContents = document.getElementById('divPrint').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+</script>

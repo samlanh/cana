@@ -1,0 +1,82 @@
+<?php 
+	$url_cencel = $this->url(array('module'=>'purchase','controller'=>'payment','action'=>'polpay',));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$pol = $this->rspol;
+	//print_r($this->rspol);
+?>
+<style>
+.paddingtop{line-height: 32px;}
+</style>
+<title><?php echo $tr->translate("ADD_BRAND");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title col-sm-12">
+			<div class="caption col-sm-10">
+				<i class="fa fa-globe"></i><?php echo $tr->translate("MENU_RECEIVE_POL");?>
+			</div>
+			<div class="col-sm-2 pull-right">
+				<a class="pull-right" href="<?php echo $url_cencel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" method="post" id="a" action="" >
+				<div class="form-body ">
+					<div style="margin: 0 auto;" >
+						<div class="form-group">
+							<label class="col-md-3 control-label"><?php echo $tr->translate("POL_NUMBER");?></label>
+							<div class="col-md-6 paddingtop">
+								<?php echo $pol['pol_no'];?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"><?php echo $tr->translate("POL_DATE");?></label>
+							<div class="col-md-6 paddingtop">
+								<?php echo date("d-m-Y",strtotime($pol['expense_date']));?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"><?php echo $tr->translate("GRAND_TOTAL");?></label>
+							<div class="col-md-6 paddingtop">
+								<?php echo number_format($pol['total'],2);?>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label"><strong><?php echo $tr->translate("DATE_GET_POL");?> (MM/DD/YYYY)</strong></label>
+							<div class="col-md-6">
+								<input type="text" name="date_get" id="date_get" required="required" value="<?php echo !empty($pol['get_date'])?date("m/d/Y",strtotime($pol['get_date'])):"";?>" class="form-control date-picker" required="required">	
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"><strong><?php echo $tr->translate("DATE_PAY_POL");?> (MM/DD/YYYY)</strong></label>
+							<div class="col-md-6">
+								<input type="text" name="date_pay" id="date_pay" value="<?php echo !empty($pol['paid_date'])?date("m/d/Y",strtotime($pol['paid_date'])):"";?>" class="form-control date-picker" >	
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"><?php echo $tr->translate("NOTE");?></label>
+							<div class="col-md-6">
+								<input type="text" name="brand_name" id="brand_name" value="" class="form-control" >	
+								<input type="hidden" name="id" id="id" value="<?php echo $pol['id'];?>" class="form-control" >	
+							</div>
+						</div>
+						<div class="form-group">
+							<label  class="col-md-4">
+							</label>
+							<label  class="col-md-4">
+								<button type="submit" name="btnsavenew" id="save_close" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+							</label>
+							<label  class="col-md-4">
+							</label>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function () {
+    
+});
+</script>

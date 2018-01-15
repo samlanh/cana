@@ -1,0 +1,169 @@
+<?php 
+$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+$brach_name =  $this->branch;
+$formFilter = $this->formFilter;
+?>
+<title><?php echo $tr->translate("RPT_COMPARE_PRICE");?></title>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("RPT_COMPARE_PRICE");?>
+				</div>
+						<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							   <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
+							 </button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#" onclick="doPrint();">
+										<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
+									</a>
+								</li>
+							</ul>
+						</div>
+			</div>
+            <div class="portlet-body form frmfilter">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+					<div class="form-group" style="padding-top: 6px;">
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('purchase_status');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-2">
+							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+						</label>
+					</div>			
+				</form> 
+			<div id="divPrint">	
+			<style>
+				.style{
+					line-height: 20px;font-size: 9px !important;
+					font-family: 'Khmer OS Battambang';
+				}
+				ul{margin: 0;padding:0;}
+				table tr td ul li{text-align: center;list-style: none;line-height: 25px; }
+				th{padding: 0px;}
+				table thead tr th{
+					line-height:30px;
+					background:#ccc;
+					font-size:15px;
+					padding:3px;
+				}
+				table tr td{
+					line-height:20px;
+					padding:5px;
+					font-size:12px;
+				}
+				ul.pur_info li{line-height:18px; 
+						font-weight: normal !important;}
+				ul.pur_info li strong{font-weight: bold;}
+			   .hover:hover{background: #ccc;}
+			</style>
+			<table style="font-family: 'Khmer OS Content'; width:100%;">
+				<tbody>
+				<tr>
+					<td align="center">
+						<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
+							<tbody>
+							<tr style="margin-bottom:10px;"> 
+								<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logo/<?php echo $this->title_reprot["logo"]?>"></td>
+								<td width="60%" valign="top" style="line-height:30px">
+									<ul>
+										<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
+										<li style="text-align:center; font-size:18px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
+										<li style="text-align:center; font-size:20px; margin-top:25px; font-family:'Khmer OS Muol Light',serif,header-font; "><?php echo $tr->translate("RPT_COMPARE_PRICE");?></li>
+									</ul>
+								</td>
+								<td width="20%" style="text-align:center; font-size: 11px;white-space: nowrap;">
+								</td>
+							</tr> 
+						</tbody></table>
+					</td>
+				</tr>
+				<tr>
+					<table  border="1"  class="collape tablesorter" style="border-collapse:collapse;border:1px solid #000; font-family: 'Khmer OS Battambang';" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th class="tdheader"><?php echo  $tr->translate("NO");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("REQUEST_NO");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("REQUEST_DATE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("PLAN");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("LOCATION_NAME");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("COMPARE_CODE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("DATE_COMPARE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("APP_STATUS");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("PEDDING");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("USER");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("ACTION");?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							if(!empty($this->rs)){
+								foreach ($this->rs as $key=>$rs){
+									$edit_status =  '';									
+									if($rs["is_approve"]==1){
+										$edit_status ="style='pointer-events: none;cursor: default;color: #ccc;'";
+									}	
+							?>
+								<tr class="normal">
+									<td class="items-no"><?php echo $key+1;?></td>
+									<td class="items"><?php echo $rs["re_code"];?></td>
+									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_request"]));?></td>
+									<td class="items"><?php echo $rs["plan"];?></td>
+									<td class="items"><?php echo $rs["branch"];?></td>
+									<td class="items"><?php echo $rs["code"];?></td>
+									<td class="items"><?php echo date('d-M-Y',strtotime($rs["pur_date"]));?></td>
+									<td class="items"><?php echo $rs["app_status"];?></td>
+									<td class="items"><?php echo $rs["pedding"];?></td>
+									<!--<td class="items"><?php echo $rs["status"];?></td>-->
+									<td class="items"><?php echo $rs["user_name"];?></td>
+									<td class="items-no" style="white-space: nowrap;">
+										<a target="_blank" href="<?php echo $this->baseUrl();?>/report/proches/purproductdetail/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("PRINT");?></a>
+									</td>
+								</tr>
+							<?php }}?>
+						</tbody>
+					</table>
+					<br>
+		            <table align="center" width="100%" >
+						   <tbody>
+						   <tr style="font-size: 11px;">
+						       <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">អនុម័តដោយ</td>
+						        <td></td>
+								<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ត្រួតពិនិត្យដោយ</td>
+								<td></td>
+								<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">រៀបចំដោយ</td>
+						   </tr>
+						    <tr style="font-size: 11px; height: 55px;">
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000;  font-family:'Khmer MEF2'; white-space: nowrap;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000; font-family:'Khmer MEF2';white-space: nowrap;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000; font-family:'Khmer MEF2';white-space: nowrap;"></td>
+						   </tr>
+
+						</tbody>
+					</table>
+				</tr>
+			</tbody>
+		</table>	
+			    </div>
+		   </div>
+		</div>  
+	 </div>
+   </div>
+</div>
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<script>
+function doPrint() {
+	var printContents = document.getElementById('divPrint').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+</script>

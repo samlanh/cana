@@ -1,0 +1,137 @@
+<?php 
+	$url_new = $this->url(array('module'=>'brand','controller'=>'index','action'=>'add',));
+	$url_cencel = $this->url(array('module'=>'brand','controller'=>'index','action'=>'index',));
+	$url_delete = $this->url(array('module'=>'brand','controller'=>'index','action'=>'delete',));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->frmAdd;
+?>
+<title><?php echo $tr->translate("BRAND_LIST");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ADD_BRAND");?>
+			</div>
+			<div class="tools">
+				<a href="<?php echo $url_cencel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" method="post" action="<?php echo $url_new;?>" >
+				<div class="form-body ">
+					<div style="margin: 0 auto;" >
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('parent');?>
+								</div>
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("BRAND_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('cat_name');?>
+								</div>
+												
+							</div>
+							<div class="form-group">
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('status');?>
+								</div>
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('remark');?>
+								</div>
+							</div>
+						<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<button type="submit" name="saveclose" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+									<a href="<?php echo $this->baseUrl();?>/brand/index"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
+								</label>
+							</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<?php $formcat = $this->frmCat; ?>
+<div id="categorypopup" class="modal fade" tabindex="-1" data-width="1200">
+       <div class="modal-dialog">
+      <div class="modal-content">
+      <div class="modal-header">   
+		<div class="row">
+		<div class="col-md-12">
+			<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="icon-home"></i><?php echo $tr->translate("ADD_NEW_CATEGORY");?>
+				</div>
+				<div class="caption pull-right">
+					<a href="<?php echo $url_new;?>" >
+						 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					</a>
+				</div>
+			</div>
+			<div class="portlet-body form">
+				<form id="frmCat" name="frmcustomer" id="a" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<div class="form-body">
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
+								<div class="col-md-4">
+									<?php echo $formcat->getElement('parent');?>
+								</div>
+								<label class="col-md-2 control-label"><?php echo $tr->translate("CATEGORY_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formcat->getElement('cat_name');?>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
+								<div class="col-md-4">
+									<?php echo $formcat->getElement('prifix');?>
+								</div>
+								<label class="col-md-2 control-label"><?php echo $tr->translate("START_CODE");?></label>
+								<div class="col-md-4">
+									<?php echo $formcat->getElement('start_code');?>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label" style="white-space: nowrap;"><?php echo $tr->translate("IS_NONE_STOCK");?></label>
+								<div class="col-md-4">
+									<?php echo $formcat->getElement('is_none_stock');?>
+								</div>
+								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php echo $formcat->getElement('remark');?>
+								</div>
+							</div>
+							<div class="form-group">
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formcat->getElement('status');?>
+								</div>
+								<label class="col-md-2 control-label"></label>
+								<div class="col-md-4">
+									
+								</div>
+							</div>
+					
+					<div class="form-group">
+						<label  class="col-md-12 col-md-offset-4 col-md-8">
+							<button type="button" name="btnsavenew" id="save_category" onclick="addNewCategory();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE")?> </button>
+						</label>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+          </div>
+        </div>
+    </div>
+ </div>	

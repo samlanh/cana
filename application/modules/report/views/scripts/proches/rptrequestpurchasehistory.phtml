@@ -1,0 +1,230 @@
+<?php 
+$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+$brach_name =  $this->branch;
+//print_r($this->repurchase);
+?>
+<title><?php echo $tr->translate("RPT_REQUEST_PURCHASE_DETAIL");?></title>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("RPT_REQUEST_PURCHASE_DETAIL");?>
+				</div>
+						<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							   <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
+							 </button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#" onclick="doPrint();">
+											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
+										</a>
+									</li>
+									<li>
+										<!--<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>-->
+									</li>
+									
+								</ul>
+					</div>
+			</div>
+            <div class="portlet-body form frmfilter">
+				<form method="post" style="border-bottom: 1px solid #ccc;"  action="<?php //echo $formFilter->getAction(); ?>">
+					<div class="form-group" style="padding-top: 6px;">
+						<?php $formFilter = $this->form_purchase; ?>
+						<label class="control-label col-md-4"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('plan');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-2">
+							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+						</label>
+					</div><div style="clear:both;"></div>	
+				</form> 
+	<div style=" min-height:28cm; margin:25 0 0 0; padding:0px 0.2cm">
+	<div id="divPrint" style="width: 100%;">
+	<style>
+		.style{
+					line-height: 20px;font-size: 9px !important;
+					font-family: 'Khmer OS Battambang';
+				}
+				ul{margin: 0;padding:0;}
+				table tr td ul li{text-align: center;list-style: none;line-height: 25px; }
+				th{padding: 0px;}
+				table thead tr th{
+					line-height:30px;
+					background:#ccc;
+					font-size:15px;
+					padding:3px;
+				}
+				table tr td{
+					line-height:20px;
+					padding:5px;
+					font-size:12px;
+				}
+				table tr th{
+					background:#ccc;
+				}
+				ul.pur_info li{line-height:18px; 
+						font-weight: normal !important;}
+				ul.pur_info li strong{font-weight: bold;}
+			   .hover:hover{background: #ccc;}
+	</style>
+		<table style="font-family: 'Khmer OS Content'; width:100%;">
+			<tbody>
+			<tr>
+		    	<td align="center">
+		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
+		            	<tbody>
+						<tr>
+		                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logo/<?php echo $this->title_reprot["logo"]?>" height="55px"></td>
+		                	<td width="60%" valign="top">
+		                		<ul>
+									<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
+									<li style="text-align:center; font-size:18px; font-family:font-family:'Khmer OS Muol Light',serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
+		                			<li style="text-align:center; font-size:18px;margin: 10px 0px 0px 0px;font-family:'Khmer OS Muol Light',serif,header-font;"><?php echo $tr->translate("RPT_PURCHASE_DETAIL");?></li>
+		                			<li style="text-align:center; font-size:15px; margin: 0px 0px 0px 0px;"><?php echo date("d-M-Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d-M-Y",strtotime($this->rssearch['end_date']));?></li>
+		                		</ul>
+		                	</td>
+		                    <td width="20%"></td>
+		                </tr>  
+		            </tbody></table>
+		        </td>
+		    </tr>
+		    <tr>
+		    	<td id="exportExcel">
+		            <table class="collape tablesorter" id="table" style="border-collapse:collapse;border:1px solid #000;" width="100%" cellspacing="0" border="1">
+		                 <tbody>
+						<?php $num=1; 
+							$his_ids = '';
+							if(!empty($this->repurchase))foreach ($this->repurchase AS $index => $rs){
+								$num++;
+								if($rs["type"]==1){
+									$type=$tr->translate("ADD_NEW");
+								}else{
+									$type=$tr->translate("EDIT");
+								}
+						?>
+						<?php if($his_ids!=$rs["id"]){  $num=1;?>
+							
+							<tr style="background:#ccc">
+								<td><?php echo $tr->translate("MR_NO")." : <b>".$rs["re_code"]."</b> <br /> ".$tr->translate("MR_DATE")." : <b>".date("d-M-Y",strtotime($rs["date_request"]))."</b> <br />"?></td>
+								<td><?php echo $tr->translate("PLAN")." : <b>".$rs["plan"]."</b> <br /> ".$tr->translate("NUMBER_WORK_SPACE")." : <b>".$rs["number_request"]."</b> | ".$tr->translate("DATE_REQUEST_WORK_PLACE")." : <b>".date("d-M-Y",strtotime($rs["date_from_work_space"]))."</b>"?></td>
+								<td colspan="13"><span class="pull-right"><?php echo $tr->translate("TYPE")." : <b>".$type."</b> | ".$tr->translate("PREPARE_BY")." : <b>".$rs["prepare_by"]."</b> | ".$tr->translate("DATE")." : <b>".$rs["date_time"]."</b>";?></span></td>
+							</tr>
+							
+							<tr>
+								<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("ITEM_CODE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("ITEM_NAME");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("QTY");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("MEASURE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("DATE_IN");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("NOTE");?></th>
+							</tr>
+						 <?php $his_ids=$rs["id"];}?>
+						<tr class="normal">
+									<td class="items-no"><?php echo $num;?></td>
+									<td class="items"><?php echo $rs["item_code"];?></td>
+									<td class="items"><?php echo $rs["item_name"];?></td>
+									<td class="items"><?php echo $rs["qty"];?></td>
+									<td class="items"><?php echo $rs["measure"];?></td>
+									<td class="items"><?php echo date("d-M-Y",strtotime($rs["date_in"]));?></td>
+									<td class="items"><?php echo $rs["pro_remark"];?></td>
+						</tr>
+						
+						<?php }?>
+		                </tbody>
+		           </table>
+		            <br>
+		            <table align="center" width="100%" >
+						   <tbody>
+						   <tr style="font-size: 11px;">
+						        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">អនុម័តដោយ</td>
+						        <td></td>
+								<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ត្រួតពិនិត្យដោយ</td>
+								<td></td>
+								<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">រៀបចំដោយ</td>
+						        
+						   
+						   </tr>
+						    <tr style="font-size: 11px; height: 55px;">
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000;  font-family:'Khmer MEF2'; white-space: nowrap;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000; font-family:'Khmer MEF2';white-space: nowrap;"></td>
+						        <td></td>
+						        <td valign="bottom" style="width:20%;text-align:center; border-bottom:1px solid #000; font-family:'Khmer MEF2';white-space: nowrap;"></td>
+						   </tr>
+
+						</tbody>
+					</table>
+		    		</td>
+		    	</tr>
+			</tbody>
+		</table>
+		</div>
+	  </div>		
+	</div>
+	 </div>
+   </div>
+</div>
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<script>
+function doPrint() {
+	var printContents = document.getElementById('divPrint').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+
+/*var currentTime = new Date();
+var month = currentTime.getMonth() + 1;
+var day = currentTime.getDate();
+var year = currentTime.getFullYear();
+	var date =(year + "-" + month + "-" + day );
+
+var start_date = $('#start_date').val();
+var end_date =$('#end_date').val();
+
+if(end_date!="" | start_date!=""){
+    start_date = $('#start_date').val();
+	end_date =$('#end_date').val();
+	
+}else{
+	start_date = $('#start_date').val(date);
+	end_date = $('#end_date').val(date);
+}*/
+
+<?php //$url_item_filter =  $this->url(array('module'=>'report','controller'=>'index','action'=>'get-item-filter')); ?>
+/*function getProductFilter(){
+	var location_id=$("#LocationId").val();
+	var branch_id = $('#branch_id').val();
+	var category_id = $('#category_id').val();
+		$.ajax({
+			url:"<?php //echo $url_item_filter;?>",
+			type:"post",
+			data:{'category_id':category_id,'branch_id':branch_id,'location_id':location_id},
+			success: function(data){
+				items = $.parseJSON(data);
+				if(items){
+					 $('#item').empty();
+					 $('#item').val('').trigger("liszt:updated");
+					 $('#item').append($("<option></option>").attr("value","").text("Please Select Item"));
+					 for (var index = 1 ; index <= items.length; index++) {
+							$('#item').append($("<option></option>").attr("value",items[index-1]['pro_id']).text(items[index-1]['item_code'] + items[index-1]['item_name'])); 
+							$("select#item").find("option#items[index-1]['pro_id']").attr("selected", true);
+					 }           
+					$('#item').val('').trigger("liszt:updated");
+				}else{
+					 $('#item').empty();
+					 $('#item').val('').trigger("liszt:updated");
+						 $('#item').append($("<option></option>").attr("value","").text("No Items Result!"));
+						 $('#item').val('').trigger("liszt:updated");
+				}
+			},
+			error:function(){
+			}
+		});
+	}*/
+</script>

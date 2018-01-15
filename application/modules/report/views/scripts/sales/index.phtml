@@ -1,0 +1,180 @@
+<?php $tr = Application_Form_FrmLanguages::getCurrentlanguage();  
+  $rpt_rptrequest_list		=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptrequest'), null, true);
+  $rpt_rptsales	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptsales'), null, true);
+   $rpt_rptsalesdetail	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptsalesdetail'), null, true);
+  $rpt_rptquote	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptquote'), null, true);
+  $rpt_rptquotedetail	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptquotedetail'), null, true);
+   $rpt_rptinvoice	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptinvoice'), null, true);
+   $rpt_rptinvoicedetail	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptinvoicedetail'), null, true);
+    $rpt_purchase_detail	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptpurchasedetail'), null, true);
+  $rpt_receive			=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptreceive'), null, true);
+   $rpt_receive_detail			=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptreceivedetail'), null, true);
+  $rpt_price_compare	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptpricecompare'), null, true);
+   $rpt_invoice	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptinvoice'), null, true);
+   $rpt_invoice_detail	=	$this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptinvoicedetail'), null, true);
+   $invoicecontrolling = $this	->	url(array('module'=>'report','controller'=>'sales','action'=>'rptinvoicecontrolling'), null, true);
+    $rpt_pol = $this	->	url(array('module'=>'report','controller'=>'sales','action'=>'pol'), null, true);
+	$rpt_pol_detail = $this	->	url(array('module'=>'report','controller'=>'sales','action'=>'poldetail'), null, true);
+  ?>
+  <div class="portlet box blue">						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-gift"></i><?php echo $tr->translate("MENU_REPORT_SALE");?>
+							</div>
+							<div class="pull-right"><a href="<?php //echo $url_cencel;?>" class="btn btn-sm red" style="line-height: 35px;"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></a></div>
+						</div>
+	<div class="portlet-body">
+		<div class="portlet-body form">
+									 
+<div class="form-body">
+	<div class="row">
+		<!--<h3 class="form-section" style="border-bottom: 3px solid red;"><?php //echo $tr->translate("RPT_QUOTE");?></h3>-->
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_rptquote;?>">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("RPT_QUOTE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_rptquote;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_rptquotedetail;?>">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("RPT_QUOTE_DETAIL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_rptquotedetail;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_rptsales;?>">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("RPT_SALE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_rptsales;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_rptsalesdetail;?>">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("RPT_SALE_DETAIL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_rptsalesdetail;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+		</div>
+		<div class="row">
+				<h3 class="form-section" style="border-bottom: 3px solid red;"><?php //echo $tr->translate("RPT_QUOTE");?></h3>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_rptinvoice;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_INVOICE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_rptinvoice;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_rptinvoicedetail;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_INVOICE_DETAIL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_rptinvoicedetail;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat red-haze">
+						<a class="more" href="<?php echo $rpt_rptrequest_list;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_SALE_REQIEST");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_rptrequest_list;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+			
+	</div>
+	</div>
+	</div>
+</div>

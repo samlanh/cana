@@ -1,0 +1,91 @@
+<?php 
+	$url_new = $this->url(array('module'=>'product','controller'=>'location','action'=>'add',));
+	$url_cancel = $this->url(array('module'=>'product','controller'=>'location','action'=>'index',));
+	$url_delete = $this->url(array('module'=>'product','controller'=>'location','action'=>'delete',));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->frmAdd;
+?>
+<title><?php echo $tr->translate("ADD_LOCAT");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ADD_LOCAT");?>
+			</div>
+			<div class="tools">
+				<a href="<?php echo $url_cancel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" id="a" method="post" action="<?php echo $url_new;?>" enctype="multipart/form-data" >
+				<div class="form-body">
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('branch_name');?>
+								</div>
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('prefix');?>
+								</div>
+							</div>
+											
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_EN");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('title_en');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_KH");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('title_kh');?>
+								</div>
+								
+							</div>
+							
+							
+							
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('remark');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("LOGO");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('logo');?>
+								</div>
+								
+								
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php //echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php //echo $formFilter->getElement('remark');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('status');?>
+								</div>
+							</div>
+						<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<a href="<?php echo $url_cancel;?>"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
+									<button type="submit" name="save_close" id="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" name="save_new" id="save_close" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+									
+								</label>
+						</div>
+					</div>
+					</form>
+				</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function () {
+    
+});
+</script>

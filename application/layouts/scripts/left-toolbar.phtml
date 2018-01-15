@@ -1,0 +1,126 @@
+<?php 
+	$user_info = new Application_Model_DbTable_DbGetUserInfo();
+	$result = $user_info->getUserInfo();
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage(); 
+	$session_user=new Zend_Session_Namespace('auth');
+	$request=Zend_Controller_Front::getInstance()->getRequest();
+	$level = $result["level"];
+	$db = new Application_Model_DbTable_DbGlobal();
+	
+	$module=$request->getModuleName();
+	 $class_active='start';
+	 $controller=$request->getControllerName();
+	 $class_active_menu='active';
+	
+	
+	//module user 
+	$url_user_list = array($this->url(array('module'=>'rsvacl','controller'=>'user','action'=>'index'),null, true), "MENU_RSVACL_USER_INDEX");
+	$url_user_add = array($this->url(array('module'=>'rsvacl','controller'=>'user','action'=>'add'),null, true), "MENU_RSVACL_USER_ADD_USER");
+	$url_add_user_access = array($this->url(array('module'=>'rsvacl','controller'=>'useraccess','action'=>'index'),null, true), "MENU_RSVACL_USER_ACCESS_ADD");
+	$url_user_acl_list = array($this->url(array('module'=>'rsvacl','controller'=>'acl','action'=>'index'),null, true), "MENU_RSVACL_USER_ACL_LIST");
+	$url_user_type = array($this->url(array('module'=>'rsvacl','controller'=>'usertype','action'=>'index'),null, true), "MENU_RSVACL_USER_TYPE_LIST");
+	
+	
+	
+	
+	//module billing
+ $delivery_con = array($this->url(array('module'=>'billing','controller'=>'deliveryconcrete','action'=>'index'),null, true), "DELIVER_CONCRETE");
+ $youdriver = array($this->url(array('module'=>'billing','controller'=>'youdriver','action'=>'index'),null, true), "DRIVER");
+ $truck_type = array($this->url(array('module'=>'billing','controller'=>'trucktype','action'=>'index'),null, true), "TRUCK_TYPE");
+ $truck = array($this->url(array('module'=>'billing','controller'=>'truck','action'=>'index'),null, true), "TRUCK");
+ 
+ //module billing product
+ $product = array($this->url(array('module'=>'billing','controller'=>'billingproduct','action'=>'index'),null, true), "ADD_PRODUCT");
+ //$location = array($this->url(array('module'=>'billing','controller'=>'trucktype','action'=>'index'),null, true), "LOCATION");
+ $type_con = array($this->url(array('module'=>'billing','controller'=>'typeconcrete','action'=>'index'),null, true), "TYPE_CONCRETE");
+$module_str  = array(
+		'product'=>'INVENTORY',
+		'purchase'=>'PURCHASING',
+		'sales'=>'SALES_INVENTORY',
+		'report'=>'REPORT',
+		);	
+ ?>
+<!-- BEGIN SIDEBAR -->
+	<div class="page-sidebar-wrapper">
+		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+		<div class="page-sidebar navbar-collapse collapse">
+			
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+				<li class="sidebar-toggler-wrapper" style="background:#6c5353;height: 41px; border-bottom:2px solid #9a9a9a !important;">
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler">
+					</div>
+					<!-- END SIDEBAR TOGGLER BUTTON -->
+				</li>
+				<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+				<?php if(!empty($db->getAllAclParentUserType($level))){ foreach ($db->getAllAclParentUserType($level) as $rs){ 
+					if($module==$rs["module"]){
+						$class_active='start active open';
+						break;
+					}
+				?>
+				<li class="<?php if($module==$rs["title"]){echo 'start active open';}?>">
+					<a href="javascript:;">
+					<i class="<?php echo $rs["icon"];?>"></i>
+					<span class="title"><?php echo $tr->translate($module_str[$rs["title"]]);?></span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<?php if(!empty($db->getAllAclSubParentUserType($level,$rs["parent"]))){ foreach($db->getAllAclSubParentUserType($level,$rs["parent"]) as $row){?>
+						<?php if($row["lable"]!="NO_SUB"){?>
+						<li  class="start " style="padding: 6px 0 6px 2px;background:#6c5353">
+								<span style="color:#fff; "><i class="icon-arrow-right"></i><?php echo $tr->translate($row["lable"])?></span>
+						</li> 
+						<?php }?>
+							<?php if(!empty($db->getAllAclUserTypeAndParent($rs["parent"],$level,$row["sub_parent"]))){ foreach($db->getAllAclUserTypeAndParent($rs["parent"],$level,$row["sub_parent"]) as $rows){?>
+								<li>
+									<a href="<?php echo $this->baseUrl()."/".$rows["module"]."/".$rows["controller"]."/".$rows["action"]?>">
+										<i class="icon-arrow-right"></i><?php echo $tr->translate($rows["lable"])?></a>
+									</a>
+								</li> 
+							<?php }}?>
+						<?php }}?>
+					</ul>
+				</li>
+				<?php }}?>
+				<?php if($level==1){?>
+				<li class="start">
+					<a href="javascript:;">
+					<i class="icon-user"></i>
+					<span class="title"><?php echo $tr->translate("USER_ACCESS");?></span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+	            			<a href="<?php echo $url_user_list[0]; ?>">
+		            			<i class="icon-user"></i><?php echo $tr->translate($url_user_list[1]);?>
+		            		</a>
+	            		</li> 
+	            		<!--<li>
+	            			<a href="<?php echo $url_user_add[0]; ?>">
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_user_add[1]);?>
+		            		</a>
+	            		</li> 
+	            		<li>
+	            			<a href="<?php echo $url_add_user_access[0]; ?>">
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_add_user_access[1]);?>
+		            		</a>
+	            		</li>
+	            		<li>
+	            			<a href="<?php echo $url_user_acl_list[0]; ?>">
+		            			<i class="icon-arrow-right"></i><?php echo $tr->translate($url_user_acl_list[1]);?>
+		            		</a>
+	            		</li> -->
+	            		<li>
+	            			<a href="<?php echo $url_user_type[0]; ?>">
+		            			<i class="icon-settings"></i><span class="title"><?php echo $tr->translate($url_user_type[1]);?></span>
+		            		</a>
+	            		</li> 
+					</ul>
+				</li>
+				<?php }?>
+			</ul>
+		</div>
+	</div>

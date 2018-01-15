@@ -1,0 +1,268 @@
+<?php $tr = Application_Form_FrmLanguages::getCurrentlanguage();  $rpt_pruches_list		=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptprucheslist'), null, true);
+  $rpt_request_detail	=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptpurchaserequestdetail'), null, true);
+   $rpt_purchase	=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rpt-purchase'), null, true);
+    $rpt_purchase_detail	=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptpurchasedetail'), null, true);
+  $rpt_receive			=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptreceive'), null, true);
+   $rpt_receive_detail			=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptreceivedetail'), null, true);
+  $rpt_price_compare	=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptpricecompare'), null, true);
+   $rpt_invoice	=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptinvoice'), null, true);
+   $rpt_invoice_detail	=	$this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptinvoicedetail'), null, true);
+   $invoicecontrolling = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptinvoicecontrolling'), null, true);
+    $rpt_pol = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'pol'), null, true);
+	$rpt_pol_detail = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'poldetail'), null, true);
+  ?>
+  <div class="portlet box blue">						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-gift"></i><?php echo $tr->translate("MENU_REPORT_PROCHES");?>
+							</div>
+							<div class="pull-right"><a href="<?php //echo $url_cencel;?>" class="btn btn-sm red" style="line-height: 35px;"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></a></div>
+						</div>
+	<div class="portlet-body">
+		<div class="portlet-body form">
+									 
+<div class="form-body">
+	<div class="row">
+		<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("MR_REQUEST");?></h3>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_pruches_list;?>">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("RPT_MR");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_pruches_list;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_request_detail;?>">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("RPT_MR_DETAIL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_request_detail;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_price_compare;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_COMPARE_PRICE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_price_compare;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+	
+				
+	</div>
+	<div class="row">
+	<br />
+		<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("PURCHASING");?></h3>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat red-haze">
+						<a class="more" href="<?php echo $rpt_purchase;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_PURCHASE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_purchase;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat red-haze">
+						<a class="more" href="<?php echo $rpt_purchase_detail;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_PURCHASE_DETAIL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_purchase_detail;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat red-haze">
+						<a class="more" href="<?php echo $rpt_receive;?>">
+						<div class="visual">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_RECEIVE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_receive;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat red-haze">
+						<a class="more" href="<?php echo $rpt_receive_detail;?>">
+						<div class="visual">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_RECEIVE_DETAIL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_receive_detail;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>	
+				
+	</div>
+
+	<div class="row">
+	<br />
+		<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("INVOICE_AND_POL_SESTION");?></h3>
+				
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<a class="more" href="<?php echo $rpt_invoice;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_INVOICE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_invoice;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<a class="more" href="<?php echo $invoicecontrolling;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_INVOICE_CONTRILLING");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $invoicecontrolling;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<a class="more" href="<?php echo $rpt_pol;?>">
+						<div class="visual">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_POL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_pol;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<a class="more" href="<?php echo $rpt_pol_detail;?>">
+						<div class="visual">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								<?php echo $tr->translate("RPT_POL_DETAIL");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_pol_detail;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+	</div>
+	<!--<div class="row">
+		<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("MENU_PAYMENT_ORDER_LETTER");?></h3>
+				
+	</div>-->
+	</div>
+	</div>
+	</div>
+</div>

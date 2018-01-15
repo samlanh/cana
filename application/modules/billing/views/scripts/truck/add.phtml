@@ -1,0 +1,158 @@
+<?php 
+	$url_new = $this->url(array('module'=>'billing','controller'=>'truck','action'=>'add',),null,true);
+	$url_cancel = $this->url(array('module'=>'billing','controller'=>'truck','action'=>'index',),null,true);
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->frmAdd;
+?>
+<style>
+       td.quater-input select {
+		    height: 32px;
+		}
+</style>
+<title><?php echo $tr->translate("CATEGORY");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ADD_TRUCK");?>
+			</div>
+			<div class="tools"  >
+				<a  href="<?php echo $url_cancel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" method="post" action="<?php echo $url_new;?>" >
+				<div class="form-body ">
+					<div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TRUCK_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('tru_name');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TRUCK_NO");?></label>
+								<div class="col-md-4">
+									<?php //echo $formFilter->getElement('tru_no');?>
+									<input type="text" name="tru_no" id="tru_no" value="<?php echo $this->truck_no?>" class="form-control" required="required">	
+								</div>
+												
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("EMPTY_WEIGHT");?>(kg)</label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('emp_weidth');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("NET_WEIGHT");?>(kg)</label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('net_weight');?>
+								</div>
+												
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TOTAL_WEIGHT");?>(kg)</label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('total_weight');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TRUCK_TYPE");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('tru_type');?>
+								</div>
+												
+							</div>
+							 
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php //echo $tr->translate("ADDRESS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('dri_address');?>
+								</div>				
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('status');?>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-0">
+						           <input type="hidden" id="identity" name="identity" />
+						        </label>
+						        <label class="control-label col-md-12">
+								<table class="collape" id="table_order" style="width: 100%;">
+									<tr height="25px">
+										<td class="sub-tdheader" width="20px"><?php echo $tr->translate("NUM");?></td>
+										<td class="sub-tdheader" style="width:330px;"><?php echo $tr->translate("DRIVER_NAME");?></td>
+										<td class="sub-tdheader" width="20px"><?php echo $tr->translate("PHNONE");?></td>
+										<td class="sub-tdheader"><?php echo $tr->translate("ORTHER");?></td>
+									</tr>
+								</table>
+							       <button class="btn btn-primary" type="button" id="new_item" onclick="addRow(1);" name="new_followup" value="New">
+													&nbsp;<img src="<?php echo $this->baseUrl()?>/images/icon/new-row.png" alt="">Add</button> 
+							  </label>
+							  <label class="control-label col-md-0"></label>
+							</div>
+						<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<a href="<?php echo $this->baseUrl();?>/billing/truck/index"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
+									<button type="submit" name="saveclose" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+									
+								</label>
+							</div>
+				
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		addRow();
+		jQuery('#frm').validationEngine('attach', {promptPosition : "centerRight"});
+		
+	});
+</script>
+<script>
+var index5 = 0;
+var option5 = '<?php echo $this->you_driver; ?>';
+
+var baseUrl = '<?php echo BASE_URL; ?>';
+var template = '';
+var value = '';
+function addRow(){
+	index5++;
+	template='<tr id="row_order_'+index5+'">';
+	var inp = '';
+	if(index5 == 1) {
+		template+='<td class="quater-input">&nbsp;</td>';
+	} else {
+		template+='<td class="quater-input"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
+	}
+	template+='<td class="quater-input"><select Onchange="AddLocation('+index5+')" class="form-control select2me"  id="driver_id_'+index5+'"  name="driver_id_'+index5+'" >'+option5+' </select>'+inp+'</td>'; 
+	template+='<td class="quater-input"><input  class="form-control"  id="phone_'+index5+'"  name="phone_'+index5+'" />'+inp+'</td>'; 
+	template+='<td class="quater-input"><input  class="form-control"  id="orther_'+index5+'"  name="orther_'+index5+'" />'+inp+'</td>'; 
+	template+="</tr>";
+	$('#table_order').append(template);
+	if($('#identity').val()!="") {
+		var identity = $('#identity').val();
+		$('#identity').val(identity+','+index5);
+	} else {$('#identity').val(index5);}
+	//$("#orderFrm").validationEngine();
+	
+}
+
+//$('#new_item').click(addRow);
+
+function deleteRecord(index) {
+	var identity = $('#identity').val();
+	var arrays = identity.split(',');
+	for(var i=0;i<arrays.length;i++) {
+		if(arrays[i] == index) arrays.splice(i,1);
+	}
+	var strings = arrays.join(',');
+	$('#identity').val(strings);
+	$("#row_order_"+index).remove();
+
+}
+</script>

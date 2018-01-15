@@ -1,0 +1,40 @@
+<?php 
+	$url_new = $this->url(array('module'=>'product','controller'=>'other','action'=>'add',));
+	$url_edit = $this->url(array('module'=>'product','controller'=>'other','action'=>'edit',));
+	$url_delete = $this->url(array('module'=>'product','controller'=>'other','action'=>'delete',));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->Form;
+	
+	$rs = $this->rs;
+?>
+<title><?php echo $tr->translate("OTHER");?></title>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("OTHER_LIST");?>
+				</div>
+				<a href="<?php echo $url_new;?>" class="btn btn-sm green  pull-right">
+					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
+				</a>
+			</div>
+			
+			<div class="portlet-body form">
+				<form method="post" action="" >
+				<div class="form-group" style="padding-top: 6px;">
+					<label class="control-label col-md-3"><?php echo $formFilter->getElement('adv_search');?></label>
+					<label class="control-label col-md-3"><?php echo $formFilter->getElement('type');?></label>
+					<label class="control-label col-md-3"><?php echo $formFilter->getElement('status_search');?></label>
+					<label class="control-label col-md-3">
+						<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+					</label>
+				</div>
+				</form>
+					<div class="contain_form" style="clear: both;">
+						<?php echo $this->list; ?>
+					</div>
+		   </div>
+		</div>
+	</div>
+</div>

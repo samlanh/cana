@@ -1,0 +1,68 @@
+<?php 					
+	$url_new = $this->url(array('module'=>'sales','controller'=>'quoatation','action'=>'add',));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->formFilter;
+	 $formList = new Application_Form_Frmlist();
+	  $url_copy = $this->url(array('module'=>'sales','controller'=>'makeso','action'=>'add',
+ ));
+?>
+<meta charset="utf-8" />
+<title><?php echo $tr->translate("MAKE_SO");?></title>
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("MAKE_SO");?>
+				</div>
+				<?php echo $formList->showCopyBuntton($url_copy);?>
+				
+			</div>
+			<div class="portlet-body form">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+					<div class="form-group" style="padding-top: 6px;">
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('customer_id');?></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-2">
+							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+						</label>
+					</div>		
+				</form> 
+				<div class="contain_form" style="clear: both;">
+						<?php echo $this->list; ?>
+					</div>
+					
+		   </div>
+		</div>
+	</div>
+</div>
+
+<script>
+function copyRecord(url) {
+	 cu_id = $('#customer_id').val();
+	 branch_id = $('#branch_id').val();
+	 var cbs = $("input:checkbox"); //find all checkboxes
+	 var nbCbs = cbs.size(); //the number of checkboxes
+	 var checked = $("input[type=checkbox]:checked"); //find all checked checkboxes + radio buttons
+	 var nbChecked = checked.size();
+	 if(nbChecked < 1) {
+	  alert("Please select record to copy!");
+	 } else {
+	  /*var answer = confirm("Are you sure you want to delete it?")
+	     if (answer){*/
+	   id = new Array();
+	   var i = 0;
+	   checked.each(function() {
+	    id[i] = $(this).val();
+	    i++;
+	   });
+	   window.location.href = url+'?cu_id='+cu_id+'&&branch_id='+branch_id+'&&id='+id;
+	     /*} else {
+	      alert("Sorrty can't delete it!");
+	     }*/
+	 }
+	}
+</script>

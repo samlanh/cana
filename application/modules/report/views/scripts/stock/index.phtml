@@ -1,0 +1,87 @@
+<?php $tr = Application_Form_FrmLanguages::getCurrentlanguage();
+  $rpt_stock_summary=$this->url(array('module'=>'report','controller'=>'stock','action'=>'rptstocksummary'), null, true);
+  $rpt_stock_in=$this->url(array('module'=>'report','controller'=>'stock','action'=>'rptstockin'), null, true);
+  $rpt_stock_out=$this->url(array('module'=>'report','controller'=>'stock','action'=>'rptstockout'), null, true);
+  $rpt_stock_workingstone = $this->url(array('module'=>'report','controller'=>'stock','action'=>'rptworkingstone'), null, true);
+  ?>
+<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a class="more" href="<?php echo $rpt_stock_summary;?>">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("STOCK_SUMMARY");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_stock_summary;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat red-intense">
+						<a class="more" href="<?php echo $rpt_stock_in;?>">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("STOCK_IN");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_stock_in;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<a class="more" href="<?php echo $rpt_stock_out;?>">
+						<div class="visual">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("STOCK_OUT");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_stock_out;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<a class="more" href="<?php echo $rpt_stock_workingstone;?>">
+						<div class="visual">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+							</div>
+							<div class="desc">
+								 <?php echo $tr->translate("RPT_WORKING_STONE");?>
+							</div>
+						</div>
+						</a>
+						<a class="more" href="<?php echo $rpt_stock_workingstone;?>">
+						<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				
+			</div>

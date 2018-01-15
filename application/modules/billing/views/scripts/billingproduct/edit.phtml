@@ -1,0 +1,212 @@
+<?php 
+	$url_new = $this->url(array('module'=>'billing','controller'=>'billingproduct','action'=>'add',),null,true);
+	$url_cancel = $this->url(array('module'=>'billing','controller'=>'billingproduct','action'=>'index',),null,true);
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->frmAdd;
+?>
+<style>
+       td.quater-input select {
+		    height: 32px;
+		}
+</style>
+<title><?php echo $tr->translate("CATEGORY");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("EDIT_PRODUCT");?>
+			</div>
+			<div class="tools"  >
+				<a  href="<?php echo $url_cancel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" method="post" action="" >
+				<div class="form-body ">
+					<div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('pro_name');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_NO");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('pro_no');?>
+								</div>
+												
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STRENGTH");?> </label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('strength');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("SLUMP");?> </label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('slump');?>
+								</div>
+												
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("DELIVERY_QTY");?>(m3)</label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('delivery_qty');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TOTAL_DELIVERY_QTY");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('total_del_qty');?>
+								</div>
+												
+							</div>
+							
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TRIP_NO");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('trip_no');?>
+								</div>				
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TYPE_CONCRETE");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('type_concrete');?>
+								</div>
+							</div>
+							 
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('remark');?>
+								</div>				
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PRICE");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('price');?>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php //echo $tr->translate("ADDRESS");?></label>
+								<div class="col-md-4">
+									<?php //echo $formFilter->getElement('remark');?>
+								</div>				
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('status');?>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-0">
+						           <input type="hidden" id="identity" name="identity" />
+						        </label>
+						        <label class="control-label col-md-12">
+								<table class="collape" id="table_order" style="width: 100%;">
+									<tr height="25px">
+										<td class="sub-tdheader" width="20px"><?php echo $tr->translate("NUM");?></td>
+										<td class="sub-tdheader" style="width:330px;"><?php echo $tr->translate("LOCATION_NAME");?></td>
+										<td class="sub-tdheader" style="width:330px;" width="20px"><?php echo $tr->translate("CURRENT_STOCK");?></td>
+										<td class="sub-tdheader"><?php echo $tr->translate("QTY_WARNING");?></td>
+									</tr>
+								</table>
+							       <button class="btn btn-primary" type="button" id="new_item" onclick="addRow(1);" name="new_followup" value="New">
+													&nbsp;<img src="<?php echo $this->baseUrl()?>/images/icon/new-row.png" alt="">Add</button> 
+							  </label>
+							  <label class="control-label col-md-0"></label>
+							</div>
+						<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<a href="<?php echo $this->baseUrl();?>/billing/billingproduct/index"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
+									<button type="submit" name="saveclose" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+								</label>
+							</div>
+				
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<?php 
+    if(!empty($this->prlocation)){
+    	echo  "<script type='text/javascript'>
+					$( document ).ready(function() {
+					   
+						oldRow();
+						jQuery('#frm').validationEngine('attach', {promptPosition : 'centerRight'});
+						
+					});
+				</script>";
+    }else{
+    	echo  "<script type='text/javascript'>
+			    	$( document ).ready(function() {
+				    	addRow();
+				    	jQuery('#frm').validationEngine('attach', {promptPosition : 'centerRight'});
+			    	});
+		    	</script>";
+    }
+?>
+
+<script>
+var index5 = 0;
+var option5 = '<?php echo $this->location; ?>';
+
+var baseUrl = '<?php echo BASE_URL; ?>';
+var template = '';
+var value = '';
+function addRow(){
+	index5++;
+	template='<tr id="row_order_'+index5+'">';
+	var inp = '';
+	if(index5 == 1) {
+		template+='<td class="quater-input">&nbsp;</td>';
+	} else {
+		template+='<td class="quater-input"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
+	}
+	template+='<td class="quater-input"><select Onchange="AddLocation('+index5+')" class="form-control select2me"  id="location_id_'+index5+'"  name="location_id_'+index5+'" >'+option5+' </select>'+inp+'</td>'; 
+	template+='<td class="quater-input"><input  class="form-control"  id="curr_qty_'+index5+'"  name="curr_qty_'+index5+'" />'+inp+'</td>'; 
+	template+='<td class="quater-input"><input  class="form-control"  id="qty_warning_'+index5+'"  name="qty_warning_'+index5+'" />'+inp+'</td>'; 
+	template+="</tr>";
+	$('#table_order').append(template);
+	if($('#identity').val()!="") {
+		var identity = $('#identity').val();
+		$('#identity').val(identity+','+index5);
+	} else {$('#identity').val(index5);}
+	//$("#orderFrm").validationEngine();
+	
+}
+
+function oldRow(){
+	<?php $i=0; if(!empty($this->prlocation)) foreach($this->prlocation AS $key=>$rs){$i=$key+1;?>
+	index5++;
+	template='<tr id="row_order_'+index5+'">';
+	var inp = '';
+	if(index5 == 1) {
+		template+='<td class="quater-input">&nbsp;</td>';
+	} else {
+		template+='<td class="quater-input"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
+	}
+	template+='<td class="quater-input"><select Onchange="AddLocation('+index5+')" class="form-control select2me"  id="location_id_'+index5+'"  name="location_id_'+index5+'" >'+option5+' </select>'+inp+'</td>'; 
+	template+='<td class="quater-input"><input  class="form-control"  id="curr_qty_'+index5+'"  name="curr_qty_'+index5+'" value="<?php echo $rs['qty']?>" />'+inp+'</td>'; 
+	template+='<td class="quater-input"><input  class="form-control"  id="qty_warning_'+index5+'"  name="qty_warning_'+index5+'" value="<?php echo $rs['qty_warning']?>"/>'+inp+'</td>'; 
+	template+="</tr>";
+	$('#table_order').append(template);
+	if($('#identity').val()!="") {
+		var identity = $('#identity').val();
+		$('#identity').val(identity+','+index5);
+	} else {$('#identity').val(index5);}
+	//$("#orderFrm").validationEngine();
+     $('#location_id_<?php echo $i?>').val("<?php echo $rs['location_id']?>");
+	<?php }?>
+	
+}
+//$('#new_item').click(addRow);
+
+function deleteRecord(index) {
+	var identity = $('#identity').val();
+	var arrays = identity.split(',');
+	for(var i=0;i<arrays.length;i++) {
+		if(arrays[i] == index) arrays.splice(i,1);
+	}
+	var strings = arrays.join(',');
+	$('#identity').val(strings);
+	$("#row_order_"+index).remove();
+
+}
+</script>

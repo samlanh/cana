@@ -1,0 +1,96 @@
+<?php 					
+	$url_new = $this->url(array('module'=>'purchase','controller'=>'payment','action'=>'add',));
+	$print = $this->url(array('module'=>'purchase','controller'=>'payment','action'=>'print',));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->formFilter;
+	//print_r($this->rs);
+?>
+<meta charset="utf-8" />
+<div class="row">
+	<div class="col-md-12">
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("PAYMENT_LIST");?>
+				</div>
+				<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							   Actions <i class="fa fa-angle-down"></i>
+							 </button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#" onclick="doPrint();">
+											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
+										</a>
+									</li>
+									<li>
+										<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+									</li>
+									
+								</ul>
+					</div>
+			</div>
+			<div class="portlet-body form">
+				<form method="post" action="">
+					<div class="form-group" style="padding-top: 6px;">
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('customer_id');?></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('start_date');?></div></label>
+						<label class="control-label col-md-2"><div class="input-icon right"><i class="fa fa-calendar"></i><?php echo $formFilter->getElement('end_date');?></div></label>
+						<label class="control-label col-md-2">
+							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
+						</label>
+					</div>		
+				</form> 
+					<div class="contain_form" style="clear: both;">
+						<?php //echo $this->list; ?>
+					</div>
+					<div class="contain_form" style="clear: both;">
+					<form name="list"><div style="overflow:scroll; max-height: 450px; overflow-x:hidden;" >
+					<table class="collape tablesorter" id="table" width="100%">
+						<thead>
+							<tr>
+								<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("POL_NUMBER");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("POL_DATE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("INVOICE_NO");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("INVOICE_DATE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("BRANCH");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("SUPPLIER");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("PAYMENT_TYPE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("TOTAL_AMOUNT");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("PAID");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("BALANCE");?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							
+							if(!empty($this->rs)){
+								foreach ($this->rs as $key=>$rs){
+									
+							?>
+								<tr class="normal">
+									<td class="items-no"><?php echo $key+1;?></td>
+									<td class="items"><?php echo $rs["pol_no"];?></td>
+									<td class="items"><?php echo $rs["expense_date"];?></td>
+									<td class="items"><?php echo $rs["invoice_no"];?></td>
+									<td class="items"><?php echo $rs["invoice_date"];?></td>
+									<td class="items"><?php echo $rs["branch_name"];?></td>
+									<td class="items"><?php echo $rs["customer_name"];?></td>
+									<td class="items"><?php echo $rs["payment_name"];?></td>
+									<td class="items"><?php echo $rs["in_total"];?></td>
+									<td class="items"><?php echo $rs["in_paid"];?></td>
+									<td class="items"><?php echo $rs["in_balance"];?></td>
+								</tr>
+							<?php 
+							}}?>
+						</tbody>
+					</table></div></form>
+						<?php //echo $this->list; ?>
+			    </div>
+		   </div>
+		</div>
+	</div>
+</div>

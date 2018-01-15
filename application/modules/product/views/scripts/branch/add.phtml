@@ -1,0 +1,252 @@
+<?php 
+	$url_new = $this->url(array('module'=>'product','controller'=>'branch','action'=>'add',));
+	$url_cancel = $this->url(array('module'=>'product','controller'=>'branch','action'=>'index',));
+	$url_delete = $this->url(array('module'=>'product','controller'=>'branch','action'=>'delete',));
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$formFilter = $this->frmAdd;
+?>
+<title><?php echo $tr->translate("ADD_LOCATION");?></title>
+<div class="col-md-12">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+					<i class="fa fa-globe"></i><?php echo $tr->translate("ADD_LOCATION");?>
+			</div>
+			<div class="tools">
+				<a href="<?php echo $url_cancel;?>"><button type="button" name="calcel" class="btn red"><?php echo $tr->translate("GO_BACK");?></button></a>
+			</div>
+		</div>
+		<div class="portlet-body form">
+			<form class="form-horizontal" id="a" method="post" action="<?php echo $url_new;?>" enctype="multipart/form-data" >
+				<div class="form-body">
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php //echo $tr->translate("BRANCH_NAME");?></label>
+								<div class="col-md-4">
+									<?php //echo $formFilter->getElement('branch_name');?>
+								</div>
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("LOCAT_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('location');?>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("BRANCH_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('branch_name');?>
+								</div>
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("CODE");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('code');?>
+								</div>
+							</div>
+											
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_EN");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('title_en');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_KH");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('title_kh');?>
+								</div>
+								
+							</div>
+							
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("CON_NAME");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('contact');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('prefix');?>
+								</div>
+								
+								
+							</div>
+							
+							<div class="form-group">
+
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PHONE_NUM");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('contact_num');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("EMAIL");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('email');?>
+								</div>
+								
+								
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("Office Phone");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('office_num');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("FAX");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('fax');?>
+								</div>
+								
+								
+							</div>
+							
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("ADD_LOCATION");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('address');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("LOGO");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('logo');?>
+								</div>
+								
+								
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('remark');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('status');?>
+								</div>
+							</div>
+						<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<a href="<?php echo $url_cancel;?>"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
+									<button type="submit" name="save_close" id="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+									<button type="submit" name="save_new" id="save_close" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+									
+								</label>
+						</div>
+					</div>
+					</form>
+				</div>
+		</div>
+	</div>
+	<?php $formFilter = $this->frmbranch; ?>
+	<div id="branchpopup" class="modal fade" tabindex="-1" data-width="1200">
+       <div class="modal-dialog">
+      <div class="modal-content" style="width: 800px;">
+		      <div class="modal-header">   
+				<div class="row">
+				<div class="col-md-12">
+					<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-home"></i><?php echo $tr->translate("បន្ថែមឈ្មោះសាខា");?>
+						</div>
+						<div class="caption pull-right">
+							<a href="<?php echo $url_new;?>" >
+								 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+							</a>
+						</div>
+					</div>
+					<div class="portlet-body form">
+						<form id="frmbranch" name="frmbranch" id="a" class="form-horizontal" enctype="multipart/form-data" method="post">
+						<div class="form-body">
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("NAME");?></label>
+								<div class="col-md-4">
+									<input type="text" name="txtbranch_name" id="txtbranch_name" value="" class="form-control" required="required">
+								</div>
+												
+								<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('prefix');?>
+								</div>
+							</div>
+											
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_EN");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('title_en');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_KH");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('title_kh');?>
+								</div>
+								
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('remark');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("LOGO");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('logo');?>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><?php //echo $tr->translate("REMARK");?></label>
+								<div class="col-md-4">
+									<?php //echo $formFilter->getElement('remark');?>
+								</div>
+								
+								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+								<div class="col-md-4">
+									<?php echo $formFilter->getElement('status');?>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label  class="col-md-12 col-md-offset-4 col-md-8">
+									<button type="button" id="savebranch" name="savebranch" onclick="addNewBranch();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE")?> </button>
+								</label>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+          </div>
+        </div>
+    </div>
+ </div>
+<script>
+<?php $url_add_branch =  $this->url(array('module'=>'product','controller'=>'location','action'=>'addbranch')); ?>
+function addNewBranch(){
+	var brand_name  = $("#txtbranch_name").val();
+	if(brand_name==''){
+		alert("សូមបញ្ចូលឈ្មោះសាខា"); $("#txtbranch_name").focus();return false;}
+	$.ajax({
+		url: "<?php echo $url_add_branch;?>",
+		type: "post",
+		data: $('#frmbranch').serialize(),
+		success: function(data){
+			alert(data);
+			rs = $.parseJSON(data);
+			 $('#location').append($("<option></option>").attr("value",data).attr("selected",true).text(brand_name));                       
+			 $("#location").select2();
+			$('#branchpopup').modal('hide');
+		},
+		error:function(err){
+			alert("faile insert");
+		   
+		}
+	});
+}
+function showBranch(){
+	branch_id = $("#location").val();
+	if(branch_id==-1){
+		$('#branchpopup').modal('show');
+	}
+}
+$(document).ready(function () {
+    
+});
+</script>
