@@ -861,6 +861,54 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 	
 		return $db->fetchAll($sql.$where.$order);
 	}
+	
+	function getPettyCashDetail($search){
+		$db=$this->getAdapter();
+		$sql="SELECT 
+				  p.`number_request` ,
+				  p.`re_code`,
+				  p.`date_from_work_space`,
+				  p.`date_request`,
+				  p.`remark` AS p_remark,
+				  (SELECT pl.name FROM `tb_plan` AS pl WHERE pl.id=p.`plan_id`) AS plan,
+				  (SELECT pl.name FROM `tb_sublocation` AS pl WHERE pl.id=p.`branch_id` LIMIT 1) AS branch,
+				  (SELECT pd.item_name FROM `tb_product` AS pd WHERE pd.id=pci.`pro_id` LIMIT 1) AS item_name,
+				  (SELECT pd.item_code FROM `tb_product` AS pd WHERE pd.id=pci.`pro_id` LIMIT 1) AS item_code,
+				  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=(SELECT pd.measure_id FROM `tb_product` AS pd WHERE pd.id=pci.`pro_id` LIMIT 1) LIMIT 1) AS measure,
+				  pci.`price`,
+				  pci.`qty`,
+				  pci.`total`,
+				  pci.`remark`,
+				  pci.`date_in`,
+				  (SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = P.user_id LIMIT 1 ) AS user_name
+				FROM
+				  `tb_purchase_request_party_cash` AS p,
+				  `tb_purchase_request_party_cash_item` AS pci 
+				  WHERE p.id=pci.`pur_id`";
+		//$where = "";
+		$from_date =(empty($search['start_date']))? '1': " p.date_request >= '".$search['start_date']."'";
+		$to_date = (empty($search['end_date']))? '1': " p.date_request <= '".$search['end_date']."'";
+		$where = " AND".$from_date." AND ".$to_date;
+		if(!empty($search['text_search'])){
+			$s_where = array();
+			$s_search = addslashes(trim($search['text_search']));
+			$s_search = str_replace(' ', '', $s_search);
+			$s_where[] = "REPLACE(p.number_request,' ','')  LIKE '%{$s_search}%'";
+			$s_where[] = "REPLACE(p.re_code,' ','')  LIKE '%{$s_search}%'";
+			$s_where[] = "REPLACE(pci.price,' ','')  LIKE '%{$s_search}%'";
+			$s_where[] = "REPLACE(pci.total,' ','')  LIKE '%{$s_search}%'";
+			$s_where[] = "REPLACE(pci.remark,' ','')  LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		if($search['branch']>0){
+			$where .= " AND p.`branch_id` = ".$search['branch'];
+		}
+		$dbg = new Application_Model_DbTable_DbGlobal();
+		$where.=$dbg->getAccessPermission();
+		$order=" ORDER BY p.id DESC ";
+		//echo $sql.$where;
+		return $db->fetchAll($sql.$where.$order);
+	}
 }
 
 ?>

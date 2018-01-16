@@ -25,7 +25,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm a" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_CODE");?> <span class="required">
@@ -177,6 +177,28 @@
 
 
 <script>
+$('#frm').submit(function() {
+	plan=$("#plan").val();
+	if(plan==0 || plan=='' || plan==-1){
+		alert("សូមជ្រើសរើសគម្រោង!");
+		$('#plan').select2('open');
+		return false;	
+	}
+	identity =$("#identity").val();
+	if(identity=='' || identity==-1){
+		alert("ទិន្នន័យមិនអាចរក្សាទុកបានទេ ។សូមត្រួតពិនិត្យមើលម្តងទៀត");
+		$('#add_item').select2('open');
+		return false;
+	}
+	var r = confirm("\tសូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\t\n \tតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?\t");
+	if (r == true) {
+	    return true;
+	} else {
+	   return false;
+	    
+	}
+	
+});	
 
 itemss = <?php echo Zend_Json::encode($this->product)?>;
 $( document ).ready(function() {

@@ -83,7 +83,7 @@ class Purchase_PartycashController extends Zend_Controller_Action
 				}elseif(isset($data["save_print"])){
 					Application_Form_FrmMessage::redirectUrl("/purchase/partycash/purproductdetail?id=".$id);
 				}else{
-					Application_Form_FrmMessage::redirectUrl("/purchase/partycash/add");
+					Application_Form_FrmMessage::redirectUrl("/purchase/partycash");
 				}
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
