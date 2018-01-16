@@ -385,19 +385,15 @@ function netTotal() {//use
 	discount=0;
 	var rowId = $('#identity').val();
 	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		//subtotal += Number($('#subtotal'+rowIDArray[n]).val());
-		//paid +=Number($('#paid_amount'+rowIDArray[n]).val());
-		//discount +=Number($('#discount'+rowIDArray[n]).val());
+	for(var n = 0; n < rowIDArray.length; n++) {	
 		subtotal += Number($('#balance_after'+rowIDArray[n]).val());
 		total += Number($('#total'+rowIDArray[n]).val());
 		total_vat += Number($('#total_vat'+rowIDArray[n]).val());
 	}
-	//var alltotal = Number(subtotal - discount).toFixed(2);
-	$('#all_total').val(subtotal.toFixed(2));
-	$('#total').val(total.toFixed(2));
-	$('#total_vat').val(total_vat.toFixed(2));
-	$('#paid').val(subtotal.toFixed(2));
+	$('#all_total').val(subtotal.toFixed(3));
+	$('#total').val(total.toFixed(3));
+	$('#total_vat').val(total_vat.toFixed(3));
+	$('#paid').val(subtotal.toFixed(3));
 	doRemain();
 }
 function doRemain() {

@@ -197,7 +197,7 @@ $db = new Purchase_Model_DbTable_DbPriceCompare();
 								<td>&nbsp;&nbsp;<span></span><span style="float: right;"><?php echo number_format($rs["qty_receive"],2);?></span>&nbsp;&nbsp;</td>
 								<td>&nbsp;&nbsp;<span></span><span style="float: right;"><?php echo $rs["measure"];?>&nbsp;</span>&nbsp;&nbsp;</td>
 								<td>&nbsp;&nbsp;<span>$</span><span style="float: right;"><?php echo number_format($rs["price"],2);?></span>&nbsp;&nbsp;</td>
-								<td>&nbsp;&nbsp;<span>$</span><span style="float: right;"><?php echo number_format($rs["sub_total_after"],4);?></span>&nbsp;&nbsp;</td>
+								<td>&nbsp;&nbsp;<span>$</span><span style="float: right;"><?php echo number_format($rs["sub_total_after"],2);?></span>&nbsp;&nbsp;</td>
 							</tr>
 						<?php }
 							//$total_vat = ($total*$this->product[0]["vat"])/100;
