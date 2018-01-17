@@ -700,4 +700,32 @@ class report_ProchesController extends Zend_Controller_Action
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
 	}
+	
+	public function rptPettycashPurchaseDetailAction()
+	{
+		if($this->getRequest()->isPost()){
+			$search = $this->getRequest()->getPost();
+			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+		}
+		else{
+			$search =array(
+					'text_search'	=>'',
+					'branch'		=>0,
+					'start_date'	=>date("Y-m-01"),
+					'end_date'		=>date("Y-m-d"),
+			);
+		}
+		$db = new report_Model_DbStock();
+	
+		$rows = $db->getAllPurchasePettyCash($search);
+		$this->view->rs = $rows;
+	
+		$formFilter = new Application_Form_Frmsearch();
+		$this->view->formFilter = $formFilter;
+		Application_Model_Decorator::removeAllDecorator($formFilter);
+		$session_user=new Zend_Session_Namespace('auth');
+		$db_globle = new Application_Model_DbTable_DbGlobal();
+		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
+	}
 }

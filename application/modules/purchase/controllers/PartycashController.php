@@ -103,6 +103,7 @@ class Purchase_PartycashController extends Zend_Controller_Action
 		
 		$this->view->product = $items->getAllProductPettyCash();
 	}
+	
 	public function makepurchaseAction(){
 		$id = $this->getRequest()->getParam('id');
 		$db = new Purchase_Model_DbTable_DbPartyCash();
@@ -136,6 +137,7 @@ class Purchase_PartycashController extends Zend_Controller_Action
 		$this->view->product = $items->getAllProduct();
 			
 	}
+	
 	public function editpurchaseAction(){//Edit ទូរទាត់
 		$id = $this->getRequest()->getParam('id');
 		$db = new Purchase_Model_DbTable_DbPartyCash();
