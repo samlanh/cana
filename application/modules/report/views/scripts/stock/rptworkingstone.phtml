@@ -74,6 +74,13 @@ $db = new report_Model_DbStock();
 						font-weight: normal !important;}
 				ul.pur_info li strong{font-weight: bold;}
 			   .hover:hover{background: #ccc;}
+				
+				table { page-break-inside:auto }
+				tr{ page-break-inside:avoid; page-break-after:auto; }
+				#header {
+				  display: table-header-group;
+				  page-break-inside:avoid; page-break-after:auto;
+				}
 		</style>
 		
 		<table style="font-family: 'Khmer OS Content'; width:100%;">
@@ -118,23 +125,18 @@ $db = new report_Model_DbStock();
 		            <table  class="collape tablesorter" style="border-collapse:collapse;border:0px solid #000; font-size:12px;" width="100%" cellspacing="0" border="1">
 		                 <tbody>
 						  <?php $num=1; 
-						   
 						   $totl_su_qty=0;
 						  ?>
 						 <tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:none;">
-						   <td align="center" style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						   <td style="white-space: nowrap;text-align:center;border: none;"></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;"></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;" colspan="4"></td>
 						   <td colspan="5" style="white-space: nowrap;text-align:center;">Stone</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;"></td>
-						   <td colspan="5" style="white-space: nowrap;text-align:center;"><?php if(!empty($this->stockin[0])){echo $this->stockin[0]["branch_name"];}else{}?></td>
-						  
-						  <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php //echo  $total_edning_qty;?></td>
+						   <td colspan="5" style="white-space: nowrap;text-align:center;"><?php if(!empty($this->stockin[0])){echo $this->stockin[0]["branch_name"];}else{}?></td>						  
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php //echo  $total_edning_qty;?></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<span style="float:right"><?php //echo $total_amount;?></span></td>
 						</tr>
-						<tr bgcolor="#ccc" class="style tdborder" align="center" style="font-weight:bold; line-height: 35px;border:1px solid #000; font-size:12px; padding:10px 0px; white-space: nowrap; height:35px;">
-		                    
+						<thead>
+						<tr bgcolor="#ccc" class="style tdborder" align="center" style="font-weight:bold; line-height: 35px;border:1px solid #000 !impotant; font-size:12px; padding:10px 0px; white-space: nowrap; height:35px;">		                    
 							<td class="tdheader">&nbsp;&nbsp;&nbsp;<?php echo $tr->translate("DATE");?>&nbsp;&nbsp;&nbsp;</td>
 							<td class="tdheader">&nbsp;&nbsp;&nbsp;<?php echo $tr->translate("NUM");?>&nbsp;&nbsp;&nbsp;</td>
 							<td class="tdheader">&nbsp;&nbsp;&nbsp;<?php echo $tr->translate("ITEM_NAME");?>&nbsp;&nbsp;&nbsp;</td>
@@ -158,18 +160,18 @@ $db = new report_Model_DbStock();
 							<td class="tdheader">&nbsp;&nbsp;&nbsp;<?php echo $tr->translate("DIFFER_QTY");?>&nbsp;&nbsp;&nbsp;</td>
 							<td class="tdheader">&nbsp;&nbsp;&nbsp;<?php echo $tr->translate("DIFFER_AMOUNT");?>&nbsp;&nbsp;&nbsp;</td>
 							<td class="tdheader">&nbsp;&nbsp;&nbsp;<?php echo $tr->translate("REMARK");?>&nbsp;&nbsp;&nbsp;</td>
-		                </tr> 
+		                </tr>
+		                </thead> 
 		                <?php 
 							$totl_com_amount=0;
 							$totl_su_amount =0;
 							$totl_com_qty=0;
 							if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){
-								$totl_su_qty = $totl_su_qty+number_format($rs["su_scale_qty"]/$rs["convertor_measure"],2);
-								//$totl_com_qty = $totl_com_qty+number_format($rs["com_scale_qty"]/$rs["convertor_measure"],2);
-								$totl_com_qty = $totl_com_qty+number_format($rs["qty_receive"],2);
+								@$totl_su_qty = @$totl_su_qty+(@$rs["su_scale_qty"]/@$rs["convertor_measure"]);
+								$totl_com_qty = @$totl_com_qty+(@$rs["qty_receive"]);
 								
-								$totl_com_amount = $totl_com_amount+number_format(($rs["qty_receive"]*$rs["price"]),2);
-								$totl_su_amount = $totl_su_amount+number_format(($rs["su_scale_qty"]/$rs["convertor_measure"]*$rs["price"]),2);
+								$totl_com_amount = @$totl_com_amount+(@$rs["qty_receive"]*@$rs["price"]);
+								@$totl_su_amount = @$totl_su_amount+(@$rs["su_scale_qty"]/@$rs["convertor_measure"]*@$rs["price"]);
 								
 						?>
 						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
@@ -180,12 +182,12 @@ $db = new report_Model_DbStock();
 						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["supplier"];?>&nbsp;&nbsp;&nbsp;</td>
 						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["plat_no"];?>&nbsp;&nbsp;&nbsp;</td>
 						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["su_scale_refer"];?>&nbsp;&nbsp;&nbsp;</td>
-						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo number_format($rs["su_scale_qty"]/$rs["convertor_measure"],2);?><span style="float:right;">m<sup>3</sup></span>&nbsp;&nbsp;&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo @number_format($rs["su_scale_qty"]/$rs["convertor_measure"],2);?><span style="float:right;">m<sup>3</sup></span>&nbsp;&nbsp;&nbsp;</td>
 						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo $rs["price"];?></span>&nbsp;&nbsp;&nbsp;</td>
-						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo number_format(($rs["su_scale_qty"]/$rs["convertor_measure"])*$rs["price"],2);?></span>&nbsp;&nbsp;&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo @number_format(($rs["su_scale_qty"]/$rs["convertor_measure"])*$rs["price"],2);?></span>&nbsp;&nbsp;&nbsp;</td>
 						   <!--<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php //echo $rs["su_scale_qty"];?>&nbsp;&nbsp;&nbsp;</td>-->
-						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo number_format($rs["com_scale_qty"],2);?><span style="float:right;">kg</span>&nbsp;&nbsp;&nbsp;</td>
-							<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo number_format($rs["qty_receive"]);//echo number_format($rs["com_scale_qty"]/$rs["convertor_measure"],2);?><span style="float:right;">m<sup>3</sup></span>&nbsp;&nbsp;&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo @number_format($rs["com_scale_qty"],2);?><span style="float:right;">kg</span>&nbsp;&nbsp;&nbsp;</td>
+							<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo @number_format($rs["qty_receive"]);//echo number_format($rs["com_scale_qty"]/$rs["convertor_measure"],2);?><span style="float:right;">m<sup>3</sup></span>&nbsp;&nbsp;&nbsp;</td>
 						   <td style="white-space: nowrap;"><?php echo $rs["com_scale_refer"];?></td>
 						   <td style="white-space: nowrap !important;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo $rs["price"];?>&nbsp;&nbsp;&nbsp;</span></td>
 						    <td style="white-space: nowrap !important;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo number_format(($rs["qty_receive"])*$rs["price"],2);?></span>&nbsp;&nbsp;&nbsp;</td>
@@ -193,10 +195,10 @@ $db = new report_Model_DbStock();
 							 <!--<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["date_in"];?>&nbsp;&nbsp;&nbsp;</td>
 							<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["supplier"];?>&nbsp;&nbsp;&nbsp;</td>
 						    <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["com_scale_qty"];?><span style="float:right;">kg</span>&nbsp;&nbsp;&nbsp;</td>
-							 <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo number_format(($rs["qty_receive"])*$rs["price"],2);?></span>&nbsp;&nbsp;&nbsp;</td>-->
-							  <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo number_format(($rs["qty_receive"])-($rs["su_scale_qty"]/$rs["convertor_measure"]),2);?><span style="float:right;">m<sup>3</sup></span>&nbsp;&nbsp;&nbsp;</td>
-							   <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo number_format((($rs["qty_receive"])*$rs["price"])-(($rs["su_scale_qty"]/$rs["convertor_measure"])*$rs["price"]),2);?></span>&nbsp;&nbsp;&nbsp;</td>
-							 <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["remark"];?>&nbsp;&nbsp;&nbsp;</td>
+							<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo number_format(($rs["qty_receive"])*$rs["price"],2);?></span>&nbsp;&nbsp;&nbsp;</td>-->
+							<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo @number_format(($rs["qty_receive"])-($rs["su_scale_qty"]/$rs["convertor_measure"]),2);?><span style="float:right;">m<sup>3</sup></span>&nbsp;&nbsp;&nbsp;</td>
+							<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;$<span style="float:right;"><?php echo @number_format((($rs["qty_receive"])*$rs["price"])-(($rs["su_scale_qty"]/$rs["convertor_measure"])*$rs["price"]),2);?></span>&nbsp;&nbsp;&nbsp;</td>
+							<td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;<?php echo $rs["remark"];?>&nbsp;&nbsp;&nbsp;</td>
 						</tr>
 						<?php 
 							 

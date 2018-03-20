@@ -1,6 +1,5 @@
 <?php 
-$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-//print_r($this->title_reprot);
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title><?php echo $tr->translate("PRINT_PARTY_CASH_REQUEST");?></title>
 <div class="row">
@@ -192,25 +191,22 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 							</td>
 						   </tr>
 						   <tr style="font-size: 12px;">
-						        <td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'">អនុម័ត<br /> អគ្គនាយក</td>
+						        <td style="width:30%;text-align:center; font-family:'Khmer OS Muol Light'">អនុម័ត<br /> អគ្គនាយករង</td>
 						        <td></td>
-								 <td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("CHECKAND_VERIFY");?><br /><?php echo $tr->translate("ADMIN_MANAGER");?></td>
+						        <td style="width:30%;text-align:center; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("CHECKAND_APROVE");?><br /><?php echo $tr->translate("BUYER_MANAGER");?></td>
 						        <td></td>
-						        <td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("CHECKAND_APROVE");?><br /><?php echo $tr->translate("BUYER_MANAGER");?></td>
-						        <td></td>
-						        <td style="width:20%;text-align:center; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("REQUEST_BY");?><br /><?php echo $tr->translate("PURCHASING");?></td>
+						        <td style="width:30%;text-align:center; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("REQUEST_BY");?><br /><?php echo $tr->translate("PURCHASING");?></td>
 						   </tr>
 						    <tr style="font-size: 12px; height: 75px;">
 						        <td valign="bottom" style="width:20%;text-align:center;  font-family:'Khmer OS Muol Light'; white-space: nowrap; border-bottom:1px solid #000;"></td>
 						        <td></td>
-								<td valign="bottom" style="width:20%;text-align:center;  font-family:'Khmer OS Muol Light'; white-space: nowrap;border-bottom:1px solid #000;"></td>
-						        <td></td>
+								
 						        <td valign="bottom" style="width:20%;text-align:center; font-family:'Khmer OS Muol Light';white-space: nowrap;border-bottom:1px solid #000;"></td>
 						        <td></td>
 						        <td valign="bottom" style="width:20%;text-align:center;font-family:'Khmer OS Muol Light';white-space: nowrap;border-bottom:1px solid #000;"></td>
 						   </tr>
 						   <tr>
-								<td style="text-align:center;font-family:'Khmer OS Muol Light';">ឃុត  មករា</td>
+								<td style="text-align:center;font-family:'Khmer OS Muol Light';">សេង ដាលីន</td>
 						   </tr>
 						</tbody>
 					</table>	
@@ -233,54 +229,4 @@ function doPrint() {
     window.print();
     document.body.innerHTML = originalContents;
 }
-
-/*var currentTime = new Date();
-var month = currentTime.getMonth() + 1;
-var day = currentTime.getDate();
-var year = currentTime.getFullYear();
-	var date =(year + "-" + month + "-" + day );
-
-var start_date = $('#start_date').val();
-var end_date =$('#end_date').val();
-
-if(end_date!="" | start_date!=""){
-    start_date = $('#start_date').val();
-	end_date =$('#end_date').val();
-	
-}else{
-	start_date = $('#start_date').val(date);
-	end_date = $('#end_date').val(date);
-}*/
-
-<?php //$url_item_filter =  $this->url(array('module'=>'report','controller'=>'index','action'=>'get-item-filter')); ?>
-/*function getProductFilter(){
-	var location_id=$("#LocationId").val();
-	var branch_id = $('#branch_id').val();
-	var category_id = $('#category_id').val();
-		$.ajax({
-			url:"<?php //echo $url_item_filter;?>",
-			type:"post",
-			data:{'category_id':category_id,'branch_id':branch_id,'location_id':location_id},
-			success: function(data){
-				items = $.parseJSON(data);
-				if(items){
-					 $('#item').empty();
-					 $('#item').val('').trigger("liszt:updated");
-					 $('#item').append($("<option></option>").attr("value","").text("Please Select Item"));
-					 for (var index = 1 ; index <= items.length; index++) {
-							$('#item').append($("<option></option>").attr("value",items[index-1]['pro_id']).text(items[index-1]['item_code'] + items[index-1]['item_name'])); 
-							$("select#item").find("option#items[index-1]['pro_id']").attr("selected", true);
-					 }           
-					$('#item').val('').trigger("liszt:updated");
-				}else{
-					 $('#item').empty();
-					 $('#item').val('').trigger("liszt:updated");
-						 $('#item').append($("<option></option>").attr("value","").text("No Items Result!"));
-						 $('#item').val('').trigger("liszt:updated");
-				}
-			},
-			error:function(){
-			}
-		});
-	}*/
 </script>

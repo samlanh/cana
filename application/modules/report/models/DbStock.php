@@ -67,7 +67,11 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			FROM
 			  `tb_product` AS p,
 			  `tb_prolocation` AS pl
-			WHERE p.id=pl.`pro_id` AND pl.`location_id`=$loc AND p.`status`=1";
+			WHERE 
+			p.id=pl.`pro_id` 
+			AND p.is_meterail=0
+			AND pl.`location_id`=$loc 
+			AND p.`status`=1";
 		$where='';
 // 		if($search['category']>0){
 // 		$where .= " AND p.`cate_id` = ".$search['category'];
@@ -103,7 +107,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  AND poi.`pro_id` =$id";
 		return $db->fetchRow($sql);
 	}
-	function getReceiveByPro($id,$data){
+	function getReceiveByPro($pro_id,$data){
 		$db= $this->getAdapter();
 		$user_info = $this->GetuserInfo();
 		$loc = $user_info["branch_id"];
@@ -117,7 +121,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			  `tb_recieve_order` AS r,
 			  `tb_recieve_order_item` AS rt 
 			WHERE r.`order_id` = rt.`recieve_id` 
-			  AND rt.`pro_id` =$id ";
+			  AND rt.`pro_id` =$pro_id ";
 			  $groupby = "  GROUP BY rt.`pro_id`";
 		return $db->fetchRow($sql.$where.$groupby);
 	}
@@ -199,7 +203,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				FROM
 				  `v_product` AS p,
 				  `v_receive_purchase` AS r 
-				WHERE p.`id` = r.`pro_id` ";
+				WHERE 
+				p.is_meterail=0
+				AND p.`id` = r.`pro_id` ";
 		$from_date =date("Y-m-d",strtotime($search['start_date']));
 		$to_date = date("Y-m-d",strtotime($search['end_date']));
 		
@@ -262,7 +268,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				FROM
 				  `v_product` AS p,
 				  `v_sale_order` AS s 
-				WHERE p.id = s.`pro_id` ";
+				WHERE 
+				p.is_materail=0
+				AND p.id = s.`pro_id` ";
 // 		$from_date =$search['start_date'];
 // 		$to_date = $search['end_date'];
 // 		$where = " AND s.`date_sold` BETWEEN "."'".date("Y-m-d",strtotime($from_date))."'"." AND "."'".date("Y-m-d",strtotime($to_date))."'";
@@ -630,7 +638,10 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				FROM
 				  `v_product` AS p,
 				  `v_receive_purchase` AS r 
-				  WHERE p.id=r.`pro_id` AND p.`is_meterail`=1 AND r.`date_in` BETWEEN '$start_date' AND '$end_date'";
+				  WHERE 
+				  	p.id=r.`pro_id` 
+				  	AND p.`is_meterail`=1 
+					AND r.`date_in` BETWEEN '$start_date' AND '$end_date'";
 			$where ='';
 			if(!empty($search['text_search'])){
 				$s_where = array();
