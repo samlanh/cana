@@ -25,7 +25,7 @@ $db = new report_Model_DbStock();
 										</a>
 									</li>
 									<li>
-										<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+										<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
 									</li>
 									
 								</ul>
@@ -81,6 +81,11 @@ $db = new report_Model_DbStock();
 				  display: table-header-group;
 				  page-break-inside:avoid; page-break-after:auto;
 				}
+				@media print {
+				   a[href]:after {
+				      content: none !important;
+				   }
+				}
 		</style>
 		
 		<table style="font-family: 'Khmer OS Content'; width:100%;">
@@ -121,7 +126,7 @@ $db = new report_Model_DbStock();
 		<div class="table-responsive">
 		<table>
 		    <tr>
-		    	<td id="exportExcel">
+		    	<td class="table2excel" >
 		            <table  class="collape tablesorter" style="border-collapse:collapse;border:0px solid #000; font-size:12px;" width="100%" cellspacing="0" border="1">
 		                 <tbody>
 						  <?php $num=1; 

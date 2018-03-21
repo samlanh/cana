@@ -38,6 +38,11 @@ $formFilter = $this->formFilter;
 				</form> 
 			<div id="divPrint">	
 			<style>
+@media print {
+   a[href]:after {
+      content: none !important;
+   }
+}
 				.style{
 					line-height: 20px;font-size: 9px !important;
 					font-family: 'Khmer OS Battambang';

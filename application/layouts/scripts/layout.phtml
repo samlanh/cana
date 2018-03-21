@@ -316,6 +316,31 @@ function isNumberKey(evt){
 			lookup: currencies,
 		  });
 	}
+
+	function exports() {
+		title=document.title;
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+
+		var yyyy = today.getFullYear();
+		if(dd<10){
+			dd='0'+dd;
+		} 
+		if(mm<10){
+			mm='0'+mm;
+		} 
+		var today = dd+'-'+mm+'-'+yyyy;
+			$(".table2excel").table2excel({
+				exclude: ".noExl",
+				name: "Excel Document Name",
+				filename: title+"-"+today,
+				fileext: ".xls",
+				exclude_img: true,
+				exclude_links: true,
+				exclude_inputs: true
+			});
+		}
 </script>
 <!-- END PAGE LEVEL SCRIPTS -->
 

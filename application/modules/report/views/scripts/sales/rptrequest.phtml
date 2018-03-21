@@ -8,6 +8,9 @@ function secondsToTime($seconds) {
 	return $dtF->diff($dtT)->format('%a');
 }
 ?>
+
+<style>@media print{a[href]:after{content:none}}</style>
+
 <title><?php echo $tr->translate("RPT_SALE_REUEST_LIST");?></title>
 <div class="row">
 	<div class="col-md-12">
@@ -25,6 +28,9 @@ function secondsToTime($seconds) {
 									<a href="#" onclick="doPrint();">
 										<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
 									</a>
+								</li>
+								<li>
+									<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
 								</li>
 							</ul>
 						</div>
@@ -44,6 +50,11 @@ function secondsToTime($seconds) {
 				</form>  
 			<div id="divPrint">	
 			<style>
+@media print {
+   a[href]:after {
+      content: none !important;
+   }
+}
 				.style{
 					line-height: 20px;font-size: 9px !important;
 					font-family: 'Khmer OS Battambang';
@@ -66,6 +77,12 @@ function secondsToTime($seconds) {
 						font-weight: normal !important;}
 				ul.pur_info li strong{font-weight: bold;}
 			   .hover:hover{background: #ccc;}
+				
+				@media print {
+				   a[href]:after {
+				      content: none !important;
+				   }
+				}
 			</style>
 			<table style="font-family: 'Khmer OS Content'; width:100%;">
 				<tbody>
@@ -92,6 +109,7 @@ function secondsToTime($seconds) {
 					</td>
 				</tr>
 				<tr>
+				<td class="table2excel" >
 					<table border="1"  class="collape tablesorter" style="border-collapse:collapse;border:1px solid #000; font-family: 'Khmer OS Battambang';" width="100%" cellspacing="0">
 						<thead>
 							<tr>
@@ -115,11 +133,12 @@ function secondsToTime($seconds) {
 							if(!empty($this->rs)){
 								foreach ($this->rs as $key=>$rs){
 									
+									
 							?>
 								<tr class="normal">
 									<td class="items-no"><?php echo $key+1;?></td>
-									<td class="items"><a href="<?php echo $this->baseUrl();?>/sales/index/editrequest/id/<?php echo $rs["id"]?>"><?php echo $rs["location"];?></a></td>
-									<td class="items"><a href="<?php echo $this->baseUrl();?>/sales/index/editrequest/id/<?php echo $rs["id"]?>"><?php echo $rs["sale_no"];?></a></td>
+									<td class="items"><a   style="display: none;text-decoration: none;" href="<?php echo $this->baseUrl();?>/sales/index/editrequest/id/<?php echo $rs["id"]?>"><?php echo $rs["location"];?></a></td>
+									<td class="items"><a style="color: #000 !important;"  href="<?php echo $this->baseUrl();?>/sales/index/editrequest/id/<?php echo $rs["id"]?>"><?php echo $rs["sale_no"];?></a></td>
 									<td class="items"><a href="<?php echo $this->baseUrl();?>/sales/index/editrequest/id/<?php echo $rs["id"]?>"><?php echo $rs["request_name"];?></a></td>
 									<td class="items"><?php echo $rs["position"];?></td>
 									<td class="items"><?php echo $rs["plan"];?></td>
@@ -157,6 +176,7 @@ function secondsToTime($seconds) {
 
 						</tbody>
 					</table>
+					</td>
 				</tr>
 			</tbody>
 		</table>	

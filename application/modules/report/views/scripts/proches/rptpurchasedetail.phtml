@@ -24,6 +24,10 @@ $brach_name =  $this->branch;
 										<!--<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>-->
 									</li>
 									
+									<li>
+										<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+									</li>
+									
 								</ul>
 					</div>
 			</div>
@@ -44,6 +48,11 @@ $brach_name =  $this->branch;
 	<div style=" min-height:28cm; margin:25 0 0 0; padding:0px 0.2cm">
 	<div id="divPrint" style="width: 100%;">
 	<style>
+@media print {
+   a[href]:after {
+      content: none !important;
+   }
+}
 		.style{
 					line-height: 20px;font-size: 9px !important;
 					font-family: 'Khmer OS Battambang';
@@ -92,7 +101,7 @@ $brach_name =  $this->branch;
 		        </td>
 		    </tr>
 		    <tr>
-		    	<td id="exportExcel">
+		    	<td  class="table2excel" id="exportExcel">
 		            <table class="collape tablesorter" id="table" style="border-collapse:collapse;border:1px solid #000;" width="100%" cellspacing="0" border="1">
 		                 <tbody>
 						<tr>

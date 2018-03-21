@@ -21,6 +21,9 @@ $formFilter = $this->formFilter;
 										<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
 									</a>
 								</li>
+								<li>
+									<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+								</li>
 							</ul>
 						</div>
 			</div>
@@ -38,6 +41,11 @@ $formFilter = $this->formFilter;
 				</form>
 			<div id="divPrint">	
 			<style>
+@media print {
+   a[href]:after {
+      content: none !important;
+   }
+}
 				.style{
 					line-height: 20px;font-size: 9px !important;
 					font-family: 'Khmer OS Battambang';
@@ -83,6 +91,7 @@ $formFilter = $this->formFilter;
 					</td>
 				</tr>
 				<tr>
+				<td class="table2excel" >
 					<table  border="1"  class="collape tablesorter" style="border-collapse:collapse;border:1px solid #000; font-family: 'Khmer OS Battambang';" width="100%" cellspacing="0">
 						<thead>
 							<tr>
@@ -137,6 +146,7 @@ $formFilter = $this->formFilter;
 
 						</tbody>
 					</table>
+					</td>
 				</tr>
 			</tbody>
 		</table>	
