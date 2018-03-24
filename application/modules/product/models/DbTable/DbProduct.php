@@ -211,6 +211,7 @@ $db->getProfiler()->setEnabled(false);
   	}
   	$location = $db_globle->getAccessPermission('pl.`location_id`');
   	$group_by = " GROUP BY p.id ";
+  	//echo $sql.$where.$location.$group_by;
   	return $db->fetchAll($sql.$where.$location.$group_by);
   	
   }

@@ -18,12 +18,14 @@ class Purchase_MrcheckController extends Zend_Controller_Action
 				$search = $this->getRequest()->getPost();
 				$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
 				$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+				$this->view->search=$search;
 		}
 		else{
 			$search =array(
 					'text_search'		=>	'',
 					'start_date'		=>	date("Y-m-01"),
 					'branch'			=>	'',
+					'plan'				=>'',
 					'end_date'			=>	date("Y-m-d"),
 					'po_pedding'	=>	1,
 					);

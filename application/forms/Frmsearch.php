@@ -131,6 +131,41 @@ class Application_Form_Frmsearch extends Zend_Form
 		$po_invoice_status->setMultiOptions($opt_in_stat);
 		$po_invoice_status->setValue($request->getParam('po_invoice_status'));
 		$this->addElement($po_invoice_status);
+		
+		$db_re = new Sales_Model_DbTable_DbRequest();
+		$row = $db_re->getPlan();
+		$option = array(''=>$tr->translate("SELECT_PLAN"));
+		if(!empty($row)){
+			foreach($row as $rs){
+				$option[$rs["id"]] = $rs["name"];
+			}
+		}
+		
+		$request=Zend_Controller_Front::getInstance()->getRequest();
+		$plan=new Zend_Form_Element_Select('plan');
+		$nameValue = $request->getParam('plan');
+		$plan ->setAttribs(array(
+				'class' => 'validate[required] form-control select2me',
+				//'onChange'=>'addPlanAddr()'
+		));
+		$plan->setMultiOptions($option);
+		$plan->setValue($nameValue);
+		$this->addElement($plan);
+		
+		$sql = "SELECT pl.id,pl.`name` FROM `tb_sublocation` AS pl WHERE 1";
+		$row_b = $db->getGlobalDb($sql);
+		$opt_b = array(''=>$tr->translate('SELECT_BRANCH'));
+		if(!empty($row_b)){
+			foreach($row_b as $rs){
+				$opt_b[$rs["id"]] = $rs["name"];
+			}
+		}
+		$branch = new Zend_Form_Element_Select('branch');
+		$branch->setAttribs(array('class'=>'validate[required] form-control select2me','readOnly'=>'readOnly','onChange'=>'getRequestCode()'));
+		$branch->setMultiOptions($opt_b);
+		$plan->setValue($request->getParam('branch'));
+		$this->addElement($branch);
+		
 	}
 	
 }

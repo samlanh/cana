@@ -162,6 +162,9 @@ class Purchase_Model_DbTable_DbMakePurchase extends Zend_Db_Table_Abstract
 		if($search['branch']>0){
 			$where .= " AND p.branch_id =".$search['branch'];
 		}
+		if($search['plan']>0){
+			$where .= " AND p.`plan_id` =".$search['plan'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY s.`is_approve` ASC , id DESC ";

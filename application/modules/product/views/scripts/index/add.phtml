@@ -846,7 +846,9 @@ function isConvertor(){
 function getProductPrefix(){
 	//alert(1);
 				id=$("#category").val();
-				
+				if(id==""){
+					return false;
+				}
 				$.ajax({
 						url:"<?php echo $url_code;?>",
 						type:"post",

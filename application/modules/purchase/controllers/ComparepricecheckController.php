@@ -18,12 +18,14 @@ class Purchase_ComparepricecheckController extends Zend_Controller_Action
 				$search = $this->getRequest()->getPost();
 				$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
 				$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+				$this->view->search=$search;
 		}
 		else{
 			$search =array(
 					'text_search'		=>	'',
 					'start_date'		=>	date("Y-m-01"),
 					'branch'			=>	'',
+					'plan'				=>	'',
 					'suppliyer_id'		=>	0,
 					'end_date'			=>	date("Y-m-d"),
 					'po_pedding'	=>	1,

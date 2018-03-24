@@ -45,6 +45,9 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 		if($search['branch']>0){
 			$where .= " AND branch_id =".$search['branch'];
 		}
+// 		if($search['plan']>0){
+// 			$where .= " AND re_id =".$search['plan'];
+// 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";

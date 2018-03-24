@@ -50,6 +50,7 @@ class report_ProchesController extends Zend_Controller_Action
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
     
     }
+    
     public function rptprucheslistAction()
     {
     	if($this->getRequest()->isPost()){
@@ -84,8 +85,8 @@ class report_ProchesController extends Zend_Controller_Action
 		$session_user=new Zend_Session_Namespace('auth');
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
-    
     }
+    
 	public function rptpurchaserequestdetailAction()
     {
     	if($this->getRequest()->isPost()){

@@ -95,11 +95,14 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 			$s_where[] = " p.status LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		/*if($search['po_pedding']!=""){
+		if($search['po_pedding']!=""){
 			$where .= " AND p.pedding =".$search['po_pedding'];
-		}*/
+		}
 		if($search['branch']>0){
 			$where .= " AND p.branch_id =".$search['branch'];
+		}
+		if($search['plan']>0){
+			$where .= " AND p.`plan_id` =".$search['plan'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
@@ -126,6 +129,7 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 				WHERE p.`id` =$id";
 		return $db->fetchRow($sql);
 	}
+	
 	function  add($data){
 		$db = $this->getAdapter();
 		$db->beginTransaction();

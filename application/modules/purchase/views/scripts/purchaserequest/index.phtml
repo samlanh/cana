@@ -22,6 +22,9 @@
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
+						
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('plan');?></label>
+						
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('po_pedding');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
@@ -121,3 +124,11 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$( document ).ready(function() {
+    $("#plan").val('<?php echo $this->search['plan']?>');
+    $("#branch").val('<?php echo $this->search['branch']?>');
+});
+
+</script>
