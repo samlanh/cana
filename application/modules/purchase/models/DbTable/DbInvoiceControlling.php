@@ -79,7 +79,7 @@ class Purchase_Model_DbTable_DbInvoiceControlling extends Zend_Db_Table_Abstract
 				 $where=''; 
 				  $from_date =(empty($search['start_date']))? '1': "  r.invoice_date >= '".$search['start_date']."'";
 		$to_date = (empty($search['end_date']))? '1': "   r.invoice_date <= '".$search['end_date']."'";
-		//$where = " AND ".$from_date." AND ".$to_date;
+		$where = " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));

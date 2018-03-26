@@ -31,7 +31,7 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));
 			$s_where[] = " order_number LIKE '%{$s_search}%'";
-			//$s_where[] = " number_request LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT p.`re_code` FROM `tb_purchase_request` AS p WHERE p.id=re_id) LIKE '%{$s_search}%'";
 			$s_where[] = " status LIKE '%{$s_search}%'";
 			//$s_where[] = " code LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
@@ -45,9 +45,9 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 		if($search['branch']>0){
 			$where .= " AND branch_id =".$search['branch'];
 		}
-// 		if($search['plan']>0){
-// 			$where .= " AND re_id =".$search['plan'];
-// 		}
+		if(!empty($search['plan'])){
+			$where .= " AND (SELECT `id` FROM `tb_plan` AS pl WHERE pl.id=(SELECT p.`plan_id` FROM `tb_purchase_request` AS p WHERE p.id=re_id)) =".$search['plan'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";

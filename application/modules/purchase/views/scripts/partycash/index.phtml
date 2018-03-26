@@ -21,6 +21,7 @@
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('plan');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
 						<label class="control-label col-md-2">
@@ -36,8 +37,9 @@
 								<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("REQUEST_NO");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("REQUEST_DATE");?></th>
-								<th class="tdheader"><?php echo  $tr->translate("PLAN");?></th>
+								
 								<th class="tdheader"><?php echo  $tr->translate("LOCATION_NAME");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("PLAN");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("NUMBER_WORK_SPACE");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("DATE_REQUEST_WORK_PLACE");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("TOTAL_AMOUNT");?></th>
@@ -96,8 +98,8 @@
 									<td class="items-no"><?php echo $key+1;?></td>
 									<td class="items"><?php echo $rs["re_code"];?></td>
 									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_request"]));?></td>
-									<td class="items"><?php echo $rs["plan"];?></td>
 									<td class="items"><?php echo $rs["branch"];?></td>
+									<td class="items"><?php echo $rs["plan"];?></td>
 									<td class="items"><?php echo $rs["number_request"];?></td>
 									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_from_work_space"]));?></td>
 									<td class="items"><?php echo number_format($rs["total"],2);?></td>

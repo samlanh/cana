@@ -157,6 +157,9 @@ class Purchase_Model_DbTable_DbPartyCash extends Zend_Db_Table_Abstract
 		if(!empty($search['branch']) and @$search['branch']>0){
 			$where .= " AND branch_id =".$search['branch'];
 		}
+		if(!empty($search['plan'])){
+			$where .= " AND p.`plan_id` =".$search['plan'];
+		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";

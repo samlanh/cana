@@ -23,6 +23,7 @@ class Purchase_InvoicecontrollingController extends Zend_Controller_Action
 				$search = $this->getRequest()->getPost();
 				$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
 				$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+				$this->view->search=$search;
 		}
 		else{
 			$search =array(

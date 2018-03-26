@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$form=$this->form;
 	$url_submit = $this->url(array('module'=>'purchase','controller'=>'partycash','action'=>'add'));
-	$url_cancel = $this->url(array('module'=>'purchase','controller'=>'partypurchase','action'=>'index'),null,true);
+	$url_cancel = $this->url(array('module'=>'purchase','controller'=>'partycash','action'=>'partypurchase'),null,true);
 	$date_now = date("m/d/Y");
 ?>
 <style>
@@ -179,7 +179,7 @@
 									<?php echo $tr->translate("TOTAL_AMOUNT_EST");?>
 								</label>
 								<label class="control-label col-md-2 col-lg-2 col-sm-12">
-									<input type="text" readonly="readonly" name="total_amountest" id="total_amountest" value="<?php echo $this->rs['net_total']; ?>" class="form-control">
+									<input type="text" readonly="readonly" name="total_amountest" id="total_amountest" value="<?php echo $this->rs['total_est']; ?>" class="form-control">
 								</label>
 							</div>
 						</div>
@@ -191,7 +191,7 @@
 									<?php echo $tr->translate("TOTAL_AMOUNT");?>
 								</label>
 								<label class="control-label col-md-2 col-lg-2 col-sm-12">
-									<input type="text" readonly="readonly" name="total_amount" id="total_amount" value="<?php echo $this->rs['total_est']; ?>" class="form-control">
+									<input type="text" readonly="readonly" name="total_amount" id="total_amount" value="<?php echo $this->rs['net_total']; ?>" class="form-control">
 								</label>
 							</div>
 						</div>
