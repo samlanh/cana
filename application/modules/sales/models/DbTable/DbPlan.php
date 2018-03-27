@@ -71,10 +71,10 @@ class Sales_Model_DbTable_DbPlan extends Zend_Db_Table_Abstract{
 		$sql = "SELECT p.`id`,p.`name` FROM `tb_plan` AS p WHERE p.name!='' AND p.`status`=1";
 		return $db->fetchAll($sql);
 	}
-	public function getPlan($search){
+	public function getPlan($search=null){
 		$db = $this->getAdapter();
 		$sql = "SELECT id,NAME,(SELECT  NAME FROM `tb_plan_type` WHERE `tb_plan_type`.`id` = `tb_plan`.`type`) AS `type`,address ,(SELECT v.name_en FROM `tb_view` AS v WHERE v.key_code=`status` AND v.type=5 LIMIT 1) AS `status`
-		FROM `tb_plan` WHERE 1";
+		FROM `tb_plan` WHERE 1 ";
 		$where ='';
 		if(!empty($search["adv_search"])){
 			$s_where=array();

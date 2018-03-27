@@ -16,14 +16,16 @@ public function init(){
     }
     public function indexAction(){
     	if($this->getRequest()->isPost()){
-    		$search = $this->getRequest()->getPost();
-    	}else{
-    		$search = array(
-    			'ad_search'	=>	'',
-    			'status'	=>	1,
-    			'name'	=>	'',
-    		);
-    	}
+			$search = $this->getRequest()->getPost();
+			
+		}else{
+			$search =array(
+					'adv_search'	=>	'',
+    			    'typecate'		=>	'',
+    			    'status'	    =>	1,
+			);
+		}
+		$this->view->search=$search;
 		$db = new Sales_Model_DbTable_DbPlan();
 		$rows = $db->getPlan($search);
 		$list = new Application_Form_Frmlist();
@@ -72,7 +74,7 @@ public function init(){
 					{
 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS",'/sales/plan/index');
 					}else{
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS",'/sales/plan/index');
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());

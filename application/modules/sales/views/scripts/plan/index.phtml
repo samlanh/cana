@@ -6,6 +6,7 @@
 	$form=$this->formFilter;
 	$formFilter = $this->formFilter;
 	$rs = $this->product;
+	 
 ?>
 <title><?php echo $tr->translate("PRODUCT_LIST");?></title>
 
@@ -27,7 +28,7 @@
 				<div class="form-body">
 					<div class="form-group">
 						<div class="col-md-3">
-							<input  class="form-control" id="adv_search" name="adv_search" value="<?php echo $this->row['adv_search']?>" placeholder="<?php echo $this->translate("Search");?>" type="text" >
+							<input  class="form-control" id="adv_search" name="adv_search" value=" " placeholder="<?php echo $this->translate("Search");?>" type="text" >
 						</div>
 						
 						<div class="col-md-3">
@@ -48,3 +49,11 @@
 		</div>
 		<?PHP echo $this->list ?>
 </div>
+<script>
+$( document ).ready(function() {
+    $("#adv_search").val('<?php echo $this->search['adv_search']?>');
+    $("#typecate").val('<?php echo $this->search['typecate']?>');
+    $("#status").val('<?php echo $this->search['status']?>');
+});
+
+</script>

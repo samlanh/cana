@@ -376,7 +376,7 @@
 					
 					<div class="form-group">
 						<label  class="col-md-12 col-md-offset-4 col-md-8">
-							<button type="button" name="btnsavenew" onclick="addNewCustomer();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CUSTOMER")?> </button>
+							<button type="button" name="c_savenew" id="c_savenew" onclick="addNewCustomer();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_CUSTOMER")?> </button>
 						</label>
 					</div>
 				</div>
@@ -438,6 +438,14 @@ $('#login_form').submit(function() {
 			alert("Please add product row");
 			$('#add_item').select2('open');
 			return false;
+		}
+
+		var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\t\n \tតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?\t");
+		if (r == true) {
+		    return true;
+		} else {
+		   return false;
+		    
 		}
 });
 			</script>
@@ -780,6 +788,7 @@ function ShowPopupProduct(recordid){
 	}
 }
 function getCustomerInfo(){
+	$("c_savenew").attr("disabled", false);
 	customer_id = $("#customer_id").val();
 	if(customer_id==-1){
 		$('#customerpopup').modal('show');
@@ -787,15 +796,22 @@ function getCustomerInfo(){
 }
 <?php $url_add_customer =  $this->url(array('module'=>'sales','controller'=>'customer','action'=>'add-customer')); ?>
 function addNewCustomer(){
+	$("c_savenew").attr("disabled", true);
 	var customer_name  = $("#txt_name").val();
+	if(customer_name==''){
+		alert("Requier Fiel Name !!!");
+		$("#txt_name").focus();
+		return false;
+	}
 	$.ajax({
         url: "<?php echo $url_add_customer;?>",
         type: "post",
         data: $('#frmcustomer').serialize(),
         success: function(data){
             rs = $.parseJSON(data);
-             $('#customer_id').append($("<option></option>").attr("value",rs['cus_id']).attr("selected",true).text(customer_name));                       
-             $("#customer_id").select2();
+            $('#customer_id').append($("<option></option>").attr("value",rs['cus_id']).attr("selected",true).text(customer_name));
+            $("#customer_id").select2();
+            $('#frmcustomer')[0].reset();
 			$('#customerpopup').modal('hide');
         },
         error:function(err){

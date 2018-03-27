@@ -48,8 +48,8 @@ class Sales_quoatationController extends Zend_Controller_Action
 		$formFilter = new Sales_Form_FrmSearch();
 		$this->view->formFilter = $formFilter;
 	    Application_Model_Decorator::removeAllDecorator($formFilter);
-		
 	}
+	
 	function addAction(){
 		$db = new Application_Model_DbTable_DbGlobal();
 		if($this->getRequest()->isPost()) {
@@ -136,6 +136,10 @@ class Sales_quoatationController extends Zend_Controller_Action
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->term_opt = $db->getAllTermCondition(1);
 		//print_r($row);
+		$formpopup = new Sales_Form_FrmCustomer(null);
+		$formpopup = $formpopup->Formcustomer(null);
+		Application_Model_Decorator::removeAllDecorator($formpopup);
+		$this->view->form_customer = $formpopup;
 		$a = $items->getAllProduct();
 		$this->view->product = $a;
 	}	

@@ -52,10 +52,10 @@ public function init()
 			try{
 				$add_agent = new Sales_Model_DbTable_DbSalesAgent();
 				$add_agent ->addSalesAgent($post);
-				if(!empty($post['btnsavenew'])){
-					//Application_Form_FrmMessage::message("Agent Has Been Inserted !");
+				if(isset($post['btnsavenew'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", "/sales/saleagent/add");
 				}else{
-					//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", "/sales/saleagent/index");
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", "/sales/saleagent/index");
 				}
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');

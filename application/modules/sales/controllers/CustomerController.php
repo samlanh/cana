@@ -8,9 +8,9 @@ class Sales_CustomerController extends Zend_Controller_Action
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$db = new Application_Model_DbTable_DbGlobal();
 		$rs = $db->getValidUserUrl();
-		if(empty($rs)){
-			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
-		}
+// 		if(empty($rs)){
+// 			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
+// 		}
     }
 	public function indexAction()
 	{
@@ -40,8 +40,8 @@ class Sales_CustomerController extends Zend_Controller_Action
         $formFilter = new Sales_Form_FrmSearch();
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
-		
 	}
+	
 	public function addAction()
 	{
 		if($this->getRequest()->isPost())
@@ -50,12 +50,13 @@ class Sales_CustomerController extends Zend_Controller_Action
 			try{
 				$db = new Sales_Model_DbTable_DbCustomer();
 				$db->addCustomer($post);
-				if(!empty($post['saveclose']))
+				if(isset($post['saveclose']))
 				{
-// 					Application_Form_FrmMessage::Sucessfull('INSERT_SUCCESS', sel . '/customer/index');
+					Application_Form_FrmMessage::Sucessfull('INSERT_SUCCESS','/sales/customer/index');
 				}else{
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				}
+				Application_Form_FrmMessage::Sucessfull('INSERT_SUCCESS','/sales/customer/add');
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();

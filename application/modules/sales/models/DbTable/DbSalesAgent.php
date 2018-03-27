@@ -33,6 +33,7 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));
 			$s_where[] = " l.name LIKE '%{$s_search}%'";
+			$s_where[] = " sg.`code` LIKE '%{$s_search}%'";
 			$s_where[] = " sg.name LIKE '%{$s_search}%'";
 			$s_where[] = " sg.phone LIKE '%{$s_search}%'";
 			$s_where[] = " sg.email LIKE '%{$s_search}%'";
@@ -51,6 +52,7 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 		$db =$this->getAdapter();
 		return $db->fetchAll($sql.$where.$order);
 	}
+	
 	public function getSaleAgentCode($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT s.`prefix` FROM `tb_sublocation` AS s WHERE s.id=$id";
@@ -135,13 +137,13 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 					"email"      			=>	$data['email'],
 					"address"    			=>	$data['address'],
 					"pob"		 			=>	$data['pob'],
-					"dob"		 			=>	$data['dob'],
+					"dob"		 			=>	date("Y-m-d",strtotime($data['dob'])),
 					"job_title"  			=>	$data['job_title'],
 					"branch_id"   			=>	$data['branch_id'],
 					"user_type"				=>	$data["user_type"],
 					"manage_by"				=>	$data["manage_by"],
 					"bank_acc"				=>	$data["bank_acc"],
-					"start_working_date"	=>	$data["start_working_date"],
+					"start_working_date"	=>	date("Y-m-d",strtotime($data["start_working_date"])),
 					"refer_name"			=>	$data["refer_name"],
 					"refer_phone"			=>	$data["refer_phone"],
 					"refer_add"				=>	$data["refer_address"],
@@ -254,13 +256,13 @@ class Sales_Model_DbTable_DbSalesAgent extends Zend_Db_Table_Abstract
 					"email"      			=>	$data['email'],
 					"address"    			=>	$data['address'],
 					"pob"		 			=>	$data['pob'],
-					"dob"		 			=>	$data['dob'],
+					"dob"		 			=>	date("Y-m-d",strtotime($data['dob'])),
 					"job_title"  			=>	$data['job_title'],
 					"branch_id"   			=>	$data['branch_id'],
 					"user_type"				=>	$data["user_type"],
 					"manage_by"				=>	$data["manage_by"],
 					"bank_acc"				=>	$data["bank_acc"],
-					"start_working_date"	=>	$data["start_working_date"],
+					"start_working_date"	=>	date("Y-m-d",strtotime($data["start_working_date"])),
 					"refer_name"			=>	$data["refer_name"],
 					"refer_phone"			=>	$data["refer_phone"],
 					"refer_add"				=>	$data["refer_address"],

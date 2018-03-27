@@ -555,7 +555,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		return $db->fetchAll($sql);
 	}
 	
-	function getInvoiceControlling(){
+	function getInvoiceControlling($search){
 		$db = $this->getAdapter();
 		$sql = "SELECT 
 				  i.`invoice_no`,
@@ -569,7 +569,20 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  
 				FROM
 				  `tb_invoice_controlling` AS i  ";
-		return $db->fetchAll($sql);
+		
+		$from_date =(empty($search['start_date']))? '1': " i.invoice_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " i.`invoice_date`  <= '".$search['end_date']." 23:59:59'";
+		$where = " WHERE ".$from_date." AND ".$to_date;
+		if(!empty($search['text_search'])){
+			$s_where = array();
+			$s_search = trim(addslashes($search['text_search']));
+			$s_where[] = " i.`invoice_no` LIKE '%{$s_search}%'";
+			$s_where[] = " i.`grand_total` LIKE '%{$s_search}%'";
+			$s_where[] = " i.`paid`    LIKE '%{$s_search}%'";
+			$s_where[] = " i.`balance` LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		return $db->fetchAll($sql.$where);
 	}
 	
 	

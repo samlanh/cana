@@ -13,6 +13,11 @@
 				<div class="caption">
 					<i class="icon-home"></i><?php echo $tr->translate("ADD_SALESORDER")?>
 				</div>
+				<div class="tools" >
+					<a href="<?php echo $this->baseUrl();?>/sales/index" class="btn btn-sm pull-right" style="color:white;">
+						<i class="fa fa-undo"></i>&nbsp;<?php echo $tr->translate("GO_BACK");?>
+					</a>
+				</div>
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
@@ -237,7 +242,6 @@
 							<div  class="col-md-12 col-md-offset-4 col-md-8">
 								<a href="<?php echo $this->baseUrl();?>/sales/index"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
 								<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
-								<button type="submit" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 								<!--<button type="submit" name="save_print" class="btn btn-primary"><i class="fa fa-print"></i> <?php echo $tr->translate("SAVE_PRINT")?></button>-->
 												
 							</div>

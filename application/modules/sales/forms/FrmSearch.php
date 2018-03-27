@@ -80,5 +80,25 @@ public function init()
 		$locationID->setattribs(array(
 				'Onchange'=>'AddLocation()',));
 		$this->addElement($locationID);
+		
+		$db_re = new Sales_Model_DbTable_DbRequest();
+		$row = $db_re->getPlan();
+		$option = array(''=>$tr->translate("SELECT_PLAN"));
+		if(!empty($row)){
+			foreach($row as $rs){
+				$option[$rs["id"]] = $rs["name"];
+			}
+		}
+		
+		$request=Zend_Controller_Front::getInstance()->getRequest();
+		$plan=new Zend_Form_Element_Select('plan');
+		$nameValue = $request->getParam('plan');
+		$plan ->setAttribs(array(
+				'class' => 'validate[required] form-control select2me',
+				//'onChange'=>'addPlanAddr()'
+		));
+		$plan->setMultiOptions($option);
+		$plan->setValue($nameValue);
+		$this->addElement($plan);
 	}
 }

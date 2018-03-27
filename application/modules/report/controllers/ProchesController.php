@@ -588,9 +588,16 @@ class report_ProchesController extends Zend_Controller_Action
 	public function rptinvoicecontrollingAction(){
 		if($this->getRequest()->isPost()){
 			$search = $this->getRequest()->getPost();
-			}else{
-				$search= array();
-			}
+			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+		}
+		else{
+			$search =array(
+					'text_search'=>'',
+					'start_date'=>date("Y-m-01"),
+					'end_date'=>date("Y-m-d"),
+			);
+		}
 			$db = new report_Model_DbStock();
 			$rows = $db->getInvoiceControlling($search);
 			

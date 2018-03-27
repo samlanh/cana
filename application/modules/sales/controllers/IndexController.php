@@ -67,6 +67,7 @@ class Sales_IndexController extends Zend_Controller_Action
 				}elseif(isset($data["save_print"])){
 					Application_Form_FrmMessage::redirectUrl("/sales/index/viewsale?id=".$id);
 				}
+				Application_Form_FrmMessage::redirectUrl("/sales/index/add");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();
@@ -102,7 +103,7 @@ class Sales_IndexController extends Zend_Controller_Action
 				}else{
 					Application_Form_FrmMessage::message('No Data to Submit');
 				}
-				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/index");
+				Application_Form_FrmMessage::Sucessfull("INSERT_SUCESS","/sales/index");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('UPDATE_FAIL');
 				$err =$e->getMessage();
