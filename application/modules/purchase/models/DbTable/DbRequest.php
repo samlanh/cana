@@ -98,10 +98,10 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 		if($search['po_pedding']!=""){
 			$where .= " AND p.pedding =".$search['po_pedding'];
 		}
-		if($search['branch']>0){
+		if(!empty($search['branch'])){
 			$where .= " AND p.branch_id =".$search['branch'];
 		}
-		if($search['plan']>0){
+		if(!empty($search['plan'])){
 			$where .= " AND p.`plan_id` =".$search['plan'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();

@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$form=$this->form_sale;
 	$url_submit = $this->url(array('module'=>'sales','controller'=>'quoatation','action'=>'edit'));
-	$url_cancel = $this->url(array('module'=>'sales','controller'=>'index','action'=>'index'));
+	$url_cancel = $this->url(array('module'=>'sales','controller'=>'quoatation','action'=>'index'));
 	$url_new = $this->url(array('module'=>'sales','controller'=>'quoatation','action'=>'edit'));
 ?>
 <title><?php echo $tr->translate("QUOTATION_ORDER");?></title>
@@ -12,6 +12,11 @@
 			<div class="portlet-title">
 				<div class="caption">
 					<i class="icon-home"></i><?php echo $tr->translate("QUOTATION_ORDER")?>
+				</div>
+				<div class="tools" >
+					<a href="<?php echo $url_cancel;?>" class="btn btn-sm pull-right" style="color:white;">
+					<i class="fa fa-undo"></i>	&nbsp;<?php echo $tr->translate("GO_BACK");?>
+					</a>
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -122,7 +127,7 @@
 									<th><?php echo $tr->translate("SUB_TOTAL_CAP");?></th>
 							 </tr>
 						 </table>
-						 <input type="text" id="identity" name="identity" />
+						 <input type="hidden" id="identity" name="identity" />
 						 <input type="hidden" id="identity_term" name="identity_term" />
 					  </div>
 					  

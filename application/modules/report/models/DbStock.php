@@ -348,6 +348,20 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$from_date =(empty($search['start_date']))? '1': " p.`date_request` >= '".$search['start_date']."'";
 		$to_date = (empty($search['end_date']))? '1': "  p.`date_request` <= '".$search['end_date']."'";
 		$where = " AND ".$from_date." AND ".$to_date;
+		if(!empty($search['text_search'])){
+			$s_where = array();
+			$s_search = trim(addslashes($search['text_search']));
+			$s_where[] = "  p.`number_request` LIKE '%{$s_search}%'";
+			$s_where[] = "  p.`re_code` LIKE '%{$s_search}%'";
+			$s_where[] = "  pr.`qty`  LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		if(!empty($search['branch'])){
+			$where .= " AND p.`branch_id` = ".$search['branch'];
+		}
+		if(!empty($search['plan'])){
+			$where .= " AND p.`plan_id` = ".$search['plan'];
+		}
 		return $db->fetchAll($sql.$where);
 	}
 	function getAllPurchaseReport($search){//new
@@ -377,6 +391,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));
+			$s_where[] = " (SELECT p.`re_code` FROM `tb_purchase_request` AS p WHERE p.id=re_id) LIKE '%{$s_search}%'";
 			$s_where[] = " order_number LIKE '%{$s_search}%'";
 			$s_where[] = " net_total LIKE '%{$s_search}%'";
 			$s_where[] = " paid LIKE '%{$s_search}%'";
@@ -499,14 +514,27 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 	}
 	
 	
-	function getAllPOInvoice(){
+	function getAllPOInvoice($search){
 		$db = $this->getAdapter();
+		$where='';
 		$sql= "SELECT 
 				  po.*,
 				  (SELECT u.`fullname` FROM `tb_acl_user` AS u WHERE u.user_id=po.`user_id` LIMIT 1) AS user_name
 				FROM
 				  `tb_purchase_invoice` AS po";
-		return $db->fetchAll($sql);
+		$from_date =(empty($search['start_date']))? '1': " po.`invoice_date` >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " po.`invoice_date` <= '".$search['end_date']." 23:59:59'";
+		$where = " WHERE ".$from_date." AND ".$to_date;
+		if(!empty($search['text_search'])){
+			$s_where = array();
+			$s_search = trim(addslashes($search['text_search']));
+			$s_where[] = " po.`invoice_no` LIKE '%{$s_search}%'";
+			$s_where[] = " po.`sub_total_after` LIKE '%{$s_search}%'";
+			$s_where[] = " po.`paid_after` LIKE '%{$s_search}%'";
+			$s_where[] = " po.`balance_after` LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		return $db->fetchAll($sql.$where);
 	}
 	
 	function getAllPOInvoiceDetail(){

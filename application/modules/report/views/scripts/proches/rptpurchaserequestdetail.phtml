@@ -31,6 +31,8 @@ $formFilter = $this->formFilter;
 				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('plan');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('purchase_status');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>

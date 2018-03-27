@@ -308,6 +308,22 @@ class Application_Form_FrmReport extends Zend_Form
     	$location_id->setValue($locationValue);
     	$this->addElement($location_id);
     	
+    	$po_pedding = new Zend_Form_Element_Select("po_pedding");
+    	$opt = array(''=>$tr->translate("SELECT"));
+    	$rspo_pedding = $db->getPurchasePedding();
+    	if(!empty($rspo_pedding)){
+    		foreach ($rspo_pedding as $rs){
+    			$opt[$rs["id"]] = $rs["name"];
+    		}
+    	}
+    	$po_pedding->setAttribs(array(
+    			'class'=>'form-control select2me',
+    			//'required'=>'required',
+    			'Onchange'	=>	'addNewProLocation()'
+    	));
+    	$po_pedding->setMultiOptions($opt);
+    	$po_pedding->setValue($request->getParam('po_pedding'));
+    	$this->addElement($po_pedding);
     	
     	return $this;
     }

@@ -60,10 +60,11 @@ class report_ProchesController extends Zend_Controller_Action
 		}
 		else{
 			$search =array(
-					'text_search'		=>	'',
-					'start_date'		=>	date("Y-m-01"),
-					'branch'			=>	'',
-					'end_date'			=>	date("Y-m-d"),
+					'text_search'	=>	'',
+					'start_date'	=>	date("Y-m-01"),
+					'branch'		=>	'',
+					'plan'			=>	'',
+					'end_date'		=>	date("Y-m-d"),
 					'po_pedding'	=>	'',
 					);
 		}
@@ -189,7 +190,8 @@ class report_ProchesController extends Zend_Controller_Action
     				'end_date'=>date("Y-m-d"),
     				'suppliyer_id'=>0,
     				'branch_id'=>0,
-					'po_pedding'=>-1
+					'po_pedding'=>''
+    				
     		);
     	}
     	$this->view->rssearch = $data;
@@ -207,6 +209,7 @@ class report_ProchesController extends Zend_Controller_Action
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
     }
+    
 	public function rptpurchasedetailAction()//purchase report
     {
     	if($this->getRequest()->isPost()){
@@ -420,6 +423,7 @@ class report_ProchesController extends Zend_Controller_Action
 					'end_date'=>date("Y-m-d"),
 					'suppliyer_id'=>0,
 					'purchase_status'=>0,
+					'po_pedding'=>''
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbPriceCompare();
@@ -538,10 +542,17 @@ class report_ProchesController extends Zend_Controller_Action
 	
 	public function rptinvoiceAction(){
 		if($this->getRequest()->isPost()){
-					$search = $this->getRequest()->getPost();
-			}else{
-				$search= array();
-			}
+			$search = $this->getRequest()->getPost();
+			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+		}
+		else{
+			$search =array(
+					'text_search'=>'',
+					'start_date'=>date("Y-m-01"),
+					'end_date'=>date("Y-m-d"),
+			);
+		}
 			$db = new report_Model_DbStock();
 			$rows = $db->getAllPOInvoice($search);
 			

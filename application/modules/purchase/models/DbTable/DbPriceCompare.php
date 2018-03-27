@@ -194,10 +194,10 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 		if($search['suppliyer_id']>0){
 			$where .= " AND s.su_id =".$search['suppliyer_id'];
 		}
-		if($search['branch']>0){
+		if(!empty($search['branch'])){
 			$where .= " AND p.branch_id =".$search['branch'];
 		}
-		if($search['plan']>0){
+		if(!empty($search['plan'])){
 			$where .= " AND p.`plan_id` =".$search['plan'];
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
