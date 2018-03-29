@@ -36,6 +36,7 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     		'onchange'=>'this.form.submit()',
     	));
     	$location->setValue($location_r);
+    	$location->setValue($request->getParam('location'));
     	$this->addElement($location);
 		
 		$options=array(''=>'All Status',1=>"ACTIVE",'0'=>"DEACTIVE");
@@ -55,6 +56,7 @@ class Rsvacl_Form_FrmUser extends Zend_Form
     		'id'=>'username',
     		'class'=>'form-control',
     	));
+    	$ad_search->setValue($request->getParam('ad_search'));
     	$this->addElement($ad_search);
 
     	//uer title
