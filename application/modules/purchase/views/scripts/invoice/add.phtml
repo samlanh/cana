@@ -259,9 +259,10 @@ function getInvoice(type){
 				$('#identity').val("");
 				//salert(data);
 				data = $.parseJSON(data);
-				
-				
+				var set_backgroun='';
+				var num=0;
 				for(i=0;i<data.length;i++){
+				
 					if(i==0){
 						$("#customer_id").val(data[i].vendor_id);
 						$("#customer_id").select2();
@@ -269,11 +270,13 @@ function getInvoice(type){
 						$("#purchase_id").val(data[i].purchase_id);
 					}
 					index=i+1;
+				 
+				 
 					template+='<tr style="height:30px;">';
 			           // template+='<td ><img onClick="deleteRecord('+index+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
 					   template+='<td style="vertical-align: middle;text-align: center;"><input type="checkbox" onClick="checkedRow('+index+')" name="checkbox_'+index+'" id="checkbox_'+index+'" /></td>';
 						template+='<td >'+index+'</td>';
-						template+='<td >'+data[i].purchase_order+'</td>';
+						template+='<td >'+data[i].purchase_order+'<input type="hidden" name="po_number'+index+'" id="po_number'+index+'" value="'+data[i].purchase_order+'"/></td>';
 						template+='<td >'+data[i].dn_number+'</td>';
 						template+='<td >'+data[i].date_in+'<input type="hidden" value='+data[i].purchase_id+' id="purchase_id'+index+'" name="purchase_id'+index+'"/><input type="hidden" value='+data[i].order_id+' id="dn_id'+index+'" name="dn_id'+index+'"/></td>';
 						template+='<td >'+data[i].recieve_number+'</td>';
@@ -375,3 +378,26 @@ function getCustomerInfo(){
 }
 
 </script>	
+<script>
+$('#frm').submit(function() {
+	var rowId = $('#identity').val();
+    if(rowId!=''){ 
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++){
+			var po_number = $('#po_number'+rowIDArray[n]).val();
+			if(po_number!=$('#po_number'+rowIDArray[0]).val()){
+				    alert("PO Number Cann't​​ Different("+po_number+" != "+$('#po_number'+rowIDArray[0]).val()+")");
+					return false;
+				}
+			}
+	}
+	var r = confirm("\tសូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\t\n \tតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?\t");
+	if (r == true) {
+	    return true;
+	} else {
+	   return false;
+	    
+	}
+	
+});	
+</script>
