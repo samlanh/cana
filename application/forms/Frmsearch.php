@@ -122,6 +122,19 @@ class Application_Form_Frmsearch extends Zend_Form
 		$statusCO->setValue($statusCOValue);
 		$this->addElement($statusCO);
 		
+		
+		
+		$status_paid = $request->getParam('is_paid_balance');
+		$optionsCOStatus=array('0'=>$tr->translate('CHOOSE_STATUS'),1=>$tr->translate('Paid Balance'),2=>$tr->translate('Paid Full'));
+		$is_paid_balance=new Zend_Form_Element_Select('is_paid_balance');
+		$is_paid_balance->setMultiOptions($optionsCOStatus);
+		$is_paid_balance->setattribs(array(
+				'id'=>'is_paid_balance',
+				'class'=>'form-control'
+		));
+		$is_paid_balance->setValue($status_paid);
+		$this->addElement($is_paid_balance);
+		
 		$po_invoice_status = new Zend_Form_Element_Select('po_invoice_status');
 		$po_invoice_status->setAttribs(array(
 			'class'=>'form-control',

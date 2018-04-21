@@ -37,6 +37,12 @@ $brach_name =  $this->branch;
 						<?php $formFilter = $this->form_purchase; ?>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>
+						
+						<label class="control-label col-md-2">
+								<select data-placeholder="Select..." class="form-control select2me " style="text-align: left;" id="add_item" name="add_item"  >
+								<?php echo $this->items; ?>
+								</select>
+						</label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
@@ -233,4 +239,9 @@ if(end_date!="" | start_date!=""){
 			}
 		});
 	}*/
+		$( document ).ready(function(){
+			if('<?php echo $this->rssearch['add_item']?>'!=''){
+			  $('#add_item').val('<?php echo $this->rssearch['add_item']?>');
+			}
+		});
 </script>

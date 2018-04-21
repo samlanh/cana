@@ -223,7 +223,8 @@ class report_ProchesController extends Zend_Controller_Action
     				'end_date'=>date("Y-m-d"),
     				'suppliyer_id'=>0,
     				'branch_id'=>0,
-					'po_pedding'=>-1
+					//'po_pedding'=>-1,
+    				'add_item'=>-1
     		);
     	}
     	$this->view->rssearch = $data;
@@ -244,6 +245,9 @@ class report_ProchesController extends Zend_Controller_Action
 		$session_user=new Zend_Session_Namespace('auth');
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
+		
+		$items = new Application_Model_GlobalClass();
+		$this->view->items = $items->getProductOption();
     }
     
     public function rptadjuststockAction()
@@ -596,6 +600,7 @@ class report_ProchesController extends Zend_Controller_Action
 					'text_search'=>'',
 					'start_date'=>date("Y-m-01"),
 					'end_date'=>date("Y-m-d"),
+					'is_paid_balance'=>0
 			);
 		}
 			$db = new report_Model_DbStock();

@@ -440,22 +440,29 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$where = " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
-			$s_where[] = " order_number LIKE '%{$s_search}%'";
-			$s_where[] = " net_total LIKE '%{$s_search}%'";
-			$s_where[] = " paid LIKE '%{$s_search}%'";
-			$s_where[] = " balance LIKE '%{$s_search}%'";
+			$s_search=addslashes(trim($search['text_search']));
+			$s_search = str_replace(' ', '', $s_search);
+			$s_where[] = " REPLACE(item_name,' ','')     LIKE '%{$s_search}%'";
+			$s_where[] = " REPLACE(item_code,' ','')     LIKE '%{$s_search}%'";
+			$s_where[] = " REPLACE(order_number,' ','')  LIKE '%{$s_search}%'";
+			$s_where[] = " REPLACE(net_total,' ','')     LIKE '%{$s_search}%'";
+			$s_where[] = " REPLACE(paid,' ','')          LIKE '%{$s_search}%'";
+			$s_where[] = " REPLACE(balance,' ','')       LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		if($search['suppliyer_id']>0){
 			$where .= " AND vendor_id = ".$search['suppliyer_id'];
 		}
-		if($search['po_pedding']>0){
-			$where .= " AND purchase_status =".$search['po_pedding'];
+		if($search['add_item']>0){
+			$where .= " AND v.id = ".$search['add_item'];
 		}
+// 		if($search['po_pedding']>0){
+// 			$where .= " AND purchase_status =".$search['po_pedding'];
+// 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY p.order_number DESC ";
+		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
@@ -582,6 +589,15 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			$s_where[] = " i.`balance` LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
+		
+		if(!empty($search['is_paid_balance'])){
+			if($search['is_paid_balance']==1){
+				$where .= " AND  i.`balance` > 0 ";
+			}else{
+				$where .= " AND  i.`balance` = 0 ";
+			}
+		}
+		//echo $sql.$where;exit();
 		return $db->fetchAll($sql.$where);
 	}
 	
