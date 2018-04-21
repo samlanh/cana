@@ -243,7 +243,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			}
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
-		$where.=$dbg->getAccessPermission();
+		$where.=$dbg->getAccessPermission('branch');
 		$order=" ORDER BY r.`order_number` ";
 		return $db->fetchAll($sql.$where.$order);
 	}
