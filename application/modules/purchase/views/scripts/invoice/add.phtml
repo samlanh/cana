@@ -274,7 +274,7 @@ function getInvoice(type){
 				 
 					template+='<tr style="height:30px;">';
 			           // template+='<td ><img onClick="deleteRecord('+index+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
-					   template+='<td style="vertical-align: middle;text-align: center;"><input type="checkbox" onClick="checkedRow('+index+')" name="checkbox_'+index+'" id="checkbox_'+index+'" /></td>';
+					   template+='<td style="vertical-align: middle;text-align: center;"><input type="checkbox" onClick="checkedRow('+index+');checkPONumber('+index+')" name="checkbox_'+index+'" id="checkbox_'+index+'" /></td>';
 						template+='<td >'+index+'</td>';
 						template+='<td >'+data[i].purchase_order+'<input type="hidden" name="po_number'+index+'" id="po_number'+index+'" value="'+data[i].purchase_order+'"/></td>';
 						template+='<td >'+data[i].dn_number+'</td>';
@@ -386,6 +386,7 @@ $('#frm').submit(function() {
 		for(var n = 0; n < rowIDArray.length; n++){
 			var po_number = $('#po_number'+rowIDArray[n]).val();
 			if(po_number!=$('#po_number'+rowIDArray[0]).val()){
+				    
 				    alert("PO Number Cann't​​ Different("+po_number+" != "+$('#po_number'+rowIDArray[0]).val()+")");
 					return false;
 				}
@@ -400,4 +401,21 @@ $('#frm').submit(function() {
 	}
 	
 });	
+
+function checkPONumber(index){
+	var rowId = $('#identity').val();
+	var po_number =0;
+    if(rowId!=''){ 
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++){
+			po_number = $('#po_number'+rowIDArray[n]).val();
+			if(po_number!=$('#po_number'+rowIDArray[0]).val()){
+				    alert("PO Number Cann't​​ Different("+po_number+" != "+$('#po_number'+rowIDArray[0]).val()+")");
+				    $("#checkbox_"+index).attr("checked",false);
+				    deleteRecord(index);
+					return false;
+				}
+			}
+	}
+}
 </script>
