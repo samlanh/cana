@@ -629,7 +629,7 @@ class report_ProchesController extends Zend_Controller_Action
 					'start_date'=>date("Y-m-01"),
 					'end_date'=>date("Y-m-d"),
 					'branch_id'=>-1,
-					'customer_id'=>-1,
+					'suppliyer_id'=>-1,
 					);
 		}
 		$db = new report_Model_DbStock();

@@ -213,9 +213,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$to_date = (empty($search['end_date']))? '1': " r.`date_in` <= '".$to_date." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		
-		if(!empty($search['text_search'])){
+		if(!empty($search['ad_search'])){
 			$s_where = array();
-			$s_search = trim(addslashes($search['text_search']));
+			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " p.`item_code` LIKE '%{$s_search}%'";
 			$s_where[] = " p.`item_name` LIKE '%{$s_search}%'";
 			$s_where[] = " p.`measure` LIKE '%{$s_search}%'";
@@ -245,6 +245,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission('branch');
 		$order=" ORDER BY r.`order_number` ";
+		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 		
@@ -621,6 +622,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			if(!empty($search['text_search'])){
 				$s_where = array();
 				$s_search = trim(addslashes($search['text_search']));
+				$s_where[] = " r.`pol_no` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`receipt_no` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`total` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`paid` LIKE '%{$s_search}%'";
@@ -630,8 +632,8 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			if($search['branch_id']>0){
 				$where .= " AND r.`branch_id` = ".$search['branch_id'];
 			}
-			if($search['customer_id']>0){
-				$where .= " AND r.vendor_id =".$search['customer_id'];
+			if($search['suppliyer_id']>0){
+				$where .= " AND r.vendor_id =".$search['suppliyer_id'];
 			}
 			$dbg = new Application_Model_DbTable_DbGlobal();
 			$where.=$dbg->getAccessPermission();

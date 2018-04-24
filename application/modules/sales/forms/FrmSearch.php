@@ -100,5 +100,18 @@ public function init()
 		$plan->setMultiOptions($option);
 		$plan->setValue($nameValue);
 		$this->addElement($plan);
+		
+		$rs=$db->getGlobalDb('SELECT vendor_id, v_name FROM tb_vendor WHERE v_name!="" AND status=1 ');
+		$options=array($tr->translate('Choose Suppliyer'));
+		$vendorValue = $request->getParam('suppliyer_id');
+		if(!empty($rs)) foreach($rs as $read) $options[$read['vendor_id']]=$read['v_name'];
+		$vendor_element=new Zend_Form_Element_Select('suppliyer_id');
+		$vendor_element->setMultiOptions($options);
+		$vendor_element->setAttribs(array(
+				'id'=>'suppliyer_id',
+				'class'=>'form-control select2me'
+		));
+		$vendor_element->setValue($vendorValue);
+		$this->addElement($vendor_element);
 	}
 }

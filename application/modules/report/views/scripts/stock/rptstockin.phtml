@@ -86,7 +86,7 @@ if(!empty($result)){
 				table.collape td {
 				    border: 1px solid #000 !important;
 				    font-family: "Open Sans", sans-serif,'Kh Battambang','Khmer Battambang';
-				    font-size: 11px;
+				    font-size: 12px;
 				}
 				table tr.noborder td{border: 1px solid #fff !important;
 				border-bottom: 1px solid #000 !important;}
@@ -111,7 +111,7 @@ if(!empty($result)){
 									<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
 									<li style="text-align:center; font-size:16px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
 		                			<li style="text-align:center; font-size:16px;margin: 10px 0px 0px 0px;font-family:'Khmer OS Muol Light',serif,header-font;"> <?php echo $tr->translate("STOCK_IN");?></li>
-									<li style="text-align:center; font-size:11px;"><?php echo date("d-M-Y",strtotime($this->start_date));?> ដល់ <?php echo date("d-M-Y",strtotime($this->end_date));?></li>
+									<li style="text-align:center; font-size:14px;"><?php echo date("d-M-Y",strtotime($this->start_date));?> ដល់ <?php echo date("d-M-Y",strtotime($this->end_date));?></li>
 		                		</ul>
 								</td>
 								<td width="20%" style="text-align:left; font-size: 11px;white-space: nowrap;">
@@ -127,7 +127,7 @@ if(!empty($result)){
 		    </tr>
 		    <tr>
 		    	<td class="table2excel" >
-		            <table  class="collape tablesorter" style="border-collapse:collapse;border:0px solid #000; font-size:12px;" width="95%" cellspacing="0" border="1">
+		            <table  class="collape tablesorter" style="border-collapse:collapse;border:0px solid #000; font-size:12px;" width="100%" cellspacing="0" border="1">
 		                 <tbody>
 						  <?php $num=1; 
 			               $total_qty = 0;
@@ -143,10 +143,10 @@ if(!empty($result)){
 						   <td align="center" style="white-space: nowrap;text-align:center; border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap; text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;font-size:13px; font-family:'Khmer OS Muol Light'">&nbsp;<?php echo $tr->translate("TOTAL");?></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail; font-weight: bolder;">&nbsp;<?php echo   $total_qty;?></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;font-size:14px;font-family:Arail; font-weight: bolder;" nowrap>&nbsp;<?php echo   $total_qty;?></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail; font-weight: bolder;">&nbsp;$<span style="float:right"><?php echo number_format($total_price,2);?></span></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail; font-weight: bolder;">&nbsp;$<span style="float:right"><?php echo number_format($total_amount,2);?></span></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail; font-size:14px;font-weight: bolder;" nowrap>&nbsp;$&nbsp;<?php echo number_format($total_price,2);?></td>
+						   <td style="white-space: nowrap;text-align:center;border: none;font-family:Arail; font-size:14px;font-weight: bolder;" nowrap>&nbsp;$&nbsp;<?php echo number_format($total_amount,2);?></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
@@ -163,12 +163,12 @@ if(!empty($result)){
 							<td class="tdheader"><?php echo $tr->translate("AMOUNT");?></td>
 							<td class="tdheader">&nbsp;<?php echo $tr->translate("PU_NO");?></td>
 							<td class="tdheader">&nbsp;<?php echo $tr->translate("RECEIVE_NO");?></td>
-							<td class="tdheader">&nbsp;<?php echo $tr->translate("SUPPLIER");?></td>
+							<td class="tdheader"  >&nbsp;<?php echo $tr->translate("SUPPLIER");?></td>
 							<td class="tdheader">&nbsp;<?php echo $tr->translate("PURCHASER");?></td>
 							<td class="tdheader">&nbsp;<?php echo $tr->translate("REMARK");?></td>
 		                </tr> 
 		                <?php if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){?>
-						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+						<tr class=' tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;background: #FFFFFF;">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-M-Y',strtotime($rs["date_in"]))?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
@@ -178,7 +178,7 @@ if(!empty($result)){
 						   <td style="white-space: nowrap;">&nbsp;$<span style="float:right;"><?php echo $rs["sub_total_after"];?></span></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["order_number"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["recieve_number"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["supplier"];?></td>
+						   <td >&nbsp;<?php echo $rs["supplier"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["purchaser"];?></td>
 						   <td>&nbsp;<?php echo $rs["remark_receiv"];?></td>
 						</tr>

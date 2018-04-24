@@ -27,10 +27,10 @@ $formFilter = $this->formFilter;
             <div class="portlet-body form frmfilter">
 				<form method="post" action="">
 					<div class="form-group" style="padding-top: 6px;">
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('start_date');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('end_date');?></label>
 						<label class="control-label col-md-2">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
@@ -65,6 +65,9 @@ $formFilter = $this->formFilter;
 						font-weight: normal !important;}
 				ul.pur_info li strong{font-weight: bold;}
 			   .hover:hover{background: #ccc;}
+				table.collape td {
+					    border: 1px solid #000;
+					}
 			</style>
 			<table style="font-family: 'Khmer OS Content'; width:100%;">
 				<tbody>
@@ -93,7 +96,7 @@ $formFilter = $this->formFilter;
 				<tr>
 					<table  border="1"  class="collape tablesorter" style="border-collapse:collapse;border:1px solid #000; font-size:12px; font-family: 'Khmer OS Battambang';" width="100%" cellspacing="0">
 						<thead>
-							<tr bgcolor="#ccc" class="style" align="center" style="background:#ccc;font-weight:800 !important; line-height: 30px; font-size:12px !important; padding:1px 0px; white-space: nowrap; ">
+							<tr bgcolor="#ccc" align="center" style="background:#ccc;font-weight:800 !important; line-height: 30px; font-size:12px !important; padding:1px 0px; white-space: nowrap; ">
 			                  	<th style="background: #ccc !important;"><?php echo  $tr->translate("NUM");?></th>
 								<th style="background: #ccc !important;"><?php echo  $tr->translate("REQUEST_NO");?></th>
 								<th style="background: #ccc !important;"><?php echo  $tr->translate("REQUEST_DATE");?></th>
@@ -103,15 +106,15 @@ $formFilter = $this->formFilter;
 							<!-- 	<th style="background: #ccc !important;"><?php echo  $tr->translate("DATE_REQUEST_WORK_PLACE");?></th> -->
 			                  
 			                    
-								<td style="background: #ccc !important;"><?php echo $tr->translate("ITEM_CODE");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("ITEM_NAME");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("MEASURE");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("TOTAL_QTY");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("SAMPLE_PRICE");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("TOTAL_EST");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("PO_PRICE");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("TOTAL");?></td>
-								<td style="background: #ccc !important;"><?php echo $tr->translate("REQ_DATE_IN");?></td>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("ITEM_CODE");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("ITEM_NAME");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("MEASURE");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("TOTAL_QTY");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("SAMPLE_PRICE");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("TOTAL_EST");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("PO_PRICE");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("TOTAL");?></th>
+								<th style="background: #ccc !important;"><?php echo $tr->translate("REQ_DATE_IN");?></th>
 								<th style="background: #ccc !important;"><?php echo  $tr->translate("USER");?></th>
 			                </tr>
 						</thead>
