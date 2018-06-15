@@ -26,11 +26,12 @@ public function init()
 			$data = array(
 					'name'		=>	'',
 					'parent'	=>	'',
-					'status'	=>	1
+					'status'	=>	1,
+					'stock_type'=>-1
 			);
 		}
 		
-		$columns=array("CATEGORY_NAME","PARENT_NAME","REMRK","STATUS");
+		$columns=array("CATEGORY_NAME","PARENT_NAME","TYPE","PREFIX","START_CODE","REMRK","STATUS");
 		$link=array(
 				'module'=>'product','controller'=>'category','action'=>'edit',
 		);

@@ -778,26 +778,29 @@ function checkCateparent($id){
 	}
 	function getProductPrefix($id){
 		$db=$this->getAdapter();
-		$sql="SELECT prefix,start_code FROM `tb_category` WHERE id=$id ";
+		$sql="SELECT prefix,start_code,is_none_stock FROM `tb_category` WHERE id=$id ";
 		$row=$db->fetchRow($sql);
 
 		$sql_p="SELECT int_code FROM `tb_product` WHERE cate_id=$id ORDER BY id DESC  LIMIT 1";
-		$rowp=$db->fetchOne($sql_p);
-		if(!empty($rowp)){
+		$rowp=$db->fetchOne($sql_p);		
+		if($row['is_none_stock']==1){//មិនរាប់ស្តុក
+			if(!empty($rowp)){
+				$p_code=$rowp+1;
+				$acc_no= strlen((int)$rowp+1);
+			}else{
+				$p_code=$row["start_code"]+1;
+				$acc_no= strlen((int)$row["start_code"]+1);
+			}
+			$pre = $row["prefix"];
+			return array("p_code"=>$pre.$p_code,"int_code"=>$p_code);			
+		}else{//រាប់ស្តុក
 			$p_code=$rowp+1;
 			$acc_no= strlen((int)$rowp+1);
-		}else{
-			$p_code=$row["start_code"]+1;
-			$acc_no= strlen((int)$row["start_code"]+1);
+			$pre = $row["prefix"].$row["start_code"];
+			for($i = $acc_no;$i<3;$i++){
+				$pre.='0';
+			}
+			return array("p_code"=>$pre.$p_code,"int_code"=>$p_code);
 		}
-		
-		
-		$pre = $row["prefix"];
-		for($i = $acc_no;$i<4;$i++){
-			//$pre.='0';
-		}
-		return array("p_code"=>$pre.$p_code,"int_code"=>$p_code);
-	}
-	
-    
+	}   
 }

@@ -250,7 +250,7 @@ function addRow(item_id) {
 			template+='<td width="2%" class="center"><label id="lbno_'+index5+'">'+index+'<label></td>';
 			template+='<td width="2%" class="center">'+rs.item_code+'<input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" value="'+rs.item_id+'" /></td>';
 			template+='<td width="2%" class="center">'+rs.item_name+'</td>';
-			template+='<td><input type="text" class="form-control" required="1" id="qty_'+index5+'" name="qty_'+index5+'" value="1"></td>';
+			template+='<td><input type="text" onkeypress="return isNumberKey(event)" class="form-control" required="1" id="qty_'+index5+'" name="qty_'+index5+'" value="1"></td>';
 			template+='<td width="2%" class="center">'+rs.measure+'</td>';
 			template+='<td width="2%" class="center"><input type="text" name="date_in_'+index5+'" id="date_in_'+index5+'" class="validate[required] form-control date-picker" /></td>';
 			template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" /></span></td>';

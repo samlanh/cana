@@ -15,8 +15,9 @@ public function init(){
     	return $result;
     }
     public function indexAction(){
+    	$db = new Product_Model_DbTable_DbOther();
     	try{
-    		$db = new Product_Model_DbTable_DbOther();
+    		
     		if($this->getRequest()->isPost()){
     			$search = $this->getRequest()->getPost();
     		}
@@ -42,6 +43,7 @@ public function init(){
     	$frm = $fm->search();
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->Form = $frm;
+    	//$db->updateOldPettycash();
     }
     public function addAction(){
     	if($this->getRequest()->isPost()){

@@ -75,4 +75,24 @@ class Product_Model_DbTable_DbOther extends Zend_Db_Table_Abstract{
     	$number = $db->fetchOne($sql);
     	return $number+1;
     }
+    function updateOldPettycash(){
+    	$sql="SELECT n.id,n.item_name,n.item_code,o.item_name,o.item_code AS item_code_old ,c.name
+			  FROM `tb_product` AS n ,
+			  `tb_product_old` AS o,
+			  `tb_category` AS c
+			 WHERE  n.id=o.id AND c.id=n.cate_id AND c.is_none_stock=1 AND n.item_code!=o.item_code";
+    	$db = $this->getAdapter();
+    	$row = $db->fetchAll($sql);
+    	if(!empty($row)){
+    		
+    		$this->_name="tb_product";
+    		foreach($row as $rs){
+    			$arr = array(
+    					'item_code'=>$rs['item_code_old']
+    					);
+    			$where="id=".$rs['id'];
+    			$this->update($arr, $where);
+    		}
+    	}
+    }
 }

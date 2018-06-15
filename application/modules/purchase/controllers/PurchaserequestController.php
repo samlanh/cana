@@ -80,13 +80,7 @@ class Purchase_PurchaserequestController extends Zend_Controller_Action
 			try {
 				$db->edit($data);
 				Application_Form_FrmMessage::message("Request has been Saved!");
-				if(!empty($data['save_close'])){
-					Application_Form_FrmMessage::redirectUrl("/purchase/purchaserequest");
-				}elseif(isset($data["save_print"])){
-					Application_Form_FrmMessage::redirectUrl("/purchase/purchaserequest/purproductdetail?id=".$id);
-				}else{
-					Application_Form_FrmMessage::redirectUrl("/purchase/purchaserequest/add");
-				}
+				Application_Form_FrmMessage::redirectUrl("/purchase/purchaserequest");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();

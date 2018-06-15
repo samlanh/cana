@@ -203,15 +203,22 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY  s.`is_approve` ASC, id DESC ";
-		//echo $sql.$where.$groupby;
 		return $db->fetchAll($sql.$where.$groupby.$order);
 	}
 	
 	function add($data){
 		try{
-			$sql = "SELECT s.`id` FROM `tb_su_price_idcompare` AS s WHERE s.`code`='".$data["c_code"]."'";
+			
 			$db=$this->getAdapter();
 			$db->beginTransaction();
+			
+			$sql = "SELECT s.`id` FROM `tb_su_price_idcompare` AS s WHERE s.`re_id`=".$data["id"];
+			$rsult = $db->fetchOne($sql);
+			if(!empty($rsult)){
+				Application_Form_FrmMessage::message('This Transaction is has beed compared!');
+				return true;
+			}
+			
 			$db_global = new Application_Model_DbTable_DbGlobal();
 			$session_user = new Zend_Session_Namespace('auth');
 			$GetUserId= $session_user->user_id;
@@ -230,7 +237,6 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 				);
 				$this->insert($arr);
 			}
-			//$identity = $data["identity"];
 			$ids=explode(',',$data['identity']);
 			foreach($ids as $i){
 				for($j=1;$j<=4;$j++){
@@ -238,6 +244,10 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 						$is_vat = 10;
 					}else{
 						$is_vat = 0;
+					}
+					$check=0;
+					if ($data['checkbox_'.$i]==$j){
+						$check=1;
 					}
 					$arr_pro=array(
 							're_id'			=> 	$data["id"],
@@ -247,7 +257,7 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 							'qty'			=>	$data["pro_qty_".$i],
 							'pro_from'		=>	$data["pro_from_".$i."_".$j],
 							'pro_brand'		=>	$data["brand_".$i."_".$j],
-							'is_check'		=>	@$data["checkbox_".$i."_".$j],
+							'is_check'		=>	$check,
 							'vat'			=>	$is_vat,
 					);
 					$this->_name="tb_pro_compare";
@@ -270,6 +280,7 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 			$this->_name = "tb_purchase_request";
 			$where = "id=".$data["id"];
 			$this->update($arr_re,$where);
+			
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
@@ -281,7 +292,7 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 	
 	function edit($data){
 		try{
-			//print_r($data);exit();
+			
 			$db=$this->getAdapter();
 			$db->beginTransaction();
 			$db_global = new Application_Model_DbTable_DbGlobal();
@@ -308,7 +319,7 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 				);
 				$this->insert($arr);
 			}
-			//$identity = $data["identity"];
+	
 			$ids=explode(',',$data['identity']);
 			foreach($ids as $i){
 				for($j=1;$j<=4;$j++){
@@ -317,6 +328,11 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 					}else{
 						$is_vat = 0;
 					}
+					$check=0;
+					if ($data['checkbox_'.$i]==$j){
+						$check=1;
+					}
+					
 					$arr_pro=array(
 							're_id'			=> 	$data["id"],
 							'pro_id'		=> 	$data["pro_id_".$i],
@@ -325,7 +341,7 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 							'qty'			=>	$data["pro_qty_".$i],
 							'pro_from'		=>	$data["pro_from_".$i."_".$j],
 							'pro_brand'		=>	$data["brand_".$i."_".$j],
-							'is_check'		=>	@$data["checkbox_".$i."_".$j],
+							'is_check'		=>	$check,
 							'vat'			=>	$is_vat,
 					);
 					$this->_name="tb_pro_compare";

@@ -41,25 +41,7 @@ class Purchase_Model_DbTable_DbInvoiceControlling extends Zend_Db_Table_Abstract
 	}
 	function getAllReceiveInvoice($search){
 		$db = $this->getAdapter();
-		/*$sql = "SELECT 
-				  r.`order_id`,
-				  r.`recieve_number`,
-				  r.`invoice_no`,
-				  (SELECT i.`invoice_controlling_date` FROM `tb_invoice_controlling` AS i WHERE i.`receive_id`=r.`order_id` LIMIT 1) AS controlling_receive_date,
-				  (SELECT p.`order_number` FROM `tb_purchase_order` AS p WHERE p.id=r.`purchase_id` LIMIT 1) AS purchase_no,
-				  (SELECT s.name FROM `tb_sublocation` AS s WHERE s.id=r.`LocationId` LIMIT 1) AS branch,
-				  r.`invoice_date`,
-				  r.`receive_invoice_date`,
-				  r.`date_order`,
-				  r.`date_in`,
-				  (SELECT p.name FROM `tb_plan` AS p WHERE p.id=(SELECT pr.plan_id FROM `tb_purchase_request` AS pr WHERE pr.id=(SELECT po.re_id FROM `tb_purchase_order` AS po WHERE po.id=r.`purchase_id` LIMIT 1) LIMIT 1) LIMIT 1) AS plan,
-				  (SELECT v.`v_name` FROM `tb_vendor` AS v WHERE v.`vendor_id`=r.`vendor_id` LIMIT 1) AS vendor,
-				  r.`all_total_after`,
-				  r.`is_invoice_controlling`,
-				  r.paid,
-				  r.balance
-				FROM
-				  `tb_recieve_order` AS r ";*/
+		
 		$sql="SELECT 
 				  r.`id`,
 				  r.`invoice_no`,
@@ -70,16 +52,18 @@ class Purchase_Model_DbTable_DbInvoiceControlling extends Zend_Db_Table_Abstract
 				  (SELECT p.name FROM `tb_plan` AS p WHERE p.id=(SELECT pr.plan_id FROM `tb_purchase_request` AS pr WHERE pr.id=(SELECT po.re_id FROM `tb_purchase_order` AS po WHERE po.id=r.`purchase_id` LIMIT 1) LIMIT 1) LIMIT 1) AS plan,
 				  (SELECT v.`v_name` FROM `tb_vendor` AS v WHERE v.`vendor_id`=r.`vendor_id` LIMIT 1) AS vendor,
 				  r.`sub_total_after` as all_total_after,
-				  r.`is_invoice_contrilling` as is_invoice_controlling ,
+				  r.`is_invoice_contrilling` AS is_invoice_controlling,
 				  r.paid,
 				  r.balance,
-				  r.`invoice_date_from_stock` as receive_invoice_date
+				  r.`invoice_date_from_stock` AS receive_invoice_date
 				FROM
 				  `tb_purchase_invoice` AS r WHERE 1";
-				 $where=''; 
-				  $from_date =(empty($search['start_date']))? '1': "  r.invoice_date >= '".$search['start_date']."'";
+		$where=''; 
+		
+		$from_date =(empty($search['start_date']))? '1': "  r.invoice_date >= '".$search['start_date']."'";
 		$to_date = (empty($search['end_date']))? '1': "   r.invoice_date <= '".$search['end_date']."'";
 		$where = " AND ".$from_date." AND ".$to_date;
+		
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));

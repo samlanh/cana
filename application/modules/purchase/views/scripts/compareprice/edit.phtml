@@ -4,7 +4,6 @@
 	$url_submit = $this->url(array('module'=>'purchase','controller'=>'compareprice','action'=>'add'));
 	$url_cancel = $this->url(array('module'=>'purchase','controller'=>'compareprice','action'=>'addcompare'),null,true);
 	$db = new Purchase_Model_DbTable_DbPriceCompare();
-	//echo $this->id;
 ?>
 <style>
       table.table-bordered tbody th, table.table-bordered tbody td{width:2px;}
@@ -169,7 +168,7 @@
 								$product = $db->getProCompare($this->id,$rs["id"]);
 								foreach( $product as $key => $rss){ 
 									if($rss["is_check"]==1){
-										$check = 'checked="checked"';
+										$check = 'checked';
 									}else{
 										$check = '';
 									}
@@ -186,9 +185,7 @@
 											<td><input type="text" style="width: 100%;"name="pro_from_<?php echo $i?>_<?php echo $j;?>" id="pro_from_<?php echo $i?>_<?php echo $j;?>" value="<?php echo $rss["pro_from"] ?>"/></td>
 										</tr>
 									</table>
-									<div class="input-icon left"><i class="fa">$</i><input style="text-align:right;width: 80%;" name="su_price_<?php echo $i?>_<?php echo $j;?>" value="<?php echo $rss["price"]?>" /><input type="checkbox" value="1" <?php echo $check;?> name="checkbox_<?php echo $i?>_<?php echo $j;?>"/></div>
-									<!--<input type="hidden" style="width: 50%;"name="brand_<?php //echo $i?>_<?php //echo $j;?>" id="brand_<?php //echo $i?>_<?php //echo $j;?>" value="<?php //echo $rss["pro_brand"] ?>" />
-									<input type="hidden" style="width: 50%;"name="pro_from_<?php //echo $i?>_<?php //echo $j;?>" id="pro_from_<?php //echo $i?>_<?php //echo $j;?>" value="<?php //echo $rss["pro_from"] ?>"/>-->
+									<div class="input-icon left"><i class="fa">$</i><input style="text-align:right;width: 80%;" name="su_price_<?php echo $i?>_<?php echo $j;?>" value="<?php echo $rss["price"]?>" /><input value="<?php echo $j;?>" type="radio" <?php if($rss["is_check"]==1){echo "checked";}?> name="checkbox_<?php echo $i?>"/></div>
 								</td>
 							<?php 
 							} ?>

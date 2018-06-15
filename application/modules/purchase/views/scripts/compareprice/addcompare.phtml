@@ -26,6 +26,7 @@
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('po_pedding');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('search_bydate');?></label>
 						<label class="control-label col-md-2">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
@@ -39,6 +40,7 @@
 								<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("REQUEST_NO");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("REQUEST_DATE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("CHECK_DATE");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("PLAN");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("LOCATION_NAME");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("NUMBER_WORK_SPACE");?></th>
@@ -102,12 +104,13 @@
 							?>
 								<tr class="normal">
 									<td class="items-no"><?php echo $key+1;?></td>
-									<td class="items"><?php echo $rs["re_code"];?></td>
-									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_request"]));?></td>
+									<td class="items"​ style="white-space: nowrap;"><?php echo $rs["re_code"];?></td>
+									<td class="items" style="white-space: nowrap;"><?php echo date('d-M-Y',strtotime($rs["date_request"]));?></td>
+									<td class="items" style="white-space: nowrap;"><?php echo !empty($rs["check_date"])?date('d-M-Y',strtotime($rs["check_date"])):"";?></td>
 									<td class="items"><?php echo $rs["plan"];?></td>
 									<td class="items"><?php echo $rs["branch"];?></td>
 									<td class="items"><?php echo $rs["number_request"];?></td>
-									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_from_work_space"]));?></td>
+									<td class="items" style="white-space: nowrap;"><?php echo date('d-M-Y',strtotime($rs["date_from_work_space"]));?></td>
 									<td class="items"><?php echo $rs["app_status"];?></td>
 									<td class="items"><?php echo $rs["pedding"];?></td>
 									<td class="items"><?php echo $rs["pstatus"];?></td>

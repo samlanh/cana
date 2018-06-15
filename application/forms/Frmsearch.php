@@ -18,7 +18,6 @@ class Application_Form_Frmsearch extends Zend_Form
 		}
 		$branch->setAttribs(array(
 				'class'=>'form-control select2me',
-				//'required'=>'required',
 				'Onchange'	=>	'addNewProLocation()'
 		));
 		$branch->setMultiOptions($opt);
@@ -35,7 +34,6 @@ class Application_Form_Frmsearch extends Zend_Form
 		}
 		$po_pedding->setAttribs(array(
 				'class'=>'form-control select2me',
-				//'required'=>'required',
 				'Onchange'	=>	'addNewProLocation()'
 		));
 		$po_pedding->setMultiOptions($opt);
@@ -94,21 +92,6 @@ class Application_Form_Frmsearch extends Zend_Form
 				'class'=>'form-control form-control-inline date-picker'
 		));
 		
-// 		$rs=$db->getGlobalDb('SELECT DISTINCT name,id FROM tb_sublocation WHERE Name!="" AND status=1 ');
-// 		$options=array($tr->translate('Please_Select'));
-// 		$locationValue = $request->getParam('LocationId');
-// 		foreach($rs as $read) $options[$read['id']]=$read['name'];
-// 		$location_id=new Zend_Form_Element_Select('id');
-// 		$location_id->setMultiOptions($options);
-// 		$location_id->setAttribs(array(
-// 				'id'=>'LocationId',
-// 				'onchange'=>'this.form.submit()',
-// 				'class'=>'form-control'
-				
-// 		));
-// 		$location_id->setValue($locationValue);
-// 		$this->addElement($location_id);
-	  
 		$statusCOValue=4;
 		$statusCOValue = $request->getParam('purchase_status');
 		$optionsCOStatus=array(0=>$tr->translate('CHOOSE_STATUS'),2=>$tr->translate('OPEN'),3=>$tr->translate('IN_PROGRESS'),4=>$tr->translate('PAID'),5=>$tr->translate('RECEIVED'),6=>$tr->translate('MENU_CANCEL'));
@@ -121,8 +104,6 @@ class Application_Form_Frmsearch extends Zend_Form
 		
 		$statusCO->setValue($statusCOValue);
 		$this->addElement($statusCO);
-		
-		
 		
 		$status_paid = $request->getParam('is_paid_balance');
 		$optionsCOStatus=array('0'=>$tr->translate('CHOOSE_STATUS'),1=>$tr->translate('Paid Balance'),2=>$tr->translate('Paid Full'));
@@ -159,26 +140,20 @@ class Application_Form_Frmsearch extends Zend_Form
 		$nameValue = $request->getParam('plan');
 		$plan ->setAttribs(array(
 				'class' => 'validate[required] form-control select2me',
-				//'onChange'=>'addPlanAddr()'
 		));
 		$plan->setMultiOptions($option);
 		$plan->setValue($nameValue);
 		$this->addElement($plan);
 		
-// 		$sql = "SELECT pl.id,pl.`name` FROM `tb_sublocation` AS pl WHERE 1";
-// 		$row_b = $db->getGlobalDb($sql);
-// 		$opt_b = array(''=>$tr->translate('SELECT_BRANCH'));
-// 		if(!empty($row_b)){
-// 			foreach($row_b as $rs){
-// 				$opt_b[$rs["id"]] = $rs["name"];
-// 			}
-// 		}
-// 		$branch = new Zend_Form_Element_Select('branch');
-// 		$branch->setAttribs(array('class'=>'validate[required] form-control select2me','readOnly'=>'readOnly','onChange'=>'getRequestCode()'));
-// 		$branch->setMultiOptions($opt_b);
-// 		$plan->setValue($request->getParam('branch'));
-// 		$this->addElement($branch);
-		
+		$search_bydate = new Zend_Form_Element_Select('search_bydate');
+		$search_bydate->setAttribs(array(
+				'class'=>'form-control',
+					
+		));
+		$opt_date = array(1=>$tr->translate("MR_DATE"),2=>$tr->translate('CHECK_DATE'),3=>$tr->translate('DATE_REQUEST_WORK_SPACE'));
+		$search_bydate->setMultiOptions($opt_date);
+		$search_bydate->setValue($request->getParam('search_bydate'));
+		$this->addElement($search_bydate);
 	}
 	
 }

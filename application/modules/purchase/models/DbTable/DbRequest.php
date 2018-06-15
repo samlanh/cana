@@ -74,6 +74,7 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 				  p.`status` ,
 				  p.re_edit,
 				  p.`date_from_work_space`,
+				  p.check_date,
 				  p.`number_request`,
 				  (SELECT pl.`name` FROM `tb_plan` AS pl WHERE pl.id=p.`plan_id`) AS plan,
 				  p.`pedding` AS pedding_stat,
@@ -84,9 +85,22 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 				  (SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = P.user_id LIMIT 1 ) AS user_name,
 				  (SELECT s.is_edit FROM `tb_su_price_idcompare` AS s WHERE s.re_id=p.id LIMIT 1) AS is_edit
 				FROM
-				  `tb_purchase_request` AS p WHERE p.date_request BETWEEN '$start_date' AND '$end_date'";
+				  `tb_purchase_request` AS p WHERE 1";
 		
-		$where ='';
+		if(empty($search['search_bydate'])){
+			$search['search_bydate']=1;
+		}
+		if($search['search_bydate']==1){
+			$str_date=' p.date_request';
+		}else if($search['search_bydate']==2){
+			$str_date=' p.check_date';
+		}else{
+			$str_date=' p.date_from_work_space';
+		}
+		$from_date =(empty($start_date))? '1': " $str_date >= '".$start_date." 00:00:00'";
+		$to_date = (empty($end_date))? '1': " $str_date <= '".$end_date." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));

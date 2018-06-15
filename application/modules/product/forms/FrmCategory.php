@@ -104,7 +104,16 @@ class Product_Form_FrmCategory extends Zend_Form
 		$status->setMultiOptions($opt);
 		$status->setValue($request->getParam("status"));
 		
-		$this->addElements(array($parent,$name,$status));
+		$stock_type = new Zend_Form_Element_Select("stock_type");
+		$stock_type->setAttribs(array(
+				'class'=>'form-control',
+				'required'=>'required'
+		));
+		$opt = array(-1=>$tr->translate("TYPE"),0=>$tr->translate("រាប់បញ្ចូលស្តុក"),1=>$tr->translate("មិនរាប់បញ្ចូលស្តុក"));
+		$stock_type->setMultiOptions($opt);
+		$stock_type->setValue($request->getParam("stock_type"));
+		
+		$this->addElements(array($stock_type,$parent,$name,$status));
 		return $this;
 	}
 }

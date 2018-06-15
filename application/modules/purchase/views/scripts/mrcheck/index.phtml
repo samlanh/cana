@@ -2,7 +2,6 @@
 	$url_new = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'add',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
-	//print_r($this->rs)."sfsgesd";
 ?>
 <title><?php echo $tr->translate("MENU_MR_CHECK");?></title>
 <meta charset="utf-8" />
@@ -13,9 +12,6 @@
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("MENU_MR_CHECK");?>
 				</div>
-				<!--<a href="<?php echo $url_new;?>" class="btn btn-sm green  pull-right">
-					<i class="fa fa-plus"></i>&nbsp;<?php //echo $tr->translate("ADD_NEW");?>
-				</a>-->
 			</div>
 			<div class="portlet-body form frmfilter">
 				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
@@ -26,6 +22,7 @@
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('po_pedding');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('search_bydate');?></label>
 						<label class="control-label col-md-2">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
@@ -39,6 +36,7 @@
 								<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("REQUEST_NO");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("REQUEST_DATE");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("CHECK_DATE");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("PLAN");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("LOCATION_NAME");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("NUMBER_WORK_SPACE");?></th>
@@ -90,14 +88,15 @@
 							if(!empty($this->rs)){
 								foreach ($this->rs as $key=>$rs){
 									$edit_status = '';
-									if($rs["pedding_stat"]>3 && $rs['re_edit']==1){ //$rs["pedding_stat"]>3
+									if($rs["pedding_stat"]>3 && $rs['re_edit']==1){ 
 										$edit_status = "style='pointer-events: none;cursor: default;color: #ccc;'";
 									}
 							?>
 								<tr class="normal">
 									<td class="items-no"><?php echo $key+1;?></td>
-									<td class="items"><?php echo $rs["re_code"];?></td>
-									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_request"]));?></td>
+									<td class="items" style="white-space: nowrap;"><?php echo $rs["re_code"];?></td>
+									<td class="items" style="white-space: nowrap;"><?php echo date('d-M-Y',strtotime($rs["date_request"]));?></td>
+									<td class="items" style="white-space: nowrap;"><?php echo !empty($rs["check_date"])?date('d-M-Y',strtotime($rs["check_date"])):"";?></td>
 									<td class="items"><?php echo $rs["plan"];?></td>
 									<td class="items"><?php echo $rs["branch"];?></td>
 									<td class="items"><?php echo $rs["number_request"];?></td>
@@ -116,7 +115,6 @@
 							}}?>
 						</tbody>
 					</table></div></form><?php echo $footer?>
-						<?php //echo $this->list; ?>
 			    </div>
 		   </div>
 		</div>

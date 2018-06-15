@@ -166,7 +166,9 @@
 											<td><input type="text" style="width: 100%;"name="pro_from_<?php echo $i?>_<?php echo $j;?>" id="pro_from_<?php echo $i?>_<?php echo $j;?>" /></td>
 										</tr>
 									</table>
-									<div class="input-icon left"><i class="fa">$</i><input style="text-align:right;width: 80%;" name="su_price_<?php echo $i?>_<?php echo $j;?>" value="" /><input type="checkbox" value="1" name="checkbox_<?php echo $i?>_<?php echo $j;?>"/></div>
+									<div class="input-icon left"><i class="fa">$</i><input style="text-align:right;width: 80%;" name="su_price_<?php echo $i?>_<?php echo $j;?>" value="" /><input type="radio" value="<?php echo $j;?>" name="checkbox_<?php echo $i?>"/>
+										
+									</div>
 							<?php 
 								
 							} ?>
@@ -209,6 +211,7 @@
 	</div>
 </div>
 <script>
+						
 function deleteRecord(index) {	
 	var identity = $('#identity').val();
 	var r = confirm("តើលោកអ្នកពិតជាចង់លុបទិន្នន័យនេះមែនឫទេ?");

@@ -67,6 +67,9 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract{
 		$db = $this->getAdapter();
 		$sql = "SELECT c.id,c.`name`,
 				(SELECT par_id.name FROM tb_category AS par_id WHERE par_id.id = c.parent_id  ) AS parent_name,
+				(SELECT name_kh FROM `tb_view` WHERE type=16 AND key_code=c.`is_none_stock` LIMIT 1) AS stock_type,
+				c.prefix,
+				c.start_code,
 				c.`remark`,
 				(SELECT name_en FROM `tb_view` WHERE type=5 AND key_code=c.`status` LIMIT 1) AS status
 				FROM `tb_category` AS c WHERE 1";
@@ -76,7 +79,8 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract{
 			$s_where=array();
 			$s_search = addslashes(trim($data['name']));
 			$s_where[]= " c.`name` LIKE '%{$s_search}%'";
-			//$s_where[]= " cate LIKE '%{$s_search}%'";
+			$s_where[]= " c.prefix LIKE '%{$s_search}%'";
+			$s_where[]= " c.start_code LIKE '%{$s_search}%'";
 			$where.=' AND ('.implode(' OR ', $s_where).')';
 		}
 		if($data["parent"]!=""){
@@ -85,6 +89,10 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract{
 		if($data["status"]!=""){
 			$where.=' AND c.status='.$data["status"];
 		}
+		if($data["stock_type"]>-1){
+			$where.=' AND c.is_none_stock='.$data["stock_type"];
+		}
+		
 		return $db->fetchAll($sql.$where);
 	}
 	 
