@@ -9,9 +9,9 @@ class report_ProductController extends Zend_Controller_Action
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$db = new Application_Model_DbTable_DbGlobal();
 		$rs = $db->getValidUserUrl();
-		if(empty($rs)){
-			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
-		}
+		//if(empty($rs)){
+		//	Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
+		//}
     }
     protected function GetuserInfo(){
     	$user_info = new Application_Model_DbTable_DbGetUserInfo();

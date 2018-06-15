@@ -259,7 +259,7 @@ function initList() {
 	template='<tr id="row_order_'+index5+'" style="height:33px;">';
 	var inp = '';
 	if(index5 == 1) {
-		template+='<td width="2%" class="center">&nbsp;</td>';
+		template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" />&nbsp;</td>';
 	} else {
 		template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
 	}
