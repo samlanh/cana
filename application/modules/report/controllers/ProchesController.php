@@ -66,10 +66,11 @@ class report_ProchesController extends Zend_Controller_Action
 					'plan'			=>	'',
 					'end_date'		=>	date("Y-m-d"),
 					'po_pedding'	=>	'',
+			        'appr_status'	=>	'',
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbRequest();
-		
+		$this->view->rssearch=$search;
 		$rows = $db->getAllRequest($search);
 		$this->view->rs = $rows;
 		$list = new Application_Form_Frmlist();
@@ -94,17 +95,33 @@ class report_ProchesController extends Zend_Controller_Action
 				$search = $this->getRequest()->getPost();
 				$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
 				$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+				
+				if($search['search_date']==1){
+				    $search['start_date']=date("Y-m-d");
+				    $search['end_date']=date("Y-m-d");
+				    
+				}elseif ($search['search_date']==2){
+				    $str_next = '+1 week';
+				    $search['start_date']=date("Y-m-d");
+				    $search['end_date']=date("Y-m-d", strtotime($search['end_date'].$str_next));
+				    
+				}elseif ($search['search_date']==3){
+				    $str_next = '+1 month';
+				    $search['start_date']=date("Y-m-d");
+				    $search['end_date']=date("Y-m-d", strtotime($search['end_date'].$str_next));
+				}else{}
 		}
 		else{
 			$search =array(
 					'text_search'=>'',
 					'start_date'=>date("Y-m-01"),
 					'end_date'=>date("Y-m-d"),
-					'purchase_status'=>0,
+					//'purchase_status'=>0,
+					'appr_status'=>''
 					);
 		}
+		$this->view->rssearch=$search;
 		$db = new report_Model_DbStock();
-		
 		$rows = $db->getPORequestDetail($search);
 		$this->view->rs = $rows;
 		
@@ -183,6 +200,22 @@ class report_ProchesController extends Zend_Controller_Action
     		$data = $this->getRequest()->getPost();
     		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+    		
+    		if($data['search_date']==1){
+    		    $data['start_date']=date("Y-m-d");
+    		    $data['end_date']=date("Y-m-d");
+    		    
+    		}elseif ($data['search_date']==2){
+    		    $str_next = '+1 week';
+    		    $data['start_date']=date("Y-m-d");
+    		    $data['end_date']=date("Y-m-d", strtotime($data['end_date'].$str_next));
+    		    
+    		}elseif ($data['search_date']==3){
+    		    $str_next = '+1 month';
+    		    $data['start_date']=date("Y-m-d");
+    		    $data['end_date']=date("Y-m-d", strtotime($data['end_date'].$str_next));
+    		}else{}
+    		
     	}else{
     		$data = array(
     				'text_search'=>'',
@@ -190,6 +223,7 @@ class report_ProchesController extends Zend_Controller_Action
     				'end_date'=>date("Y-m-d"),
     				'suppliyer_id'=>0,
     				'branch_id'=>0,
+    		        'plan'     =>0,
 					'po_pedding'=>''
     				
     		);
@@ -216,6 +250,22 @@ class report_ProchesController extends Zend_Controller_Action
     		$data = $this->getRequest()->getPost();
     		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
     		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+    		
+    		if($data['search_date']==1){
+    		    $data['start_date']=date("Y-m-d");
+    		    $data['end_date']=date("Y-m-d");
+    		    
+    		}elseif ($data['search_date']==2){
+    		    $str_next = '+1 week';
+    		    $data['start_date']=date("Y-m-d");
+    		    $data['end_date']=date("Y-m-d", strtotime($data['end_date'].$str_next));
+    		    
+    		}elseif ($data['search_date']==3){
+    		    $str_next = '+1 month';
+    		    $data['start_date']=date("Y-m-d");
+    		    $data['end_date']=date("Y-m-d", strtotime($data['end_date'].$str_next));
+    		}else{}
+    		
     	}else{
     		$data = array(
     				'text_search'=>'',
@@ -223,6 +273,7 @@ class report_ProchesController extends Zend_Controller_Action
     				'end_date'=>date("Y-m-d"),
     				'suppliyer_id'=>0,
     				'branch_id'=>0,
+    		        'plan'=>0,
 					//'po_pedding'=>-1,
     				'add_item'=>-1
     		);
@@ -414,6 +465,7 @@ class report_ProchesController extends Zend_Controller_Action
 		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
     	 
     }
+    
 	public function rptpricecompareAction(){
 		if($this->getRequest()->isPost()){
 				$search = $this->getRequest()->getPost();
@@ -440,6 +492,7 @@ class report_ProchesController extends Zend_Controller_Action
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
 	}
+	
 	public function purproductdetailAction(){
 		$db = new Purchase_Model_DbTable_DbPriceCompareCheck();
 		$dbs = new Purchase_Model_DbTable_DbMrApprove();

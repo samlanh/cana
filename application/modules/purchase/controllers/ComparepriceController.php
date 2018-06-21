@@ -12,6 +12,7 @@ class Purchase_ComparepriceController extends Zend_Controller_Action
 			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
 		}
     }
+    
 	public function indexAction()
 	{
 		if($this->getRequest()->isPost()){
@@ -35,6 +36,7 @@ class Purchase_ComparepriceController extends Zend_Controller_Action
 		$formFilter = new Application_Form_Frmsearch();
 		$this->view->formFilter = $formFilter;
 	}
+	
 	public function addcompareAction()
 	{
 		if($this->getRequest()->isPost()){
@@ -69,6 +71,7 @@ class Purchase_ComparepriceController extends Zend_Controller_Action
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
+	
 	public function addAction(){
 		$db = new Purchase_Model_DbTable_DbPriceCompare();
 		$id = $this->getRequest()->getParam('id');
@@ -100,9 +103,8 @@ class Purchase_ComparepriceController extends Zend_Controller_Action
 		$session_user=new Zend_Session_Namespace('auth');
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
-		
-			
 	}
+	
 	public function editAction(){
 		$db = new Purchase_Model_DbTable_DbPriceCompare();
 		$id = $this->getRequest()->getParam('id');

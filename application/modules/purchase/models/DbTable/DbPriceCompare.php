@@ -152,6 +152,7 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 				WHERE p.`re_id` =$id AND p.`pro_id`=$pro_id";
 		return $db->fetchAll($sql);
 	}
+	
 	function getAllCompare($search){
 		$db = $this->getAdapter();
 		$start_date = date("Y-m-d",strtotime($search['start_date']));
@@ -179,6 +180,18 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 				WHERE s.`re_id` = p.`id` AND p.date_request BETWEEN '$start_date' AND '$end_date'";
 		$where ='';
 		$groupby = " GROUP BY s.`re_id`";
+		
+		if(empty($search['search_bydate'])){
+		    $search['search_bydate']=1;
+		}
+		if($search['search_bydate']==1){
+		    $str_date=' p.date_request';
+		}else if($search['search_bydate']==2){
+		    $str_date=' p.check_date';
+		}else{
+		    $str_date=' p.date_from_work_space';
+		}
+		
 		if(!empty($search['text_search'])){
 			$s_where = array();
 			$s_search = trim(addslashes($search['text_search']));

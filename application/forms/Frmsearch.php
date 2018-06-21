@@ -150,6 +150,32 @@ class Application_Form_Frmsearch extends Zend_Form
 				'class'=>'form-control',
 					
 		));
+		
+		$appr_status = new Zend_Form_Element_Select("appr_status");
+		$opt = array(''=>$tr->translate("SELECT"));
+		$rspo_pedding = $db->getRequestStatusAprove();
+		if(!empty($rspo_pedding)){
+		    foreach ($rspo_pedding as $rs){
+		        $opt[$rs["id"]] = $rs["name"];
+		    }
+		}
+		$appr_status->setAttribs(array(
+		    'class'=>'form-control select2me',
+		));
+		$appr_status->setMultiOptions($opt);
+		$appr_status->setValue($request->getParam('appr_status'));
+		$this->addElement($appr_status);
+		
+		$search_date = new Zend_Form_Element_Select('search_date');
+		$search_date->setAttribs(array(
+		    'class'=>'form-control',
+		    
+		));
+		$opt_d = array(''=>$tr->translate("SELECT"),1=>$tr->translate("Daily"),2=>$tr->translate('Weekly'),3=>$tr->translate('Monthly'));
+		$search_date->setMultiOptions($opt_d);
+		$search_date->setValue($request->getParam('search_date'));
+		$this->addElement($search_date);
+		
 		$opt_date = array(1=>$tr->translate("MR_DATE"),2=>$tr->translate('CHECK_DATE'),3=>$tr->translate('DATE_REQUEST_WORK_SPACE'));
 		$search_bydate->setMultiOptions($opt_date);
 		$search_bydate->setValue($request->getParam('search_bydate'));

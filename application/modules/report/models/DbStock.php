@@ -346,6 +346,22 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  `tb_purchase_request` AS p 
 				WHERE p.`id` = pr.`pur_id` 
 				  AND pr.`pro_id` = v.`id` ";
+		
+// 		if($search['search_date']==1){
+// 		    $search['start_date']=date("Y-m-d");
+// 		    $search['end_date']=date("Y-m-d");
+		     
+// 		}elseif ($search['search_date']==2){
+// 		    $str_next = '+1 week';
+// 		    $search['start_date']=date("Y-m-d");
+// 		    $search['end_date']=date("Y-m-d", strtotime($search['end_date'].$str_next));
+		
+// 		}elseif ($search['search_date']==3){
+// 		    $str_next = '+1 month';
+// 		    $search['start_date']=date("Y-m-d");
+// 		    $search['end_date']=date("Y-m-d", strtotime($search['end_date'].$str_next));
+// 		}else{}
+		
 		$from_date =(empty($search['start_date']))? '1': " p.`date_request` >= '".$search['start_date']."'";
 		$to_date = (empty($search['end_date']))? '1': "  p.`date_request` <= '".$search['end_date']."'";
 		$where = " AND ".$from_date." AND ".$to_date;
@@ -363,8 +379,13 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		if(!empty($search['plan'])){
 			$where .= " AND p.`plan_id` = ".$search['plan'];
 		}
+		if(!empty($search['appr_status'])){
+		    $where .= " AND p.`appr_status` = ".$search['appr_status'];
+		}
+		//echo $sql.$where;
 		return $db->fetchAll($sql.$where);
 	}
+	
 	function getAllPurchaseReport($search){//new
 		$db= $this->getAdapter();
 		$sql=" SELECT id,
@@ -386,6 +407,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		(SELECT name_en FROM `tb_view` WHERE key_code =tb_purchase_order.status AND TYPE=5 LIMIT 1) AS `status`,
 		(SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = user_mod LIMIT 1 LIMIT 1) AS user_name
 		FROM `tb_purchase_order` ";
+		
 		$from_date =(empty($search['start_date']))? '1': " date_order >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " date_order <= '".$search['end_date']." 23:59:59'";
 		$where = " WHERE ".$from_date." AND ".$to_date;
@@ -405,6 +427,15 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		if($search['po_pedding']>0){
 			$where .= " AND purchase_status =".$search['po_pedding'];
 		}
+		
+		if(!empty($search['plan'])){
+		    $where .= " AND (SELECT `plan_id` FROM `tb_purchase_request` WHERE tb_purchase_request.id = re_id AND status=1)  =".$search['plan'];
+		}
+		
+		if(!empty($search['branch_id'])){
+		    $where .= " AND branch_id =".$search['branch_id'];
+		}
+		
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";
@@ -436,6 +467,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  `tb_purchase_order_item` AS pr 
 				WHERE p.id = pr.`purchase_id` 
 				  AND pr.`pro_id` = v.`id`  ";
+		
 		$from_date =(empty($search['start_date']))? '1': " p.date >= '".$search['start_date']." 00:00:00'";
 		$to_date = (empty($search['end_date']))? '1': " p.date <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
@@ -456,6 +488,14 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		if($search['add_item']>0){
 			$where .= " AND v.id = ".$search['add_item'];
+		}
+		
+		if(!empty($search['plan'])){
+		    $where .= " AND (SELECT `plan_id` FROM `tb_purchase_request` WHERE tb_purchase_request.id = p.re_id AND status=1)  =".$search['plan'];
+		}
+		
+		if(!empty($search['branch_id'])){
+		    $where .= " AND p.branch_id =".$search['branch_id'];
 		}
 // 		if($search['po_pedding']>0){
 // 			$where .= " AND purchase_status =".$search['po_pedding'];

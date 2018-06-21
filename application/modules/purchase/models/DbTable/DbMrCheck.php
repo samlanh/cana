@@ -80,6 +80,7 @@ class Purchase_Model_DbTable_DbMrCheck extends Zend_Db_Table_Abstract
 				WHERE p.`id` =$id";
 		return $db->fetchRow($sql);
 	}
+	
 	function  add($data){
 		$db = $this->getAdapter();
 		$db_globle = new Application_Model_DbTable_DbGlobal();

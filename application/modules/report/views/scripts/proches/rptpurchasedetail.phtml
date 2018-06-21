@@ -35,18 +35,19 @@ $brach_name =  $this->branch;
 				<form method="post" style="border-bottom: 1px solid #ccc;"  action="<?php //echo $formFilter->getAction(); ?>">
 					<div class="form-group" style="padding-top: 6px;">
 						<?php $formFilter = $this->form_purchase; ?>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch_id');?></label>
-						
-						<label class="control-label col-md-2">
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('text_search');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch_id');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('plan');?></label>
+						<label class="control-label col-md-3">
 								<select data-placeholder="Select..." class="form-control select2me " style="text-align: left;" id="add_item" name="add_item"  >
 								<?php echo $this->items; ?>
 								</select>
 						</label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
-						<label class="control-label col-md-2">
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('suppliyer_id');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('start_date');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('search_date');?></label>
+						<label class="control-label col-md-3">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
 					</div><div style="clear:both;"></div>	

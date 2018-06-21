@@ -27,8 +27,8 @@ class Purchase_MrcheckController extends Zend_Controller_Action
 					'branch'			=>	'',
 					'plan'				=>'',
 					'end_date'			=>	date("Y-m-d"),
-					'po_pedding'	=>	1,
-					'search_bydate'=>1,
+					'po_pedding'	    =>	1,
+					'search_bydate'     =>1,
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbRequest();
@@ -38,6 +38,7 @@ class Purchase_MrcheckController extends Zend_Controller_Action
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
+	
 	public function approveAction(){
 		$id = $this->getRequest()->getParam('id');
 		$db = new Purchase_Model_DbTable_DbMrCheck();
@@ -68,6 +69,7 @@ class Purchase_MrcheckController extends Zend_Controller_Action
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
 	}
+	
 	public function editAction(){
 		$id = $this->getRequest()->getParam('id');
 		$db = new Purchase_Model_DbTable_DbRequest();

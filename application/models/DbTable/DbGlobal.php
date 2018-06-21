@@ -43,6 +43,14 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 		$sql = "SELECT v.`key_code` as id,v.`name_en` as name FROM `tb_view` AS v WHERE v.`type`=11 AND v.`status`=1 AND v.`key_code`!=0 ORDER BY v.`key_code`";
 		return $db->fetchAll($sql);
 	}
+	
+	function getRequestStatusAprove(){
+	    $db = $this->getAdapter();
+	    $db_globle = new Application_Model_DbTable_DbGlobal();
+	    $sql = "SELECT v.`key_code` as id,v.`name_en` as name FROM `tb_view` AS v WHERE v.`type`=12 AND v.`status`=1  ORDER BY v.`key_code`";
+	    return $db->fetchAll($sql);
+	}
+	
 	public function getValidUserUrl(){
 		$db=$this->getAdapter();
 		$request=Zend_Controller_Front::getInstance()->getRequest();

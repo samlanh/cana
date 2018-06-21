@@ -62,6 +62,7 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 				WHERE p.`pur_id` = $id";
 		return $db->fetchAll($sql);
 	}
+	
 	function getAllRequest($search){
 		$start_date = date("Y-m-d",strtotime($search['start_date']));
 		$end_date = date("Y-m-d",strtotime($search['end_date']));
@@ -89,6 +90,7 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 		
 		if(empty($search['search_bydate'])){
 			$search['search_bydate']=1;
+			$str_date=' p.date_request';
 		}
 		if($search['search_bydate']==1){
 			$str_date=' p.date_request';
@@ -112,6 +114,11 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 		if($search['po_pedding']!=""){
 			$where .= " AND p.pedding =".$search['po_pedding'];
 		}
+		
+		if(!empty($search['appr_status'])){
+		    $where .= " AND p.`appr_status` =".$search['appr_status'];
+		}
+		
 		if(!empty($search['branch'])){
 			$where .= " AND p.branch_id =".$search['branch'];
 		}
@@ -124,6 +131,7 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
  		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
+	
 	function getRequestById($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT 

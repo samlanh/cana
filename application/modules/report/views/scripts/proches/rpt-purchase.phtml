@@ -33,10 +33,12 @@ $brach_name =  $this->branch;
 						<?php $formFilter = $this->form_purchase; ?>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch_id');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('plan');?></label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('suppliyer_id');?></label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('po_pedding');?></label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('search_date');?></label>
 						<label class="control-label col-md-3">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>

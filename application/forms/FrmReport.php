@@ -207,6 +207,7 @@ class Application_Form_FrmReport extends Zend_Form
     	$this->addElements(array($txt_search,$startDate,$endDate,$location_id));
     	return $this;
     }
+    
     function FrmReportPurchase(){
     	$request=Zend_Controller_Front::getInstance()->getRequest();
     	$db=new Application_Model_DbTable_DbGlobal();
@@ -324,6 +325,16 @@ class Application_Form_FrmReport extends Zend_Form
     	$po_pedding->setMultiOptions($opt);
     	$po_pedding->setValue($request->getParam('po_pedding'));
     	$this->addElement($po_pedding);
+    	
+    	$search_date = new Zend_Form_Element_Select('search_date');
+    	$search_date->setAttribs(array(
+    	    'class'=>'form-control',
+    	    
+    	));
+    	$opt_d = array(''=>$tr->translate("SELECT"),1=>$tr->translate("Daily"),2=>$tr->translate('Weekly'),3=>$tr->translate('Monthly'));
+    	$search_date->setMultiOptions($opt_d);
+    	$search_date->setValue($request->getParam('search_date'));
+    	$this->addElement($search_date);
     	
     	return $this;
     }
