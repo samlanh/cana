@@ -128,14 +128,17 @@ $db = new report_Model_DbStock();
 						   if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){
 							   $rs_re = $db->getReceiveByPro($rs["id"],$this->search);
 								$rs_deli = $db->getDeliByPro($rs["id"],$this->search);
+								
 								$pur_qty = $rs_re["qty_receive"];
 								$issuse_qty = $rs_deli["deli_qty"];
-							   $total_pur_qty =  $total_pur_qty+ $pur_qty;
+							    $total_pur_qty =  $total_pur_qty+ $pur_qty;
 							    $toal_issus_qty =  $total_pur_qty+ $issuse_qty;
+							    
 								$total_begin_qty =  $total_begin_qty+ (($rs["qty"]+$issuse_qty)-$pur_qty);
-							  $total_price =  $total_price+$rs["price"];
-							  $total_edning_qty =$total_edning_qty+$rs["qty"];
+							    $total_price =  $total_price+$rs["price"];
+							    $total_edning_qty =$total_edning_qty+$rs["qty"];
 							   $total_amount= $total_amount+$rs["price"]*$rs["qty"];
+							   
 						   }
 						  ?>
 						 <tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:none;">
@@ -170,6 +173,7 @@ $db = new report_Model_DbStock();
 								$rs_deli = $db->getDeliByPro($rs["id"],$this->search);
 								$pur_qty = $rs_re["qty_receive"];
 								$issuse_qty = $rs_deli["deli_qty"];
+								
 								$begin_qty = ($rs["qty"]+$rs_deli["deli_qty"])-$rs_re["qty_receive"];
 								$total_price = $total_price+$rs["price"];
 						?>
@@ -180,9 +184,9 @@ $db = new report_Model_DbStock();
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["measure"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $begin_qty;?></td>
-						    <td style="white-space: nowrap;">&nbsp;<?php echo  $pur_qty;?></td>
-						    <td style="white-space: nowrap;">&nbsp;<?php echo  $issuse_qty;?></td>
-							 <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo  $pur_qty;?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo  $issuse_qty;?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty"];?></td>
 						   <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"]*$rs["qty"],2);?></span></td>
 						</tr>
 						<?php 

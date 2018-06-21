@@ -50,6 +50,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$order = " ORDER BY p.receive_id";
 		return $db->fetchAll($sql.$where.$order);
 	}
+	
 	function getAllProduct($search){
 		$db= $this->getAdapter();
 		$user_info = $this->GetuserInfo();
@@ -73,20 +74,37 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			AND pl.`location_id`=$loc 
 			AND p.`status`=1";
 		$where='';
-// 		if($search['category']>0){
-// 		$where .= " AND p.`cate_id` = ".$search['category'];
-// 		}
-		if($search['category']>0){
-			$category_id = $search["category"];
-			$parent = $this->checkCateparent($category_id);
-			if ($parent['parent_id']==0){
-				$where.=" AND (p.cate_id=".$category_id." OR (SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` =p.cate_id AND p.cate_id LIMIT 1) = $category_id)";
-			}else{
-				$where.=' AND p.cate_id='.$category_id;
-			}
+		
+// 		$from_date =(empty($search['start_date']))? '1': " p.`date_request` >= '".$search['start_date']."'";
+// 		$to_date = (empty($search['end_date']))? '1': "  p.`date_request` <= '".$search['end_date']."'";
+// 		$where = " AND ".$from_date." AND ".$to_date;
+		
+		if(!empty($search['ad_search'])){
+		    $s_where = array();
+		    $s_search=addslashes(trim($search['ad_search']));
+		    $s_search = str_replace(' ', '', $s_search);
+		    $s_where[]="REPLACE(p.`item_code`,' ','')   LIKE '%{$s_search}%'";
+		    $s_where[]="REPLACE(p.`item_name`,' ','')   LIKE '%{$s_search}%'";
+		    
+		    $where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		return $db->fetchAll($sql.$where);
+		
+		if($search['category']>0){
+		$where .= " AND p.`cate_id` = ".$search['category'];
+		}
+// 		if($search['category']>0){
+// 			$category_id = $search["category"];
+// 			$parent = $this->checkCateparent($category_id);
+// 			if ($parent['parent_id']==0){
+// 				$where.=" AND (p.cate_id=".$category_id." OR (SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` =p.cate_id AND p.cate_id LIMIT 1) = $category_id)";
+// 			}else{
+// 				$where.=' AND p.cate_id='.$category_id;
+// 			}
+// 		}
+		$order=" ORDER BY p.`item_code` ASC ";
+		return $db->fetchAll($sql.$where.$order);
 	}
+	
 	function checkCateparent($id){
 		$db = $this->getAdapter();
 		$sql=" SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` = $id  limit 1";
@@ -107,7 +125,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  AND poi.`pro_id` =$id";
 		return $db->fetchRow($sql);
 	}
+	
 	function getReceiveByPro($pro_id,$data){
+	    //print_r($data);exit();
 		$db= $this->getAdapter();
 		$user_info = $this->GetuserInfo();
 		$loc = $user_info["branch_id"];
@@ -227,10 +247,14 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		
 		if($search['suppliyer_id']>0){
-			$where .= " AND vendor_id = ".$search['suppliyer_id'];
+			$where.= " AND vendor_id = ".$search['suppliyer_id'];
 		}
 		if($search['branch']>0){
-			$where .= " AND branch = ".$search['branch'];
+			$where.= " AND branch = ".$search['branch'];
+		}
+		
+		if(!empty($search['purchaser'])){
+		    $where.= " AND (SELECT pur.user_mod FROM `tb_purchase_order` AS pur WHERE pur.id=r.`purchase_id`)=".$search['purchaser'];
 		}
 		
 		if($search["category"]!="" AND $search["category"]>0){
@@ -270,7 +294,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  `v_product` AS p,
 				  `v_sale_order` AS s 
 				WHERE 
-				p.is_materail=0
+				p.is_meterail=0
 				AND p.id = s.`pro_id` ";
 // 		$from_date =$search['start_date'];
 // 		$to_date = $search['end_date'];
@@ -739,16 +763,19 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  `v_receive_purchase` AS r 
 				  WHERE 
 				  	p.id=r.`pro_id` 
-				  	AND p.`is_meterail`=1 
-					AND r.`date_in` BETWEEN '$start_date' AND '$end_date'";
+				  	AND p.`is_meterail`=1  ";
 			$where ='';
-			if(!empty($search['text_search'])){
+			$from_date =(empty($search['start_date']))? '1': " r.`date_in` >= '".$search['start_date']." 00:00:00'";
+			$to_date = (empty($search['end_date']))? '1': "  r.`date_in` <= '".$search['end_date']." 23:59:59'";
+			$where = " AND ".$from_date." AND ".$to_date;
+			
+			if(!empty($search['ad_search'])){
 				$s_where = array();
-				$s_search = trim(addslashes($search['text_search']));
-				$s_where[] = " sale_no LIKE '%{$s_search}%'";
-				$s_where[] = " net_total LIKE '%{$s_search}%'";
-				$s_where[] = " paid LIKE '%{$s_search}%'";
-				$s_where[] = " balance LIKE '%{$s_search}%'";
+				$s_search=addslashes(trim($search['ad_search']));
+				$s_search = str_replace(' ', '', $s_search);
+				$s_where[]="REPLACE(r.plat_no,' ','')   LIKE '%{$s_search}%'";
+				$s_where[]="REPLACE(p.item_code,' ','')   LIKE '%{$s_search}%'";
+				$s_where[]="REPLACE(p.item_name,' ','')   LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
 			if($search['category']>0){

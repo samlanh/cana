@@ -90,6 +90,21 @@ class report_Form_FrmSearch extends Zend_Form
 		$branch->setValue($request->getParam('branch'));
 		$this->addElement($branch);
 		
+		$purchaser = new Zend_Form_Element_Select("purchaser");
+		$opt = array(''=>$tr->translate("PURCHASER"));
+		$row_p = $db->getPurchaser();
+		if(!empty($row_p)){
+		    foreach ($row_p as $rs){
+		        $opt[$rs["id"]] = $rs["name"];
+		    }
+		}
+		$purchaser->setAttribs(array(
+		    'class'=>'form-control select2me',
+		));
+		$purchaser->setMultiOptions($opt);
+		$purchaser->setValue($request->getParam('purchaser'));
+		$this->addElement($purchaser);
+		
 		return $this;
 	}
 	

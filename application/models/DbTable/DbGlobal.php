@@ -1082,6 +1082,15 @@ function getDnNo($completed=null,$opt=null){
    			return $options;
    		}
    }
+   
+   public function getPurchaser(){
+       $db=$this->getAdapter();
+       $sql=" SELECT u.`user_id` AS id,
+              `u`.`fullname` as name FROM `tb_acl_user` As u ";
+       $dbg = new Application_Model_DbTable_DbGlobal();
+       $sql.=$dbg->getAccessPermission();
+       return $db->fetchAll($sql);
+   }
    /*function getAllLocation($opt=null){
    		$db=$this->getAdapter();
    		$sql=" SELECT id,`name` FROM `tb_sublocation` WHERE `name`!='' AND STATUS=1  ";

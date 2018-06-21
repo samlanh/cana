@@ -23,12 +23,15 @@ class report_StockController extends Zend_Controller_Action
     	
     
     }
+    
     public function rptstocksummaryAction()
     {
     	$db = new report_Model_DbStock();
 		$data = array();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+    		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
     	}else{
     		$data = array(
     				'ad_search'		=>	'',
@@ -52,8 +55,8 @@ class report_StockController extends Zend_Controller_Action
 		$session_user=new Zend_Session_Namespace('auth');
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
-    
     }
+    
     public function rptstockinAction()
     {
     	$db = new report_Model_DbStock();
@@ -125,6 +128,8 @@ class report_StockController extends Zend_Controller_Action
     	$db = new report_Model_DbStock();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     				'ad_search'		=>	'',
