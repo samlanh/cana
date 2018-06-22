@@ -46,6 +46,7 @@ class Purchase_PurchaserequestController extends Zend_Controller_Action
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}
+	
 	public function addAction(){
 		$db = new Purchase_Model_DbTable_DbRequest();
 		if($this->getRequest()->isPost()) {
@@ -71,6 +72,7 @@ class Purchase_PurchaserequestController extends Zend_Controller_Action
 		$form = new Purchase_Form_FrmRequest();
 		$this->view->form = $form->add();
 	}
+	
 	public function editAction(){
 		$id = $this->getRequest()->getParam('id');
 		$db = new Purchase_Model_DbTable_DbRequest();

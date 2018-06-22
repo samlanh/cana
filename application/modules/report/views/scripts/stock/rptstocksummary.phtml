@@ -32,18 +32,20 @@ $db = new report_Model_DbStock();
             <div class="portlet-body form frmfilter">
 				<form method="post" style="border-bottom: 1px solid #ccc;" action="<?php //echo $formFilter->getAction(); ?>">
 					<div class="form-group" style="padding-top: 6px;">
-						
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
-						<label class="control-label col-md-2">
-								<select data-placeholder="Select..." class="form-control select2me " style="text-align: left;" id="add_item" name="add_item" Onchange="getItemOrder();" >
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('ad_search');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('product_id');?></label>
+					<!--  product_id	<label class="control-label col-md-3">
+								<select data-placeholder="Select..." class="form-control select2me " style="text-align: left;" id="add_item" name="add_item" >
 								<?php echo $this->items; ?>
 								</select>
+					-->
 						</label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('category');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
-						<label class="control-label col-md-2 pull-right">
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('category');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('suppliyer_id');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('start_date');?></label>
+						<label class="control-label col-md-3"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="control-label col-md-3 pull-right">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
 					</div><div style="clear:both;"></div>	
@@ -116,7 +118,7 @@ $db = new report_Model_DbStock();
 		    </tr>
 		    <tr>
 		    	<td class="table2excel" >
-		            <table  class="collape tablesorter" style="border-collapse:collapse;border:0px solid #000; font-size:12px;" width="100%" cellspacing="0" border="1">
+		            <table  class="collape tablesorter" style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0" border="1">
 		                 <tbody>
 						  <?php $num=1; 
 			               $total_pur_qty = 0;
@@ -143,6 +145,7 @@ $db = new report_Model_DbStock();
 						  ?>
 						 <tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:none;">
 						   <td align="center" style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						    <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo $tr->translate("TOTAL");?></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
@@ -151,11 +154,13 @@ $db = new report_Model_DbStock();
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo $total_pur_qty;?></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp; <?php echo $toal_issus_qty;?></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo  $total_edning_qty;?></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;$<span style="float:right"><?php echo number_format($total_amount,2);?></span></td>
+						   <td style="white-space: nowrap;border: none;">&nbsp;$<span>&nbsp;&nbsp;<?php echo number_format($total_amount,2);?></span></td>
 						</tr>
 						<thead>
 							<tr bgcolor="#ccc" class="style tdborder" align="center" style="font-weight:bold; line-height: 35px;border:1px solid #000; font-size:12px; padding:1px 0px; white-space: nowrap; ">
 			                    <td class="tdheader">&nbsp;<?php echo $tr->translate("NUM");?></td>
+			                    <td class="tdheader">&nbsp;<?php echo $tr->translate("DATE_IN");?></td>
+			                     
 								<td class="tdheader"><?php echo $tr->translate("CODE");?></td>
 								<td class="tdheader">&nbsp;<?php echo $tr->translate("ITEM_NAME");?></td>
 								<td class="tdheader">&nbsp;<?php echo $tr->translate("PACKING");?></td>
@@ -179,6 +184,8 @@ $db = new report_Model_DbStock();
 						?>
 						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1;?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo date("d-M-Y",strtotime($rs["date_order"]));?></td>
+						    
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="max-width: 200px !important;">&nbsp;<?php echo $rs["item_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["measure"];?></td>
@@ -187,7 +194,7 @@ $db = new report_Model_DbStock();
 						   <td style="white-space: nowrap;">&nbsp;<?php echo  $pur_qty;?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo  $issuse_qty;?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty"];?></td>
-						   <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"]*$rs["qty"],2);?></span></td>
+						   <td>&nbsp;$<span >&nbsp;&nbsp;<?php echo number_format($rs["price"]*$rs["qty"],2);?></span></td>
 						</tr>
 						<?php 
 							 

@@ -344,6 +344,15 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 		return $db->fetchAll($sql);
 	}
 	
+	public function getProductOptions(){
+	    $db = $this->getAdapter();
+	    $user_info = new Application_Model_DbTable_DbGetUserInfo();
+	    $result = $user_info->getUserInfo();
+	    $tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	    $sql= 'SELECT id,item_name AS `name`,item_code FROM tb_product WHERE `status`=1 ';
+	    return  $db->fetchAll($sql);
+	}
+	
 	public function getAllProductPettyCash(){
 		$db = $this->getAdapter();
 		$sql = "SELECT p.id,p.`item_code`,p.`item_name` FROM `tb_product` AS p,tb_category as c WHERE p.`status`=1 AND c.id=p.cate_id AND c.is_none_stock =1";

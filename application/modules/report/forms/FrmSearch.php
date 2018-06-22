@@ -12,6 +12,9 @@ class report_Form_FrmSearch extends Zend_Form
 		$request=Zend_Controller_Front::getInstance()->getRequest();
 		
 		$row_cat = $db->getCategoryOption();
+		
+		$row_g= new Application_Model_GlobalClass();
+		
 		$date =new Zend_Date();
     	$txtsearch = new Zend_Form_Element_Text('ad_search');
 		$txtsearch->setAttribs(array(
@@ -27,7 +30,7 @@ class report_Form_FrmSearch extends Zend_Form
 		
     	$this->addElement($start_date);
 		if($request->getParam('start_date') ==""){
-			$start_date->setValue($date->get('MM/01/YYYY'));
+			//$start_date->setValue($date->get('MM/01/YYYY'));
 		}else{
 			$start_date->setValue($request->getParam('start_date'));
 		}
@@ -58,6 +61,23 @@ class report_Form_FrmSearch extends Zend_Form
 		$category->setMultiOptions($opt_c);
     	$this->addElement($category);
 		$category->setValue($request->getParam('category'));
+		
+		
+		$opt_p = array('-1'=>$tr->translate("SELECT_PRODUCT"));
+		$row_ps = $row_g->getProductOptions();
+		if(!empty($row_ps)){
+		    foreach($row_ps as $rs){
+		        $opt_p[$rs["id"]] = $rs["name"];
+		    }
+		}
+		$product_id = new Zend_Form_Element_Select('product_id');
+		$product_id->setAttribs(array(
+		    'class'=>'form-control select2me',
+		));
+		$product_id->setValue($request->getParam('product_id'));
+		$product_id->setMultiOptions($opt_p);
+		$this->addElement($product_id);
+		
 		
 		$opt_v = array('-1'=>$tr->translate("SELECT_VENDOR"));
 		if(!empty($row_vendor)){

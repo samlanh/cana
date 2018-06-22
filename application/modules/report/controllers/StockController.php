@@ -30,15 +30,17 @@ class report_StockController extends Zend_Controller_Action
 		$data = array();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
-    		$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
+    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
     	}else{
     		$data = array(
     				'ad_search'		=>	'',
-    				'start_date'	=>	date('Y-m-d'),
+    				'start_date'	=>	date('2016-m-d'),
     				'end_date'		=>	date('Y-m-d'),
     				'category'		=>	-1,
+    		        'product_id'      => -1,
     				'suppliyer_id'	=>	-1,
+    		        'branch'		=>	0
     		);
     	}
 		$this->view->start_date = $data["start_date"];
@@ -47,7 +49,7 @@ class report_StockController extends Zend_Controller_Action
     	$this->view->stockin = $db->getAllProduct($data);
 		
     	$formFilter = new report_Form_FrmSearch();
-    	$this->view->formFilter = $formFilter->formSearch();
+    	$this->view->formFilter = $formFilter->formSearch($data);
     	//Application_Model_Decorator::removeAllDecorator($formFilter);
 		$items = new Application_Model_GlobalClass();
 		$this->view->items = $items->getProductOption();

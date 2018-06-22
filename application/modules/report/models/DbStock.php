@@ -63,21 +63,24 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			  pl.`qty`,
 			  pl.price,
 			  pl.`location_id`,
-			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=p.`measure_id`) AS measure
+			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=p.`measure_id`) AS measure,
+               v.`date_order`,v.vendor_name
 			  
 			FROM
 			  `tb_product` AS p,
-			  `tb_prolocation` AS pl
+			  `tb_prolocation` AS pl,
+               v_receive_purchase AS v
 			WHERE 
 			p.id=pl.`pro_id` 
 			AND p.is_meterail=0
 			AND pl.`location_id`=$loc 
-			AND p.`status`=1";
+			AND p.`status`=1
+            AND v.`pro_id`=p.`id`";
 		$where='';
 		
-// 		$from_date =(empty($search['start_date']))? '1': " p.`date_request` >= '".$search['start_date']."'";
-// 		$to_date = (empty($search['end_date']))? '1': "  p.`date_request` <= '".$search['end_date']."'";
-// 		$where = " AND ".$from_date." AND ".$to_date;
+		$from_date =(empty($search['start_date']))? '1': " v.`date_order` >= '".$search['start_date']."'";
+		$to_date = (empty($search['end_date']))? '1': "  v.`date_order` <= '".$search['end_date']."'";
+		$where = " AND ".$from_date." AND ".$to_date;
 		
 		if(!empty($search['ad_search'])){
 		    $s_where = array();
@@ -92,6 +95,21 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		if($search['category']>0){
 		$where .= " AND p.`cate_id` = ".$search['category'];
 		}
+		
+		if($search['branch']>0){
+		    $where .= " AND pl.`location_id` = ".$search['branch'];
+		}
+		
+		if($search['product_id']>0){
+		    $where .= " AND p.`id` = ".$search['product_id'];
+		}
+		
+		if($search['suppliyer_id']>0){
+		    $where .= " AND v.`vendor_id` = ".$search['suppliyer_id'];
+		}
+		if($search['category']>0){
+		    $where .= " AND p.`cate_id` = ".$search['category'];
+		}
 // 		if($search['category']>0){
 // 			$category_id = $search["category"];
 // 			$parent = $this->checkCateparent($category_id);
@@ -101,7 +119,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 // 				$where.=' AND p.cate_id='.$category_id;
 // 			}
 // 		}
-		$order=" ORDER BY p.`item_code` ASC ";
+		$order=" GROUP BY p.`id` ORDER BY p.`item_code` ASC ";
 		return $db->fetchAll($sql.$where.$order);
 	}
 	

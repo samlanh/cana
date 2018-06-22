@@ -65,6 +65,7 @@ class Purchase_MakepurchaseController extends Zend_Controller_Action
 		$this->view->product = $db->getProduct($id);
 		$this->view->request = $dbs->getRequestById($id);
 	}
+	
 	public function addAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		$db = new Purchase_Model_DbTable_DbMakePurchase();
@@ -101,6 +102,7 @@ class Purchase_MakepurchaseController extends Zend_Controller_Action
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
 	}
+	
 	public function editAction(){
 		$db = new Purchase_Model_DbTable_DbMakePurchase();
 		$id = $this->getRequest()->getParam('id');
