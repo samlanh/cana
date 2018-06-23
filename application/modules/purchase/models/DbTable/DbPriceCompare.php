@@ -228,8 +228,13 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 			$sql = "SELECT s.`id` FROM `tb_su_price_idcompare` AS s WHERE s.`re_id`=".$data["id"];
 			$rsult = $db->fetchOne($sql);
 			if(!empty($rsult)){
-				Application_Form_FrmMessage::message('This Transaction is has beed compared!');
-				return true;
+			    
+			    $sql = "DELETE FROM tb_su_price_idcompare WHERE re_id=".$data["id"];
+			    $db->query($sql);
+			    $sql = "DELETE FROM tb_pro_compare WHERE re_id=".$data["id"];
+			    $db->query($sql);
+			    //Application_Form_FrmMessage::message('This Transaction is has beed compared!');
+				//return true;
 			}
 			
 			$db_global = new Application_Model_DbTable_DbGlobal();
