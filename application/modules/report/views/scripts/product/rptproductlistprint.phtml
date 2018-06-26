@@ -2,76 +2,17 @@
 $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 $brach_name =  $this->branch;
 $formFilter = $this->formFilter;
-
+$today=date("Y-m-d");
+header('Content-Encoding: UTF-8');
+header('Content-type: application/vnd-ms-excel; charset=UTF-8');
+header('Content-type: application/vnd-ms-excel; charset=UTF-16');
+header('Content-Disposition: attachment; filename=report_products_list-'.$today.'.xls');
 ?>
-
 <title>Product List Report</title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
-			<div class="portlet-title">
-				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("RPT_PL");?>
-				</div>
-						<div class="btn-group pull-right">
-							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
-							   <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
-							 </button>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#" onclick="doPrint();">
-											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
-										</a>
-									</li>
-									<li>
-										<a href="<?php echo $this->baseUrl()?>/report/product/rptproductlistprint"  ><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
-									</li>
-								</ul>
-					</div>
-			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" style="border-bottom: 1px solid #ccc;" action="<?php //echo $formFilter->getAction(); ?>">
-					<div class="form-body">
-							<div class="form-group">
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('ad_search');?>
-								</label>
-								
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('branch');?>
-								</label>
-								
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('brand');?>
-								</label>
-								
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('category');?>
-								</label>
-								
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('size');?>
-								</label>
-								
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('color');?>
-								</label>
-								
-								<label class="control-label col-md-3">
-									<?php echo $formFilter->getElement('status');?>
-								</label>
-								<label class="control-label col-md-3  pull-right">
-									<button type="submit" class="btn btn-primary col-md-12"><?php echo $tr->translate("SEARCH");?></button>
-								</label>
-							</div>
-				</div><div style="clear:both;"></div>	
-				</form> 
-<script>
-	
-	         
-</script>
 	<div style=" min-height:28cm; margin:25 0 0 0; padding:0px 0.2cm">
 	<div id="divPrint" style="width: 100%;">
 	<style>
@@ -108,7 +49,7 @@ $formFilter = $this->formFilter;
 		        </td>
 		    </tr>
 		    <tr>
-		    	<td class="table2excel" >
+		    	<td  >
 		            <table border="1" class="collape tablesorter" id="table" style="border-collapse:collapse;border:1px solid #000; font-size:10px;" width="100%" cellspacing="0">
 		                <tbody>
 							<tr style="background:#ccc ; font-size:13px !important;">

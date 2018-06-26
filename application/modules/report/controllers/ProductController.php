@@ -50,6 +50,7 @@ class report_ProductController extends Zend_Controller_Action
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
     
     }
+    
     public function rptproductlistAction()
     {
     	$db = new report_Model_DbProduct();
@@ -75,7 +76,33 @@ class report_ProductController extends Zend_Controller_Action
 		$session_user=new Zend_Session_Namespace('auth');
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
+    }
     
+    public function rptproductlistprintAction()
+    {
+        $db = new report_Model_DbProduct();
+        if($this->getRequest()->isPost()){
+            $data = $this->getRequest()->getPost();
+        }else{
+            $data = array(
+                'ad_search'	=>	'',
+                'branch'	=>	'',
+                'brand'		=>	'',
+                'category'	=>	'',
+                'model'		=>	'',
+                'color'		=>	'',
+                'size'		=>	'',
+                'status'	=>	1
+            );
+        }
+        $this->view->product = $db->getAllProduct($data);
+        $formFilter = new Product_Form_FrmProduct();
+        $this->view->formFilter = $formFilter->productFilter();
+        Application_Model_Decorator::removeAllDecorator($formFilter);
+        
+        $session_user=new Zend_Session_Namespace('auth');
+        $db_globle = new Application_Model_DbTable_DbGlobal();
+        $this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
     }
 	
 	public function rptproductwarningAction()
