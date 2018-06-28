@@ -1,3 +1,4 @@
+
 <?php 
 	$url_new = $this->url(array('module'=>'product','controller'=>'index','action'=>'add',));
 	$url_edit = $this->url(array('module'=>'product','controller'=>'index','action'=>'edit',));
@@ -38,15 +39,91 @@
 					<label class="control-label col-md-2">
 						<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 					</label>
+					<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							   <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
+							 </button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#" onclick="doPrint();">
+											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
+										</a>
+									</li>
+									<li>
+										<a href="#"  onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+									</li>
+								</ul>
+					</div>
 				</div>
 				</div>
 			</form>
+			
+	<div style=" min-height:28cm; margin:25 0 0 0; padding:0px 0.2cm">
+	<div id="divPrint" style="width: 100%;">
+	<style>
+		.style{
+			line-height: 20px;font-size: 9px !important;
+			font-family: 'Khmer OS Battambang';
+		}
+		ul{margin: 0;padding:0;}
+		table tr td ul li{text-align: center;list-style: none;line-height: 25px;}
+		th{padding: 5px;}
+		.hover:hover{background: #ccc;}
+		.center{text-align:center;}
+@media print {
+  a[href]:after {
+    content: none !important;
+  	color:#000 !important;
+  }
+}
+	</style>
+		<table style="font-family: 'Khmer OS Content'; width:100%;">
+			<tbody>
+			<tr>
+		    	<td align="center">
+		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
+		            	<tbody>
+						<tr style="margin-bottom:10px;"> 
+							<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logo/<?php echo $this->title_reprot["logo"]?>"></td>
+							<td width="60%" valign="top" style="line-height:30px">
+								<ul>
+									<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
+									<li style="text-align:center; font-size:18px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
+									<li style="text-align:center; font-size:20px; margin: 15px 0px 7px 0px; font-family:'Khmer OS Muol Light',serif,header-font; "><?php echo $tr->translate("RPT_PL");?></li>
+								</ul>
+							</td>
+							<td width="20%" style="text-align:center; font-size: 11px;white-space: nowrap;">
+							</td>
+						</tr> 
+		                
+		            </tbody></table>
+		        </td>
+		    </tr>
+		    <tr>
+		    	<td class="table2excel" >
+				
 					<div class="contain_form" style="clear: both;">
 						<?php echo $this->list; ?>
 					</div>
+				</td>
+			</tr>
+		</table>
+	 </div>
+	</div>	
 		   </div>
 		</div>
 
 							
 
 </div>
+
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<script>
+function doPrint() {
+	var printContents = document.getElementById('divPrint').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+}
+</script>
