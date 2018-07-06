@@ -161,7 +161,7 @@ $form=$this->form;
 													</div>
 													<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("PRODUCT_QTY_LOCATION_INFO");?></h3>
 															
-																<?php //echo $form->getElement('branch');?><br />
+																<?php echo $form->getElement('branch');?><br />
 															<div class="form-group">
 															</div>
 																<table class="table table-bordered">
@@ -504,7 +504,7 @@ $('#frm').submit(function() {
 	}
 	identity =$("#identity").val();
 	if(identity=='' || identity==-1){
-		alert("ទិន្នន័យមិនអាចរក្សាទុកបានទេ ។សូមត្រួតពិនិត្យមើលម្តងទៀត");
+		alert("ទិន្នន័យមិនអាចរក្សាទុកបានទេ ។សូមត្រួតពិនិត្យជ្រើសរើសសាខា");
 		$('#add_item').select2('open');
 		return false;
 	}
@@ -855,10 +855,10 @@ function getProductPrefix(){
 						data:{'id':id},
 						success: function(data){
 							//alert(data);
-							/*value = $.parseJSON(data);
-							alert(value.p_code);
+							value = $.parseJSON(data);
+							//alert(value.p_code);
 							$('#pro_code').val(value.p_code);
-							$('#int_code').val(value.int_code);*/
+							$('#int_code').val(value.int_code);
 							
 						},
 						error:function(e){

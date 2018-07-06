@@ -431,6 +431,7 @@ function checkCateparent($id){
 				$p_code = $data["pro_code"];
 				$int_code = $data["int_code"];
 			}
+		//	echo $p_code;exit();
     		$arr = array(
     			'item_name'		=>	$data["name"],
     			'item_code'		=>	$p_code,
@@ -776,6 +777,7 @@ function checkCateparent($id){
 		$rows = $db->fetchAll($sql);
 		return $rows;
 	}
+	
 	function getProductPrefix($id){
 		$db=$this->getAdapter();
 		$sql="SELECT prefix,start_code,is_none_stock FROM `tb_category` WHERE id=$id ";
