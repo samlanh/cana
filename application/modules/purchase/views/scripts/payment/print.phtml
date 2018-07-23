@@ -2,6 +2,8 @@
 $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 $db = new Purchase_Model_DbTable_DbPriceCompare();
 //print_r($this->product);
+
+ 
 ?>
 <title><?php echo $tr->translate("PO_INVOICE");?></title>
 <div class="row">
@@ -178,7 +180,7 @@ $db = new Purchase_Model_DbTable_DbPriceCompare();
 							<th>&nbsp;<?php echo $tr->translate("តម្លៃសរុប");?></th>
 						</tr>
 						
-						<?php $count=0; $index=0;
+						<?php $count=0; $index=0;$vat=0;
 						$total=0;$sub_total=0;$total_vat=0;
 						if(!empty($this->rsproduct)){$count=count($this->rsproduct); $total = 0; $sub_total=0; $total_vat =0;
 								foreach($this->rsproduct as $key=>$rs){
@@ -186,6 +188,7 @@ $db = new Purchase_Model_DbTable_DbPriceCompare();
 									$total = $total+$rs["sub_total_after"];
 									$sub_total = $sub_total + ($rs["sub_total_after"]);
 									$total_vat = $total_vat + $rs["total_tax"];// $total_vat + $rs["d_total_vat"];
+									 
 						?>
 							<tr>
 								<td class="center"><?php echo $index;?></td>
@@ -231,12 +234,12 @@ $db = new Purchase_Model_DbTable_DbPriceCompare();
 						<tr>
 							<td colspan="8" style="border-bottom:1px solid #fff; border-left:1px solid #fff;"></td>
 							<td>&nbsp;&nbsp;<?php echo $tr->translate("TAX");?></td>
-							<td>&nbsp;&nbsp;<span>$</span><span style="float: right;"><?php echo number_format($total_vat,2);?></span>&nbsp;&nbsp;</td>
+							<td>&nbsp;&nbsp;<span>$</span><span style="float: right;"><?php if(!empty($this->rsproduct[0]['vat'])) echo number_format($this->rsproduct[0]['vat'],2);?><?php //echo number_format($total_vat,2);?></span>&nbsp;&nbsp;</td>
 						</tr>
 						<tr>
 							<td colspan="8" style="border-bottom:1px solid #fff; border-left:1px solid #fff;"></td>
 							<td>&nbsp;&nbsp;<?php echo $tr->translate("GRAND_TOTAL");?></td>
-							<td>&nbsp;&nbsp;<span>$</span><span style="float: right;"><?php echo number_format($total+$total_vat,2);?></span>&nbsp;&nbsp;</td>
+							<td>&nbsp;&nbsp;<span>$</span><span style="float: right;"><?php if(!empty($this->rsproduct[0]['total'])) echo number_format($this->rsproduct[0]['total'],2);?><?php //echo number_format($total+$total_vat,2);?></span>&nbsp;&nbsp;</td>
 						</tr>				
 		            </tbody>
 		           </table>

@@ -63,8 +63,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			  pl.`qty`,
 			  pl.price,
 			  pl.`location_id`,
-			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=p.`measure_id`) AS measure,
-               v.`date_order`,v.vendor_name
+			  (SELECT g.name FROM `tb_category` AS g WHERE g.id=p.`cate_id` LIMIT 1) AS cat_name,
+			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=p.`measure_id` LIMIT 1) AS measure,
+			  v.`date_order`,v.vendor_name
 			  
 			FROM
 			  `tb_product` AS p,
@@ -92,10 +93,6 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		    $where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		
-		if($search['category']>0){
-		$where .= " AND p.`cate_id` = ".$search['category'];
-		}
-		
 		if($search['branch']>0){
 		    $where .= " AND pl.`location_id` = ".$search['branch'];
 		}
@@ -107,18 +104,16 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		if($search['suppliyer_id']>0){
 		    $where .= " AND v.`vendor_id` = ".$search['suppliyer_id'];
 		}
-		if($search['category']>0){
-		    $where .= " AND p.`cate_id` = ".$search['category'];
+
+		if($search["category"]!=""){
+			$category_id = $search["category"];
+			$parent = $this->checkCateparent($category_id);
+			if ($parent['parent_id']==0){
+				$sql.=" AND (p.cate_id=".$category_id." OR (SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` =p.cate_id AND p.cate_id LIMIT 1) = $category_id)";
+			}else{
+				$where.=' AND p.cate_id='.$category_id;
+			}
 		}
-// 		if($search['category']>0){
-// 			$category_id = $search["category"];
-// 			$parent = $this->checkCateparent($category_id);
-// 			if ($parent['parent_id']==0){
-// 				$where.=" AND (p.cate_id=".$category_id." OR (SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` =p.cate_id AND p.cate_id LIMIT 1) = $category_id)";
-// 			}else{
-// 				$where.=' AND p.cate_id='.$category_id;
-// 			}
-// 		}
 		$order=" GROUP BY p.`id` ORDER BY p.`item_code` ASC ";
 		return $db->fetchAll($sql.$where.$order);
 	}
@@ -265,7 +260,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		
 		if($search['suppliyer_id']>0){
-			$where.= " AND vendor_id = ".$search['suppliyer_id'];
+			$where.= " AND r.vendor_id = ".$search['suppliyer_id'];
 		}
 		if($search['branch']>0){
 			$where.= " AND branch = ".$search['branch'];
@@ -286,7 +281,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission('branch');
-		$order=" ORDER BY r.`order_number` ";
+		$order=" ORDER BY r.`date_in` ASC";
 		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}

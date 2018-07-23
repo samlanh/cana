@@ -47,9 +47,10 @@ class report_StockController extends Zend_Controller_Action
 		$this->view->end_date = $data["end_date"];
 		$this->view->search = $data;
     	$this->view->stockin = $db->getAllProduct($data);
-		
+	
     	$formFilter = new report_Form_FrmSearch();
     	$this->view->formFilter = $formFilter->formSearch($data);
+    	 
     	//Application_Model_Decorator::removeAllDecorator($formFilter);
 		$items = new Application_Model_GlobalClass();
 		$this->view->items = $items->getProductOption();

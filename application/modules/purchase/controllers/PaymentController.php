@@ -17,6 +17,7 @@ class Purchase_PaymentController extends Zend_Controller_Action
     	$result = $user_info->getUserInfo();
     	return $result;
     }
+    
    	public function indexAction()
 	{
 		if($this->getRequest()->isPost()){
@@ -54,6 +55,7 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);
 	}	
+	
 	function addAction(){
 		$db = new Application_Model_DbTable_DbGlobal();
 		if($this->getRequest()->isPost()) {
@@ -96,7 +98,10 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		$rsproduct = $db->getAllItemReceived($id);
 		//$rsproduct = $db->getAllItemReceived($row[0]['invoice_id']);
 		$this->view->rsproduct = $rsproduct;
-		$this->view->rsrequest = @$db->getRequestInfoBypurchaseId($rsproduct[0]['purchase_id']);
+		
+		
+		$rs=$this->view->rsrequest = @$db->getRequestInfoBypurchaseId($rsproduct[0]['purchase_id']);
+		
 		
 		$session_user=new Zend_Session_Namespace('auth');
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);

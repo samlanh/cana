@@ -26,7 +26,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		));
 		$pro_code->setValue($p_code);
 		
-		$int_code = new Zend_Form_Element_Hidden("int_code");
+		$int_code = new Zend_Form_Element_Text("int_code");
 		$int_code->setAttribs(array(
 				'class'=>'form-control',
 				//'required'=>'required'
@@ -76,7 +76,7 @@ class Product_Form_FrmProduct extends Zend_Form
 		}
 		$model->setMultiOptions($opt);
 		 
-		$opt = array(''=>$tr->translate("SELECT_CATEGORY"),-1=>$tr->translate("ADD_NEW_CATEGORY"));
+		$opt = array(''=>$tr->translate("SELECT_CATEGORY"),'-1'=>$tr->translate("ADD_NEW_CATEGORY"));
 		$category = new Zend_Form_Element_Select("category");
 		$category->setAttribs(array(
 				'class'=>'form-control select2me',

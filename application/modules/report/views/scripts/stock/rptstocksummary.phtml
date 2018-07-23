@@ -2,8 +2,10 @@
 $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 $brach_name =  $this->branch;
 $result = $this->stockin;
+
 $db = new report_Model_DbStock();
-//print_r($result);
+
+
 ?>
 <?php $formFilter = $this->formFilter; ?>
 <title><?php echo $tr->translate("STOCK_SUMMARY");?></title>
@@ -134,7 +136,7 @@ $db = new report_Model_DbStock();
 								$pur_qty = $rs_re["qty_receive"];
 								$issuse_qty = $rs_deli["deli_qty"];
 							    $total_pur_qty =  $total_pur_qty+ $pur_qty;
-							    $toal_issus_qty =  $total_pur_qty+ $issuse_qty;
+							    $toal_issus_qty =  $toal_issus_qty+ $issuse_qty;
 							    
 								$total_begin_qty =  $total_begin_qty+ (($rs["qty"]+$issuse_qty)-$pur_qty);
 							    $total_price =  $total_price+$rs["price"];
@@ -146,9 +148,10 @@ $db = new report_Model_DbStock();
 						 <tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:none;">
 						   <td align="center" style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						    <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						    <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo $tr->translate("TOTAL");?></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;$<span style="float:right"><?php echo number_format($total_price,2);?></span></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo  $total_begin_qty;?></td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo $total_pur_qty;?></td>
@@ -163,6 +166,9 @@ $db = new report_Model_DbStock();
 			                     
 								<td class="tdheader"><?php echo $tr->translate("CODE");?></td>
 								<td class="tdheader">&nbsp;<?php echo $tr->translate("ITEM_NAME");?></td>
+								
+								<td class="tdheader">&nbsp;<?php echo $tr->translate("CATEGORY");?></td>
+								
 								<td class="tdheader">&nbsp;<?php echo $tr->translate("PACKING");?></td>
 								<td class="tdheader"><?php echo $tr->translate("U/PRICE");?></td>
 								<td class="tdheader"><?php echo $tr->translate("B/D");?></td>
@@ -188,6 +194,7 @@ $db = new report_Model_DbStock();
 						    
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="max-width: 200px !important;">&nbsp;<?php echo $rs["item_name"];?></td>
+						   <td style="max-width: 200px !important;">&nbsp;<?php echo $rs["cat_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["measure"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $begin_qty;?></td>

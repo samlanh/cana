@@ -204,6 +204,7 @@ class Application_Form_Frmlist
 							<option value="80">80</option>
 							<option value="90">90</option>
 							<option value="100">100</option>
+                            <option value="1000">1000</option>
 							</select>
 					    </td>
 						</tr>

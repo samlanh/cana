@@ -509,6 +509,7 @@ function checkCateparent($id){
     		$arr = array(
     				'item_name'		=>	$data["name"],
     				//'item_code'		=>	$data["pro_code"],
+    				'int_code'		=>	$data["int_code"],
     				'barcode'		=>	$data["barcode"],
     				'cate_id'		=>	$data["category"],
     				'brand_id'		=>	$data["brand"],
@@ -789,9 +790,11 @@ function checkCateparent($id){
 			if(!empty($rowp)){
 				$p_code=$rowp+1;
 				$acc_no= strlen((int)$rowp+1);
+				 
 			}else{
 				$p_code=$row["start_code"]+1;
 				$acc_no= strlen((int)$row["start_code"]+1);
+				 
 			}
 			$pre = $row["prefix"];
 			return array("p_code"=>$pre.$p_code,"int_code"=>$p_code);			
@@ -802,6 +805,7 @@ function checkCateparent($id){
 			for($i = $acc_no;$i<3;$i++){
 				$pre.='0';
 			}
+			 
 			return array("p_code"=>$pre.$p_code,"int_code"=>$p_code);
 		}
 	}   
