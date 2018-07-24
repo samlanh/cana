@@ -105,7 +105,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		    $where .= " AND v.`vendor_id` = ".$search['suppliyer_id'];
 		}
 
-		if($search["category"]!=""){
+		if($search["category"]>-1){
 			$category_id = $search["category"];
 			$parent = $this->checkCateparent($category_id);
 			if ($parent['parent_id']==0){
@@ -274,7 +274,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			$category_id = $search["category"];
 			$parent = $this->checkCateparent($category_id);
 			if ($parent['parent_id']==0){
-				$sql.=" AND (p.cate_id=".$category_id." OR (SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` =p.cate_id AND p.cate_id LIMIT 1) = $category_id)";
+				$sql.=" AND (p.cate_id=".$category_id." OR (SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` =p.cate_id) = $category_id)";
 			}else{
 				$where.=' AND p.cate_id='.$category_id;
 			}
@@ -332,8 +332,8 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 		
-		if($search['category']>0 AND $search["category"]>0){
-			if($search["category"]!=""){
+		if($search['category']>-1 AND $search["category"]>-1){
+			if($search["category"]>-1){
 				$category_id = $search["category"];
 				$parent = $this->checkCateparent($category_id);
 				if ($parent['parent_id']==0){
@@ -343,6 +343,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				}
 			}
 		}
+		
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY s.`sale_no`";
@@ -791,8 +792,8 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				$s_where[]="REPLACE(p.item_name,' ','')   LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
-			if($search['category']>0){
-				if($search["category"]!=""){
+			if($search['category']>-1){
+				if($search["category"]>-1){
 					$category_id = $search["category"];
 					$parent = $this->checkCateparent($category_id);
 					if ($parent['parent_id']==0){
