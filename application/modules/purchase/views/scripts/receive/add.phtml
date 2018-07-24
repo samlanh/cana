@@ -702,7 +702,7 @@ function netTotal() {//use
 	for(var n = 0; n < rowIDArray.length; n++) {
 		netTotal += Number($('#total'+rowIDArray[n]).val());
 	}
-	$('#totalAmoun').val(netTotal.toFixed(4));
+	$('#totalAmoun').val(netTotal.toFixed(2));
 	calculateDiscount();
 }
 function calculateDiscount(){//use
@@ -966,9 +966,9 @@ function netTotal() {//use
 	total_tax = all_total_amount*(parseFloat($('#vat').val())/100);
 	$('#totalAmoun').val(all_total_amount);
 	$('#all_total').val(all_total+total_tax);
-	$('#totalAmoun_after').val(netTotal.toFixed(4));
-	$('#all_total_after').val(netTotal.toFixed(4));
-	$('#remain').val(netTotal.toFixed(4));
+	$('#totalAmoun_after').val(netTotal.toFixed(2));
+	$('#all_total_after').val(netTotal.toFixed(2));
+	$('#remain').val(netTotal.toFixed(2));
 	//$('#paid').val(netTotal.toFixed(2));
 	//calculateDiscount();
 	 doRemain();
