@@ -390,10 +390,10 @@ function netTotal() {//use
 		total += Number($('#total'+rowIDArray[n]).val());
 		total_vat += Number($('#total_vat'+rowIDArray[n]).val());
 	}
-	$('#all_total').val(subtotal.toFixed(3));
-	$('#total').val(total.toFixed(3));
-	$('#total_vat').val(total_vat.toFixed(3));
-	$('#paid').val(subtotal.toFixed(3));
+	$('#all_total').val(subtotal.toFixed(2));
+	$('#total').val(total.toFixed(2));
+	$('#total_vat').val(total_vat.toFixed(2));
+	$('#paid').val(subtotal.toFixed(2));
 	doRemain();
 }
 function doRemain() {

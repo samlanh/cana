@@ -169,11 +169,12 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 				 (SELECT p.item_name FROM `tb_product` AS p WHERE p.id = ri.pro_id LIMIT 1) AS product_name, 
 				 (SELECT m.name FROM `tb_measure` AS m WHERE m.id=(SELECT pr.measure_id FROM `tb_product` AS pr WHERE 
 				 pr.id = ri.pro_id LIMIT 1 ) LIMIT 1) AS measure 
-				 FROM `tb_purchase_invoice` AS pv,
-				 tb_purchase_invoice_detail AS pid,
-				  tb_vendorpayment_detail AS iv, 
-				  `tb_recieve_order` As ro, 
-				  `tb_recieve_order_item` As ri 
+				 FROM 
+				     `tb_purchase_invoice` AS pv,
+				 	  tb_purchase_invoice_detail AS pid,
+				 	  tb_vendorpayment_detail AS iv, 
+				  	 `tb_recieve_order` As ro, 
+				     `tb_recieve_order_item` As ri 
 				  WHERE 
 				  pv.id=pid.invoice_id
 				  AND pid.receive_id=ro.order_id
