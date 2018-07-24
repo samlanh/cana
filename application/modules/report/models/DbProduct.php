@@ -49,7 +49,7 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 		if($data["brand"]!=""){
 			$where.=' AND p.brand_id='.$data["brand"];
 		}
-		if($data["category"]!=""){
+		if($data["category"]>0){
 	  		$category_id = $data["category"];
 	  		$parent = $this->checkCateparent($category_id);
 	  		if ($parent['parent_id']==0){
@@ -122,7 +122,7 @@ Class report_Model_DbProduct extends Zend_Db_Table_Abstract{
 		if($data["brand"]!=""){
 			$where.=' AND p.brand_id='.$data["brand"];
 		}
-		if($data["category"]!=""){
+		if($data["category"]>0){
 			$category_id = $data["category"];
 			$parent = $this->checkCateparent($category_id);
 			if ($parent['parent_id']==0){

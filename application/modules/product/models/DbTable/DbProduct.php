@@ -188,7 +188,7 @@ $db->getProfiler()->setEnabled(false);
   	if($data["brand"]!=""){
   		$where.=' AND p.brand_id='.$data["brand"];
   	}
-  	if($data["category"]!=""){
+  	if($data["category"]>0){
   		$category_id = $data["category"];
   		$parent = $this->checkCateparent($category_id);
   		if ($parent['parent_id']==0){

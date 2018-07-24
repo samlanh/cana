@@ -583,6 +583,7 @@ class report_ProchesController extends Zend_Controller_Action
 			$db = new Application_Model_DbTable_DbGlobal();
 			$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
 	}
+	
 	public function receivenoteAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
     	if(empty($id)){
