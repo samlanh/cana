@@ -37,7 +37,7 @@ class report_StockController extends Zend_Controller_Action
     				'ad_search'		=>	'',
     				'start_date'	=>	date('2016-m-d'),
     				'end_date'		=>	date('Y-m-d'),
-    				'category'		=>	-1,
+    				'category'		=>	35,
     		        'product_id'      => -1,
     				'suppliyer_id'	=>	-1,
     		        'branch'		=>	0

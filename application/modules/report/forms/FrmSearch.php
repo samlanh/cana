@@ -54,14 +54,14 @@ class report_Form_FrmSearch extends Zend_Form
 				$opt_c[$rs["id"]] = $rs["name"];
 			}
 		}
+		
 		$category = new Zend_Form_Element_Select('category');
 		$category->setAttribs(array(
 				'class'=>'form-control select2me',
 		));
+		$category->setValue($request->getParam('category'));
 		$category->setMultiOptions($opt_c);
     	$this->addElement($category);
-		$category->setValue($request->getParam('category'));
-		
 		
 		$opt_p = array('-1'=>$tr->translate("SELECT_PRODUCT"));
 		$row_ps = $row_g->getProductOptions();

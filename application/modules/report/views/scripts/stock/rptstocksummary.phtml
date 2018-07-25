@@ -62,7 +62,7 @@ $db = new report_Model_DbStock();
 				ul{margin: 0;padding:0;}
 				table tr td ul li{text-align: center;list-style: none;line-height: 25px; }
 				th{padding: 0px;}
-				table thead tr th{
+				table tbody tr th{
 					line-height:30px;
 					background:#ccc;
 					font-size:15px;
@@ -76,6 +76,10 @@ $db = new report_Model_DbStock();
 				ul.pur_info li strong{font-weight: bold;}
 			   .hover:hover{background: #ccc;}
 				table.collape td{border: 1px solid #000 !important;}
+				
+               #nobor{border-left: 1px solid #fff !important;border-top: 1px solid #fff !important;
+					border-right: 1px solid #fff !important;}
+				
 				table { page-break-inside:auto }
 				tr{ page-break-inside:avoid; page-break-after:auto; }
 				#header {
@@ -145,21 +149,22 @@ $db = new report_Model_DbStock();
 							   
 						   }
 						  ?>
-						 <tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:none;">
-						   <td align="center" style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						    <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						    <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo $tr->translate("TOTAL");?></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;$<span style="float:right"><?php echo number_format($total_price,2);?></span></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo  $total_begin_qty;?></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo $total_pur_qty;?></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp; <?php echo $toal_issus_qty;?></td>
-						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;<?php echo  $total_edning_qty;?></td>
-						   <td style="white-space: nowrap;border: none;">&nbsp;$<span>&nbsp;&nbsp;<?php echo number_format($total_amount,2);?></span></td>
+						  <thead>
+						 <tr  >
+						   <td align="center" style="white-space: nowrap;text-align:center;" id="nobor">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;" id="nobor">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center; " id="nobor">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;<?php echo $tr->translate("TOTAL");?></td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;$<span style="float:right"><?php echo number_format($total_price,2);?></span></td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;<?php echo  $total_begin_qty;?></td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;<?php echo $total_pur_qty;?></td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp; <?php echo $toal_issus_qty;?></td>
+						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;<?php echo  $total_edning_qty;?></td>
+						   <td style="white-space: nowrap; "  id="nobor">&nbsp;$<span>&nbsp;&nbsp;<?php echo number_format($total_amount,2);?></span></td>
 						</tr>
-						<thead>
+						 
 							<tr bgcolor="#ccc" class="style tdborder" align="center" style="font-weight:bold; line-height: 35px;border:1px solid #000; font-size:12px; padding:1px 0px; white-space: nowrap; ">
 			                    <td class="tdheader">&nbsp;<?php echo $tr->translate("NUM");?></td>
 			                    <td class="tdheader">&nbsp;<?php echo $tr->translate("DATE_IN");?></td>
@@ -177,7 +182,8 @@ $db = new report_Model_DbStock();
 								<td class="tdheader">&nbsp;<?php echo $tr->translate("E/D");?></td>
 								<td class="tdheader" >&nbsp;<?php echo $tr->translate("AMOUNT");?></td>
 			                </tr> 
-		                </thead>
+			             </thead>
+		                
 		                <?php 
 							if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){
 								$rs_re = $db->getReceiveByPro($rs["id"],$this->search);
@@ -190,7 +196,7 @@ $db = new report_Model_DbStock();
 						?>
 						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1;?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo date("d-M-Y",strtotime($rs["date_order"]));?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php if(!empty($rs["date_order"])) echo date("d-M-Y",strtotime($rs["date_order"]));?></td>
 						    
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="max-width: 200px !important;">&nbsp;<?php echo $rs["item_name"];?></td>

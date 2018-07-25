@@ -65,23 +65,20 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			  pl.`location_id`,
 			  (SELECT g.name FROM `tb_category` AS g WHERE g.id=p.`cate_id` LIMIT 1) AS cat_name,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=p.`measure_id` LIMIT 1) AS measure,
-			  v.`date_order`,v.vendor_name
-			  
-			FROM
-			  `tb_product` AS p,
-			  `tb_prolocation` AS pl,
-               v_receive_purchase AS v
-			WHERE 
-			p.id=pl.`pro_id` 
-			AND p.is_meterail=0
-			AND pl.`location_id`=$loc 
-			AND p.`status`=1
-            AND v.`pro_id`=p.`id`";
+			  (SELECT   v.`date_order` FROM  v_receive_purchase AS v WHERE  v.`pro_id`=p.`id` LIMIT 1)AS date_order,
+			  (SELECT   v.`vendor_name` FROM  v_receive_purchase AS v WHERE  v.`pro_id`=p.`id` LIMIT 1)AS vendor_name
+			  FROM
+				  `tb_product` AS p,
+				  `tb_prolocation` AS pl
+			        WHERE 
+				p.id=pl.`pro_id` 
+				AND p.is_meterail=0
+				AND pl.`location_id`=$loc
+				AND p.`status`=1";
 		$where='';
-		
-		$from_date =(empty($search['start_date']))? '1': " v.`date_order` >= '".$search['start_date']."'";
-		$to_date = (empty($search['end_date']))? '1': "  v.`date_order` <= '".$search['end_date']."'";
-		$where = " AND ".$from_date." AND ".$to_date;
+// 		$from_date =(empty($search['start_date']))? '1': " v.`date_order` >= '".$search['start_date']."'";
+// 		$to_date = (empty($search['end_date']))? '1': "  v.`date_order` <= '".$search['end_date']."'";
+// 		$where = " AND ".$from_date." AND ".$to_date;
 		
 		if(!empty($search['ad_search'])){
 		    $s_where = array();
@@ -102,7 +99,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		
 		if($search['suppliyer_id']>0){
-		    $where .= " AND v.`vendor_id` = ".$search['suppliyer_id'];
+		    $where .= " AND  (SELECT   v.`vendor_id` FROM  v_receive_purchase AS v WHERE  v.`pro_id`=p.`id` LIMIT 1)=".$search['suppliyer_id'];
 		}
 
 		if($search["category"]>-1){
@@ -176,6 +173,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			$groupby = " GROUP BY dd.`pro_id`";
 		return $db->fetchRow($sql.$where.$groupby);
 	}
+	
 	function getAllStockSummary($search){
 		$db= $this->getAdapter();
 		$sql="SELECT 
