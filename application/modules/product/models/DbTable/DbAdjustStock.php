@@ -63,7 +63,7 @@ class Product_Model_DbTable_DbAdjustStock extends Zend_Db_Table_Abstract
 							'qty_after'		=>	$data["new_qty_".$i],
 							'differ_qty'	=>	$data["difer_qty_".$i],
 							'type'			=>	1,
-							'date'			=>	$date->get('MM/d/Y'),
+							'date'			=>	date("Y-m-d"),
 							'Remark'		=>	$data["remark_".$i],
 							'user_mod'		=>	$result["user_id"],
 					);

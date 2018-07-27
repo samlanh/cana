@@ -156,6 +156,21 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		return $db->fetchRow($sql.$where.$groupby);
 	}
 	
+	
+	function getAdjustPro($pro_id,$data){
+		$db= $this->getAdapter();
+		$user_info = $this->GetuserInfo();
+		$loc = $user_info["branch_id"];
+		$from_date =(empty($data['start_date']))? '1': "  a.`date` >= '".$data['start_date']."'";
+		$to_date = (empty($data['end_date']))? '1': "   a.`date` <= '".$data['end_date']."'";
+		$where = " AND ".$from_date." AND ".$to_date;
+       
+		$sql="SELECT a.`date`, SUM(a.`qty_after`) AS adjust_qty
+		FROM `tb_move_history` AS a WHERE  a.`pro_id` =$pro_id AND a.location_id=$loc ";
+		$groupby = "  GROUP BY a.`pro_id`";
+		return $db->fetchRow($sql.$where.$groupby);
+	}
+	
 	function getDeliByPro($id,$data){
 		$db= $this->getAdapter();
 		$user_info = $this->GetuserInfo();

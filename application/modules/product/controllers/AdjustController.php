@@ -30,8 +30,8 @@ public function init()
     	}else{
 			$data = array(
     			'ad_search'	=>	'',
-    			'start_date'	=>	$date->get('MM/d/Y'),
-				'end_date'	=>	$date->get('MM/d/Y')
+    			'start_date'	=>	date('Y-m-d'),
+				'end_date'	=>	date('Y-m-d')
     		);
 		}
    
