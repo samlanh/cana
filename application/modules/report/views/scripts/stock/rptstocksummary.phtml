@@ -168,7 +168,6 @@ $db = new report_Model_DbStock();
 						   <td style="white-space: nowrap;text-align:center; " id="nobor">&nbsp;</td>
 						   
 						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;</td>
-						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;<?php echo $tr->translate("TOTAL");?></td>
 						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;$<span style="float:right"><?php echo number_format($total_price,2);?></span></td>
 						   <td style="white-space: nowrap;text-align:center; "  id="nobor">&nbsp;<?php echo  $total_begin_qty;?></td>
@@ -186,7 +185,7 @@ $db = new report_Model_DbStock();
 								<td class="tdheader"><?php echo $tr->translate("CODE");?></td>
 								<td class="tdheader">&nbsp;<?php echo $tr->translate("ITEM_NAME");?></td>
 								
-								<td class="tdheader">&nbsp;<?php echo $tr->translate("CATEGORY");?></td>
+							<!-- <td class="tdheader">&nbsp;<?php echo $tr->translate("CATEGORY");?></td> -->	
 								
 								<td class="tdheader">&nbsp;<?php echo $tr->translate("PACKING");?></td>
 								<td class="tdheader"><?php echo $tr->translate("U/PRICE");?></td>
@@ -217,7 +216,7 @@ $db = new report_Model_DbStock();
 						    
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="max-width: 200px !important;">&nbsp;<?php echo $rs["item_name"];?></td>
-						   <td style="max-width: 200px !important;">&nbsp;<?php echo $rs["cat_name"];?></td>
+						 <!--  <td style="max-width: 200px !important;">&nbsp;<?php //echo $rs["cat_name"];?></td> --> 
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["measure"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $begin_qty;?></td>
