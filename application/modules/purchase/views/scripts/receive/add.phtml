@@ -731,10 +731,10 @@ function doRemain() {
 	var paid = $('#paid').val();
 	if(paid>all_total){
 		alert("Paid Value can not biger then total amount !");
-		 $('#remain').val(all_total.toFixed(4));
+		 $('#remain').val(all_total.toFixed(2));
    }else{
 	   remain = all_total-paid;
-	   $('#remain').val(remain.toFixed(4));
+	   $('#remain').val(remain.toFixed(2));
 	}
 	
 }
@@ -978,10 +978,10 @@ function doRemain() {
 	var paid = $('#paid').val();
 	if(paid>all_total){
 		alert("Paid Value can not biger then total amount !");
-		 $('#remain_after').val(all_total.toFixed(4));
+		 $('#remain_after').val(all_total.toFixed(2));
    }else{
 	   remain = all_total-paid;
-	   $('#remain_after').val(remain.toFixed(4));
+	   $('#remain_after').val(remain.toFixed(2));
 	}
 	
 }
