@@ -430,6 +430,8 @@ function checkCateparent($id){
 			}else{
 				$p_code = $data["pro_code"];
 				$int_code = $data["int_code"];
+				
+				return -1;
 			}
 		//	echo $p_code;exit();
     		$arr = array(
