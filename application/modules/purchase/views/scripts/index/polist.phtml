@@ -208,7 +208,6 @@
 			}
 		});
 	}
-	
 	<?php $url_item =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'get-purchase-item')); ?>
 	function item(id){
 		//alert(id);
@@ -235,7 +234,6 @@
 					index5++;
 					//alert(rs[i]);
 					
-					
 					template+='<tr id="row_order_'+index5+'" style="height:33px;">';
 					template+='<td  width="1%">'+index5+'</td>';
 					template+='<td width="30%">'+rs[i].item_code+'</td>';
@@ -245,9 +243,7 @@
 					//template+='<td ></td>';
 					template+="</tr>";
 					$('#table_order').html(template);
-					
 				}
-				
 			},
 			error:function(err){
 				alert("faile insert");

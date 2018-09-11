@@ -423,7 +423,7 @@ function checkCateparent($id){
     	try {
 			$sql ="SELECT p.id FROM `tb_product` AS p WHERE p.`item_code`='".$data["p_code"]."'";
 			$sql1 ="SELECT id FROM tb_product WHERE item_name='".$data["name"]."'";
-			$sql1.=" AND barcode='".$data['barcode']."'";
+			$sql1.=" AND item_code='".$data['p_code']."'";
 			$tes_code = $db->fetchOne($sql1);
  			$exist_code = $db->fetchOne($sql);
 			if(!empty($tes_code)){
@@ -437,7 +437,7 @@ function checkCateparent($id){
 				$p_code = $data["pro_code"];
 				$int_code = $data["int_code"];
 			}
-			//echo $int_code;exit();
+			echo $int_code;exit();
     		$arr = array(
     			'item_name'		=>	$data["name"],
     			'item_code'		=>	$p_code,
@@ -515,7 +515,7 @@ function checkCateparent($id){
     	try {
     		$arr = array(
     				'item_name'		=>	$data["name"],
-    				//'item_code'		=>	$data["pro_code"],
+    			//  'item_code'		=>	$data["pro_code"],
     				'int_code'		=>	$data["int_code"],
     				'barcode'		=>	$data["barcode"],
     				'cate_id'		=>	$data["category"],
