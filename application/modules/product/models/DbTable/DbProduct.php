@@ -421,8 +421,14 @@ function checkCateparent($id){
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try {
-			$sql ="SELECT p.id FROM `tb_product` AS p WHERE p.`item_code`='".$data["pro_code"]."'";
-			$exist_code = $db->fetchOne($sql);
+			$sql ="SELECT p.id FROM `tb_product` AS p WHERE p.`item_code`='".$data["p_code"]."'";
+			$sql1 ="SELECT id FROM tb_product WHERE item_name='".$data["name"]."'";
+			$sql1.=" AND barcode='".$data['barcode']."'";
+			$tes_code = $db->fetchOne($sql1);
+ 			$exist_code = $db->fetchOne($sql);
+			if(!empty($tes_code)){
+				return -1;
+			}
 			$new_code = $this->getProductPrefix($data["category"]);
 			if(!empty($exist_code)){
 				$p_code = $new_code["p_code"];
@@ -430,10 +436,8 @@ function checkCateparent($id){
 			}else{
 				$p_code = $data["pro_code"];
 				$int_code = $data["int_code"];
-				
-				return -1;
 			}
-		//	echo $p_code;exit();
+			//echo $int_code;exit();
     		$arr = array(
     			'item_name'		=>	$data["name"],
     			'item_code'		=>	$p_code,
@@ -501,6 +505,7 @@ function checkCateparent($id){
     		$db->rollBack();
     		Application_Model_DbTable_DbUserLog::writeMessageError($e);
     	}
+    	//print_r($data) ; exit();
     }
     
     public function edit($data){
