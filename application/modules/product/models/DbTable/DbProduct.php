@@ -422,8 +422,8 @@ function checkCateparent($id){
     	$db->beginTransaction();
     	try {
 			$sql ="SELECT p.id FROM `tb_product` AS p WHERE p.`item_code`='".$data["p_code"]."'";
-			$sql1 ="SELECT id FROM tb_product WHERE item_name='".$data["name"]."'";
-			$sql1.=" AND item_code='".$data['p_code']."'";
+			$sql1 ="SELECT id FROM tb_product WHERE item_code='".$data["p_code"]."'";
+			$sql1.=" AND int_code='".$data['int_code']."'";
 			$tes_code = $db->fetchOne($sql1);
  			$exist_code = $db->fetchOne($sql);
 			if(!empty($tes_code)){

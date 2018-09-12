@@ -7,10 +7,10 @@ class Purchase_indexController extends Zend_Controller_Action
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$db = new Application_Model_DbTable_DbGlobal();
-		$rs = $db->getValidUserUrl();
-		if(empty($rs)){
-			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
-		}
+// 		$rs = $db->getValidUserUrl();
+// 		if(empty($rs)){
+// 			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
+// 		}
     }
 	public function polistAction(){
 		if($this->getRequest()->isPost()){
@@ -60,7 +60,7 @@ class Purchase_indexController extends Zend_Controller_Action
 					'branch'			=>	'',
 					'suppliyer_id'		=>	0,
 					'end_date'			=>	date("Y-m-d"),
-					'po_pedding'	=>	7,
+					'po_pedding'		=>	7,
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbPurchaseOrder();
@@ -127,6 +127,33 @@ class Purchase_indexController extends Zend_Controller_Action
 		$formAdd = $formpopup->popuLocation(null);
 		Application_Model_Decorator::removeAllDecorator($formAdd);
 		$this->view->form_branch = $formAdd;	
+	}
+	
+	public function editpusAction(){
+		$id = $this->getRequest()->getParam('id');
+		$db = new Purchase_Model_DbTable_DbRequest();
+		if($this->getRequest()->isPost()) {
+			$data = $this->getRequest()->getPost();
+			$data["id"]  = $id;
+			try {
+				$db->edit($data);
+				Application_Form_FrmMessage::message("Request has been Saved!");
+				Application_Form_FrmMessage::redirectUrl("/purchase/index");
+			}catch (Exception $e){
+				Application_Form_FrmMessage::message('INSERT_FAIL');
+				$err =$e->getMessage();
+				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			}
+		}
+		$this->view->items = $db->getProductOption();
+		$this->view->item = $db->getRequestDetail($id);
+		$rs = $db->getRequestById($id);
+		$form = new Purchase_Form_FrmRequest();
+		$this->view->form = $form->add($rs);
+	
+		$items = new Application_Model_GlobalClass();
+		$this->view->product = $items->getAllProduct();
+			
 	}
 	public function editAction(){
 		$id = $this->getRequest()->getParam('id');
