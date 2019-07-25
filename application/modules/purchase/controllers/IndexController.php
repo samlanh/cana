@@ -7,10 +7,10 @@ class Purchase_indexController extends Zend_Controller_Action
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$db = new Application_Model_DbTable_DbGlobal();
-// 		$rs = $db->getValidUserUrl();
-// 		if(empty($rs)){
-// 			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
-// 		}
+		$rs = $db->getValidUserUrl();
+		if(empty($rs)){
+			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
+		}
     }
 	public function polistAction(){
 		if($this->getRequest()->isPost()){
@@ -60,7 +60,7 @@ class Purchase_indexController extends Zend_Controller_Action
 					'branch'			=>	'',
 					'suppliyer_id'		=>	0,
 					'end_date'			=>	date("Y-m-d"),
-					'po_pedding'		=>	7,
+					'po_pedding'	=>	7,
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbPurchaseOrder();
@@ -127,27 +127,6 @@ class Purchase_indexController extends Zend_Controller_Action
 		$formAdd = $formpopup->popuLocation(null);
 		Application_Model_Decorator::removeAllDecorator($formAdd);
 		$this->view->form_branch = $formAdd;	
-	}
-	
-	public function editpusAction(){
-		if($this->getRequest()->isPost()) {
-			$data = $this->getRequest()->getPost();
-			$db = new Purchase_Model_DbTable_DbMakePurchase();
-			$db->editPO($data);
-			Application_Form_FrmMessage::Sucessfull("EDEIT_SUCCESS", "/purchase/index/polist");
-		}
-		//editPO // submit value
-		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		if(empty($id)){
-			$this->_redirect("/report/index/rpt-purchase");
-		}
-		$query = new report_Model_DbQuery();
-		$this->view->product =  $query->getProductPruchaseById($id);
-		
-		$session_user=new Zend_Session_Namespace('auth');
-		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->title_reprot = $db->getTitleReportNew($session_user->location_id);
-		$this->view->term = $db->getTermConditionByType(1);//1=purchase,2=sale,3=quote
 	}
 	public function editAction(){
 		$id = $this->getRequest()->getParam('id');
@@ -841,6 +820,26 @@ class Purchase_indexController extends Zend_Controller_Action
 		$result = $get_code->closeReceive($post["id"],$post["re_id"]);
 		echo Zend_Json::encode($result);
 		exit();
+	}
+	public function editpusAction(){
+		if($this->getRequest()->isPost()) {
+			$data = $this->getRequest()->getPost();
+			$db = new Purchase_Model_DbTable_DbMakePurchase();
+			$db->editPO($data);
+			Application_Form_FrmMessage::Sucessfull("EDEIT_SUCCESS", "/purchase/index/polist");
+		}
+		//editPO // submit value
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		if(empty($id)){
+			$this->_redirect("/report/index/rpt-purchase");
+		}
+		$query = new report_Model_DbQuery();
+		$this->view->product =  $query->getProductPruchaseById($id);
+		
+		$session_user=new Zend_Session_Namespace('auth');
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->title_reprot = $db->getTitleReportNew($session_user->location_id);
+		$this->view->term = $db->getTermConditionByType(1);//1=purchase,2=sale,3=quote
 	}
 	
 }

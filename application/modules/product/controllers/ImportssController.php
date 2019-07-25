@@ -41,6 +41,7 @@ class Product_importssController extends Zend_Controller_Action {
 				}
 				
 				$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+				
 				//$db->productImport($sheetData);
 				$db->importQty($sheetData);
 				Application_Form_FrmMessage::message("Import Successfully");

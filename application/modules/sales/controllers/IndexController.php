@@ -222,11 +222,14 @@ class Sales_IndexController extends Zend_Controller_Action
 			
 			try {
 				$data = $this->getRequest()->getPost();
+				
 				$dbq = new Sales_Model_DbTable_DbRequest();
 				if(!empty($data['identity'])){
 					$id = $dbq->addRequestOrder($data);
 				}
+				
 				if(isset($data['save_close'])){
+					
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/sales/index/requestlist');
 				}elseif(isset($data["save_print"])){
 					Application_Form_FrmMessage::redirectUrl("/sales/index/viewrequest/id/".$id);

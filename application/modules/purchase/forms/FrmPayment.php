@@ -70,7 +70,7 @@ class Purchase_Form_FrmPayment extends Zend_Form
     	$this->addElement($descriptionElement);
     	
     	$allTotalElement = new Zend_Form_Element_Text('all_total');
-    	$allTotalElement->setAttribs(array("class"=>"form-control",'readonly'=>'readonly','require'=>true,'style'=>'text-align:right'));
+    	$allTotalElement->setAttribs(array("class"=>"form-control",'require'=>true,'style'=>'text-align:right'));
     	$this->addElement($allTotalElement);
     	
 //     	$netTotalElement = new Zend_Form_Element_Text('paid');
@@ -78,7 +78,7 @@ class Purchase_Form_FrmPayment extends Zend_Form
 //     	$this->addElement($netTotalElement);
     	
     	$remainlElement = new Zend_Form_Element_Hidden('balance');
-    	$remainlElement->setAttribs(array('readonly'=>'readonly',"class"=>"red form-control"));
+    	$remainlElement->setAttribs(array("class"=>"red form-control"));
     	$this->addElement($remainlElement);
     	
     	$date_inElement = new Zend_Form_Element_Text('expense_date');

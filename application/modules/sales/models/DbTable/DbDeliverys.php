@@ -296,9 +296,10 @@ $db->getProfiler()->setEnabled(false);
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		$db_global = new Application_Model_DbTable_DbGlobal();
-		$session_user=new Zend_Session_Namespace('auth');
-		$userName=$session_user->user_name;
-		$GetUserId= $session_user->user_id;
+			$session_user=new Zend_Session_Namespace('auth');
+			$userName=$session_user->user_name;
+			$GetUserId= $session_user->user_id;
+		
 		
 		try{
 			$rs = $this->getSaleOrder($id);
@@ -332,7 +333,7 @@ $db->getProfiler()->setEnabled(false);
 							$db->getProfiler()->setEnabled(true);
 							$deliver_id = $this->insert($arr);
 							
-							$arr_invoice = array(
+								$arr_invoice = array(
 									'branch_id'				=>	$row["branch_id"],
 									'invoice_no'			=>	$invoice_no,
 									'sale_id'				=>	$row["sale_id"],
@@ -347,9 +348,9 @@ $db->getProfiler()->setEnabled(false);
 									'balance_after'			=>	$row["net_total_after"],
 									'is_fullpaid'			=>	0,
 									'type'					=>	2,
-							);
-							$this->_name="tb_invoice";//if delevery existing update
-							$invoice_id = $this->insert($arr_invoice);
+									);
+								$this->_name="tb_invoice";//if delevery existing update
+								$invoice_id = $this->insert($arr_invoice);
 						$is_set	= 1;
 					}
 					
@@ -359,13 +360,17 @@ $db->getProfiler()->setEnabled(false);
 							'qty_order'			=> 	$row['qty_order_after'],
 							'qty_order_after'	=> 	$row['qty_order_after'],
 							'qty'	  			=> 	$row['qty_order_after'],
+							
 							'price'		  		=> 	$row['price'],
 							'benefit_plus'	  	=> $row['benefit_plus'],
 							'total'	  			=> $row['sub_total'],
+							
 							'remark'			=>	$row["remark"]
 					);
 					$this->_name="tb_deliver_detail";
+					
 					$this->insert($recieved_item);
+					
 
 					$recieved_item = array(
 							'deliver_id'	  	=> 	$deliver_id,
@@ -380,48 +385,58 @@ $db->getProfiler()->setEnabled(false);
 							'deliver_date'		=>	date("Y-m-d"),
 						);
 						$this->_name="tb_invoice_detail";
+						
 						$this->insert($recieved_item);
 
-						$rs_pro = $this->getProductExist($row["pro_id"],$row["branch_id"]);
+					$rs_pro = $this->getProductExist($row["pro_id"],$row["branch_id"]);
 							if(!empty($rs_pro)){
 								$arr_pro = array(
-									'qty'		=>	$rs_pro["qty"]-$row["qty_order_after"],
+									'qty'		=>	$rs_pro["qty"]-$row["pro_id"],
 								);
 								$this->_name = "tb_prolocation";
 								$where=" id = ".$rs_pro['id'];
 								$this->update($arr_pro,$where);
-
-							$row_product = $this->getProductForCost($row["pro_id"],$row["branch_id"]);
-							if(!empty($row_product)){
-								$amount_pro = $row_product["price"] * $row_product["qty"];
-								$new_amount_pro = $row['qty_order_after'] * $row['price'];
-								$total_qty = $row_product["qty"]+$row['qty_order_after'];
-								$cost_price = ($amount_pro+$new_amount_pro)/$total_qty;
-								$arr_pro   = array(
-											'price'   	=> 		$cost_price,
-											);
-								$this->_name="tb_prolocation";
-								$where=" pro_id = ".$row_product['id']." AND location_id=".$row["branch_id"];
-								$this->update($arr_pro, $where);
-								
-								$arr_pro   = array(
-											'price'   	=> 		$cost_price,
-											);
-								$this->_name="tb_product";
-								$where=" id = ".$row_product['id'];
-								$this->update($arr_pro, $where);
-							}
+				$row_product = $this->getProductForCost($row["pro_id"],$row["branch_id"]);
+						if(!empty($row_product)){
+							
+							$amount_pro = $row_product["price"] * $row_product["qty"];
+							$new_amount_pro = $row['qty_order_after'] * $row['price'];
+							$total_qty = $row_product["qty"]+$row['qty_order_after'];
+							$cost_price = ($amount_pro+$new_amount_pro)/$total_qty;
+							$arr_pro   = array(
+										'price'   	=> 		$cost_price,
+										);
+							$this->_name="tb_prolocation";
+							$where=" pro_id = ".$row_product['id']." AND location_id=".$row["branch_id"];
+							$db->getProfiler()->setEnabled(true);
+							$this->update($arr_pro, $where);
+							Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+$db->getProfiler()->setEnabled(false);
+							
+							//update Product Table
+							$arr_pro   = array(
+										'price'   	=> 		$cost_price,
+										);
+							$this->_name="tb_product";
+							$where=" id = ".$row_product['id'];
+							$db->getProfiler()->setEnabled(true);
+							$this->update($arr_pro, $where);
+							
+						}
 						
 						$this->_name="tb_sales_order";
-						$data_to = array(
+					$data_to = array(
 								'pending_status'	=>	5,
 								'appr_status'		=>	1,
 								'is_deliver'		=>	1,
 								'is_toinvocie'		=>	1,
 								);
-						$where=" id = ".$id;
-						$this->update($data_to, $where);
-				}
+					$where=" id = ".$id;
+					
+					$this->update($data_to, $where);
+					
+							}
 			}
 		}
 			//exit();
@@ -430,6 +445,7 @@ $db->getProfiler()->setEnabled(false);
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
 			$err =$e->getMessage();
+			
 			Application_Model_DbTable_DbUserLog::writeMessageError($err);
 		}
 	}

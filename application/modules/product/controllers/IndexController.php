@@ -61,19 +61,15 @@ public function init()
 		$db = new Product_Model_DbTable_DbProduct();
 			if($this->getRequest()->isPost()){ 
 				try{
-					$sms = "INSERT_SUCCESS";
 					$post = $this->getRequest()->getPost();
-					$_pro_id = $db->add($post);
-					if($_pro_id==-1){
-						$sms = "RECORD_EXIST";
-					}
+					$db->add($post);
 					if(isset($post["save_close"]))
 					{
-						Application_Form_FrmMessage::Sucessfull($sms, '/product/index/add');
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/product/index/add');
 					}elseif(isset($post["btn_print"])){
 						
 					}else{
-						Application_Form_FrmMessage::Sucessfull($sms,"/product/index/add");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/product/index/add");
 					}
 				  }catch (Exception $e){
 				  	Application_Form_FrmMessage::messageError("INSERT_ERROR",$err = $e->getMessage());

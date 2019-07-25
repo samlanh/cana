@@ -168,7 +168,7 @@ class Purchase_Model_DbTable_DbMakePurchase extends Zend_Db_Table_Abstract
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY s.`is_approve` ASC , id DESC ";
-// 		echo $sql.$where.$groupby;
+		
 		return $db->fetchAll($sql.$where.$groupby.$order);
 	}
 	
@@ -368,4 +368,5 @@ class Purchase_Model_DbTable_DbMakePurchase extends Zend_Db_Table_Abstract
 			$this->update($arr_pro, $where);	
 		}
 	}
+
 }

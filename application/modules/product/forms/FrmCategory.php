@@ -9,7 +9,6 @@ class Product_Form_FrmCategory extends Zend_Form
 	/////////////	Form Product		/////////////////
 	public function cat($data=null){
 		$db = new Product_Model_DbTable_DbCategory();
-		
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$name = new Zend_Form_Element_Text('cat_name');
 		$name->setAttribs(array(
@@ -64,6 +63,7 @@ class Product_Form_FrmCategory extends Zend_Form
 				'class'=>'form-control',
 		));
 		if($data != null){
+			
 			$name->setValue($data["name"]);
 			$parent->setValue($data["parent_id"]);
 			$remark->setValue($data["remark"]);

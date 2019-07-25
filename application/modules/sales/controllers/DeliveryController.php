@@ -153,6 +153,7 @@ class Sales_DeliveryController extends Zend_Controller_Action
     	$query = new Sales_Model_DbTable_Dbdeliverys();
     	$this->view->product =  $query->getProductSaleById($id);
 		$row = $query->getProductSaleById($id);
+	
     	if(empty($row)){
     		$this->_redirect("/sales/delivery/");
     	}
@@ -166,13 +167,14 @@ class Sales_DeliveryController extends Zend_Controller_Action
 				$dbq = new Sales_Model_DbTable_Dbdeliverys();				
 				$returnid = $dbq->addRequestDeliver($id);
 				if(!empty($data["saveprint"])){
-				}else{
+					
 					Application_Form_FrmMessage::Sucessfull("DELIVERY_SUCCESS", "/sales/index/requestdelivery");
 				}
 				
 			}catch (Exception $e){
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+				
 			}
 		}
 		

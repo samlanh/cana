@@ -36,6 +36,39 @@ class Product_Model_DbTable_DbImportss extends Zend_Db_Table_Abstract
 			}
 		}
 	}
+	function importQty($data){
+		$db = $this->getAdapter();
+		$db->beginTransaction();
+		$count = count($data);
+		try{
+			for($i=2; $i<=$count; $i++){
+				$product_id = $this->getProductByCode($data[$i]['A']);
+				if(!empty($product_id)){
+// 					$arr_product = array(
+// 							'price'	=>	$data[$i]['B'],
+// 					);
+// 					$this->_name="tb_product";
+// 					$where='id='.$product_id;
+// 					$this->update($arr_product, $where);
+					
+					//qty
+					$arr_product = array(
+							'qty'	=>	$data[$i]['C'],
+							'price'=> $data[$i]['B']
+					);
+					$this->_name="tb_prolocation";
+					$where='location_id=1 AND pro_id='.$product_id;
+					$this->update($arr_product, $where);
+				}
+			}
+			
+			$db->commit();
+		}catch(Exception $e){
+			$db->rollBack();
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();exit();
+		}
+	}
 	function getParentCat($title){
 		$db = $this->getAdapter();
 		$sql = "SELECT c.id FROM `tb_category` AS c WHERE c.`name` = '".$title."'";
@@ -81,6 +114,9 @@ class Product_Model_DbTable_DbImportss extends Zend_Db_Table_Abstract
 					$db->getProfiler()->setEnabled(true);
 					$this->_name="tb_category";
 					$parent_id = $this->insert($arr_parent);
+					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+$db->getProfiler()->setEnabled(false);
 
 				}else{
 					$parent_id = $rs_paren;
@@ -100,6 +136,10 @@ class Product_Model_DbTable_DbImportss extends Zend_Db_Table_Abstract
 					$db->getProfiler()->setEnabled(true);
 					$this->_name="tb_category";
 					$sub_id = $this->insert($arr_sub);
+					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+$db->getProfiler()->setEnabled(false);
+				//echo count($rs_sub_cat);
 				}else{
 					$sub_id = $rs_sub_cat;
 				}
@@ -116,6 +156,9 @@ class Product_Model_DbTable_DbImportss extends Zend_Db_Table_Abstract
 					$db->getProfiler()->setEnabled(true);
 					$this->_name="tb_measure";
 					$measur_id = $this->insert($arr_measure);
+					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+$db->getProfiler()->setEnabled(false);
 				//echo count($rs_sub_cat);
 				}else{
 					$measur_id = $rs_measure;
@@ -141,51 +184,25 @@ class Product_Model_DbTable_DbImportss extends Zend_Db_Table_Abstract
 						//'convertor_measure'	=>	$data[$i]['Q'],
 						//'sign'		=> $data[$i]['R'],
 					);
+					$db->getProfiler()->setEnabled(true);
 					$this->_name="tb_product";
 					$pro_id = $this->insert($arr_product);
+					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+$db->getProfiler()->setEnabled(false);
+				//echo count($rs_sub_cat);
 				}else{
 					$pro_id = $rs_product;
 				}
 				
 			}
+		//exit();	
 		$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
+			
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
      		echo $e->getMessage();exit();
-		}
-	}
-	function importQty($data){
-		$db = $this->getAdapter();
-		$db->beginTransaction();
-		$count = count($data);
-		try{
-			for($i=2; $i<=$count; $i++){
-				$product_id = $this->getProductByCode($data[$i]['A']);
-				if(!empty($product_id)){
-// 					$arr_product = array(
-// 							'price'	=>	$data[$i]['B'],
-// 					);
-// 					$this->_name="tb_product";
-// 					$where='id='.$product_id;
-// 					$this->update($arr_product, $where);
-					
-					//qty
-					$arr_product = array(
-							'qty'	=>	$data[$i]['C'],
-							'price'=> $data[$i]['B']
-					);
-					$this->_name="tb_prolocation";
-					$where='location_id=1 AND pro_id='.$product_id;
-					$this->update($arr_product, $where);
-				}
-			}
-			
-			$db->commit();
-		}catch(Exception $e){
-			$db->rollBack();
-			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-			echo $e->getMessage();exit();
 		}
 	}
 	

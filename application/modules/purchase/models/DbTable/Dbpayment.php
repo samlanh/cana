@@ -459,7 +459,7 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 					"total"         		=> 	$data['all_total'],
 					"vat"         			=> 	$data['total_vat'],
 					"paid"          		=> 	$data['paid'],
-					"balance"       		=> 	$data['balance'],
+					"balance"       		=> 	$data['all_total'],	//$data['balance']
 					"remark"        		=> 	$data['remark'],
 					"user_id"       		=> 	$GetUserId,
 					'status'        		=>	1,

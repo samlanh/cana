@@ -360,6 +360,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY s.`sale_no`";
+	
 		return $db->fetchAll($sql.$where.$order);
 	}
 	

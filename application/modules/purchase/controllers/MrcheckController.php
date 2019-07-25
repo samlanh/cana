@@ -27,8 +27,8 @@ class Purchase_MrcheckController extends Zend_Controller_Action
 					'branch'			=>	'',
 					'plan'				=>'',
 					'end_date'			=>	date("Y-m-d"),
-					'po_pedding'	    =>	3,
-					'search_bydate'     =>2,
+					'po_pedding'	    =>	1,
+					'search_bydate'     =>1,
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbRequest();
