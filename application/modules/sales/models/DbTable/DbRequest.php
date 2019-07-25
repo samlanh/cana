@@ -209,7 +209,6 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 					$arr_poi=array(
 						'pur_id'	=>	$po_id,
 						'pro_id'	=>	$data['item_id_'.$i],
-						//'price'		=>	,
 						'cur_qty'	=>	$data['current_qty'.$i],
 						'qty'		=>	$data['qty_order_'.$i],
 						'date_in'	=>	$data['re_date_in_'.$i],
@@ -218,22 +217,7 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 					$this->_name = "tb_purchase_request_detail";
 					$this->insert($arr_poi);
 				}
-				/*($rows=$this->productLocationInventory($data['item_id_'.$i], $locationid);//check stock product location
-					if($rows)
-					{
-						//if($data["status"]==4 OR $data["status"]==5){
-							$datatostock   = array(
-									'qty'   			=> 		$rows["qty"]-$data['qty'.$i],
-									'last_mod_date'		=>		date("Y-m-d"),
-									'last_mod_userid'	=>		$GetUserId
-							);
-							$this->_name="tb_prolocation";
-							$where=" id = ".$rows['id'];
-							$this->update($datatostock, $where);
-						//}
-					}*/
 			 }
-			//exit();
 			$db->commit();
 			return $sale_id;
 		}catch(Exception $e){
@@ -387,7 +371,6 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 	function checkRequest($data){
 		$db = $this->getAdapter();
 		$db->beginTransaction();
-		
 		try{
 			
 			if($data["apprrove"]==1){
@@ -397,44 +380,24 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 			$appr_status = 2;
 			$pending_status=1;
 		}
-		//print_r($data);exit();
+		$session_user=new Zend_Session_Namespace('auth');
+		$userName=$session_user->user_name;
+		$GetUserId= $session_user->user_id;
 			$arr=array(
-					
 					"approved_userid"   => 	$GetUserId,
 					'approved_note'		=>	$data["remark"],
 					'pending_status' 	=>	$pending_status,
 					'appr_status' 		=>	$appr_status,
 					"approved_date"     => 	date("Y-m-d"),
 			);
-
 			$this->_name="tb_sales_order";
 			$where="id = ".$data["id"];
 			$this->update($arr, $where);
 			unset($arr);
-			/*if($data["apprrove"]==1){
-				$row_old_item = $this->getSaleorderItemDetailid($data["id"]);
-				if(!empty($row_old_item)){
-					foreach($row_old_item AS $rs){
-						$row = $this->productLocationInventory($rs["pro_id"],$data["branch_id"]);
-						//$sql = "SELECT pl.id,pl.`qty` FROM `tb_prolocation` AS pl WHERE pl.`pro_id`=".$rs["pro_id"]. " AND pl.`location_id` =".$data["old_location"];
-						//$row = $db->fetchRow($sql);
-						
-							$arr_old = array(
-								'qty'	=> $row["qty"]-$rs["qty_order"],
-							);
-							$where = $db->quoteInto("id=?",$row["id"]);
-							$this->_name = "tb_prolocation";
-							$this->update($arr_old,$where);
-					}
-					
-				}
-			}*/
 			$db->commit();
 		}catch(Exception $e){
 			$db->rollBack();
-			//Application_Form_FrmMessage::message('INSERT_FAIL');
 			$err =$e->getMessage();
-			//echo $err;exit();
 			Application_Model_DbTable_DbUserLog::writeMessageError($err);
 		}
 	}

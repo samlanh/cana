@@ -89,7 +89,7 @@ class Purchase_Form_FrmInvoice extends Zend_Form
     	$this->addElement($descriptionElement);
     	
     	$allTotalElement = new Zend_Form_Element_Text('all_total');
-    	$allTotalElement->setAttribs(array("class"=>"form-control",'readonly'=>'readonly','require'=>true,'style'=>'text-align:right;'));
+    	$allTotalElement->setAttribs(array("class"=>"form-control",'require'=>true,'style'=>'text-align:right;'));
     	$this->addElement($allTotalElement);
     	
 //     	$netTotalElement = new Zend_Form_Element_Text('paid');

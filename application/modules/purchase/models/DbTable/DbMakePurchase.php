@@ -168,7 +168,7 @@ class Purchase_Model_DbTable_DbMakePurchase extends Zend_Db_Table_Abstract
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY s.`is_approve` ASC , id DESC ";
-		//echo $sql.$where.$groupby;
+// 		echo $sql.$where.$groupby;
 		return $db->fetchAll($sql.$where.$groupby.$order);
 	}
 	
@@ -333,5 +333,39 @@ class Purchase_Model_DbTable_DbMakePurchase extends Zend_Db_Table_Abstract
 			Application_Model_DbTable_DbUserLog::writeMessageError($err);
 		}
 	}
-
+	function editPO($data){
+		$db = $this->getAdapter();
+		$arr_up = array(
+				'net_total'		=>	$data["total_amount"],
+				'all_total'		=>	$data["identity"],//with vat
+				'total_after'	=>	$data["grand_total"],//with vat
+				'paid'			=>	0,
+				'balance'		=>	$data["grand_total"],
+		);
+		$this->_name = "tb_purchase_order";
+		$where = "id=".$data['poid'];
+		$this->update($arr_up,$where);
+		
+		$ids=explode(',',$data['identity']);
+		foreach($ids as $i){
+			$arr_pod = array(
+					'qty_order'		=>	$data["qty_order".$i],
+					'qty_after'		=>	$data["qty_order".$i],
+					'price'			=>	$data["price".$i],
+					'sub_total'		=>	$data["total".$i],
+					'total_before'	=>	$data["total".$i],
+			);
+			$this->_name = "tb_purchase_order_item";
+			$where="id = ".$data["id".$i];
+			$this->update($arr_pod, $where);
+			
+			$arr_pro=array(
+					'price'			=>	$data["price".$i],
+					'qty'			=>	$data["qty_order".$i],
+			);
+			$this->_name="tb_pro_compare";
+			$where=" re_id = ".$data['re_id']." AND is_check=1 AND pro_id=".$data["pro_id".$i];	
+			$this->update($arr_pro, $where);	
+		}
+	}
 }

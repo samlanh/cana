@@ -114,12 +114,14 @@ class report_StockController extends Zend_Controller_Action
 		$this->view->start_date = $data["start_date"];
 		$this->view->end_date = $data["end_date"];
 		
-    	$this->view->stockin = $db->getAllStockoutport($data);
+    	$this->view->stockout = $db->getAllStockoutport($data);
 		
 		
     	$formFilter = new report_Form_FrmSearch();
-    	$this->view->formFilter = $formFilter->formSearch();
-    	//Application_Model_Decorator::removeAllDecorator($formFilter);
+    	$frm_search = $formFilter->formSearch();
+    	Application_Model_Decorator::removeAllDecorator($frm_search);
+    	$this->view->formFilter = $frm_search;
+    	
 		$items = new Application_Model_GlobalClass();
 		$this->view->items = $items->getProductOption();
 		$session_user=new Zend_Session_Namespace('auth');

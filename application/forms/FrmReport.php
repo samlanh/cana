@@ -263,7 +263,7 @@ class Application_Form_FrmReport extends Zend_Form
     			'placeholder'=>'Start Date'
     	));
     	if($startDateValue==""){
-			$startDateElement->setValue(date("m/01/Y"));
+			//$startDateElement->setValue(date("m/01/Y"));
 		}else{
 			$startDateElement->setValue($startDateValue);
 		}

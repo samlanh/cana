@@ -307,6 +307,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  p.`item_name`,
 				  p.`cattegory`,
 				  p.`measure`,
+				  s.request_byname,
+				  s.work_plan,
+				  s.work_type,
 				  s.`qty_order`,
 				  s.`price`,
 				  s.`sub_total`,
@@ -322,10 +325,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				WHERE 
 				p.is_meterail=0
 				AND p.id = s.`pro_id` ";
-// 		$from_date =$search['start_date'];
-// 		$to_date = $search['end_date'];
-// 		$where = " AND s.`date_sold` BETWEEN "."'".date("Y-m-d",strtotime($from_date))."'"." AND "."'".date("Y-m-d",strtotime($to_date))."'";
-		
+
 		$from_date =date("Y-m-d",strtotime($search['start_date']));
 		$to_date = date("Y-m-d",strtotime($search['end_date']));
 		
@@ -360,7 +360,6 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY s.`sale_no`";
-		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	

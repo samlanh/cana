@@ -41,6 +41,16 @@ class Product_Model_DbTable_DbCategory extends Zend_Db_Table_Abstract{
 		$this->_name = "tb_category";
 		$where = $db->quoteInto("id=?", $data["id"]);
 		$this->update($arr, $where);
+		
+		$sql="SELECT id FROM tb_product where status=1 AND cate_id = ".$data["id"]." ORDER BY int_code DESC ";
+		$item_id = $db->fetchOne($sql);
+		$arr = array(
+			'int_code'=>$data["start_nuumber"],
+		);
+		$this->_name = "tb_product";
+		$where = $db->quoteInto("id=?", $item_id);
+		$this->update($arr, $where);
+		
 		}catch (Exception $e){
     		Application_Model_DbTable_DbUserLog::writeMessageError($e);
     		echo $e->getMessage();exit();

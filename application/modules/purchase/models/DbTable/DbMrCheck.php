@@ -87,7 +87,6 @@ class Purchase_Model_DbTable_DbMrCheck extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		$user = $this->GetuserInfo();
 		$GetUserId = $user['user_id'];
-		//echo $data["approve"];exit();
 		try{
 			if($data["approve"]==1){
 				$pedding = 3;

@@ -73,21 +73,28 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 	function getAllReciept($search){
 			$db= $this->getAdapter();
 			$sql=" SELECT r.id,
-			(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` AND STATUS=1 AND NAME!='' LIMIT 1) AS branch_name,
-			(SELECT v.v_name FROM `tb_vendor` AS v WHERE v.vendor_id=r.vendor_id LIMIT 1 ) AS customer_name,
-			r.`date_input`,
-			r.`total`,r.`paid`,r.`balance`,r.`pol_no`,r.`expense_date`,r.`bank_acc`,total_pay,vat,is_get,is_paid,
-			(SELECT payment_name FROM `tb_paymentmethod` WHERE payment_typeId=r.`payment_id`) AS payment_name,
-			cheque_number,bank_name,withdraw_name,che_issuedate,che_withdrawaldate,
-			(SELECT name_en FROM `tb_view` WHERE TYPE=10 AND key_code=r.`payment_type` LIMIT 1 ) payment_by,
-			(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name ,
-			(SELECT p.`date_get` FROM `tb_pol_pay` AS p WHERE p.`pol_id`=r.id LIMIT 1) AS get_date,
-			(SELECT p.`date_pay` FROM `tb_pol_pay` AS p WHERE p.`pol_id`=r.id LIMIT 1) AS paid_date
-			FROM `tb_vendor_payment` AS r ";
+						(SELECT s.name FROM `tb_sublocation` AS s WHERE s.id = r.`branch_id` LIMIT 1) AS branch_name,
+						(SELECT v.v_name FROM `tb_vendor` AS v WHERE v.vendor_id=r.vendor_id LIMIT 1 ) AS customer_name,
+						r.`date_input`,
+						r.`total`,r.`paid`,r.`balance`,r.`pol_no`,r.`expense_date`,r.`bank_acc`,r.total_pay,r.vat,r.is_get,r.is_paid,
+						(SELECT payment_name FROM `tb_paymentmethod` WHERE payment_typeId=r.`payment_id`) AS payment_name,
+						r.cheque_number,r.bank_name,r.withdraw_name,r.che_issuedate,r.che_withdrawaldate,
+						(SELECT name_en FROM `tb_view` WHERE TYPE=10 AND key_code=r.`payment_type` LIMIT 1 ) payment_by,
+						(SELECT u.fullname FROM `tb_acl_user` AS u WHERE u.user_id = r.`user_id`) AS user_name ,
+						(SELECT p.`date_get` FROM `tb_pol_pay` AS p WHERE p.`pol_id`=r.id LIMIT 1) AS get_date,
+						(SELECT p.`date_pay` FROM `tb_pol_pay` AS p WHERE p.`pol_id`=r.id LIMIT 1) AS paid_date,
+						(SELECT po.order_number FROM `tb_purchase_order` AS po WHERE po.id= iv.purchase_id LIMIT 1) AS purchase_no
+						FROM 
+							`tb_vendor_payment` AS r,
+							tb_vendorpayment_detail vd,
+							tb_purchase_invoice AS iv
+						WHERE 
+						r.id=vd.receipt_id
+						AND iv.id = vd.invoice_id ";
 			
 			$from_date =(empty($search['start_date']))? '1': " r.`expense_date` >= '".$search['start_date']." 00:00:00'";
 			$to_date = (empty($search['end_date']))? '1': " r.`expense_date` <= '".$search['end_date']." 23:59:59'";
-			$where = " WHERE ".$from_date." AND ".$to_date;
+			$where = " AND ".$from_date." AND ".$to_date;
 			if(!empty($search['text_search'])){
 				$s_where = array();
 				$s_search = trim(addslashes($search['text_search']));
@@ -95,6 +102,7 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 				$s_where[] = " r.`pol_no` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`paid` LIKE '%{$s_search}%'";
 				$s_where[] = " r.`balance` LIKE '%{$s_search}%'";
+				$s_where[] = " (SELECT po.order_number FROM `tb_purchase_order` AS po WHERE po.id= iv.purchase_id LIMIT 1) LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 			}
 			if($search['branch']>0){
@@ -104,8 +112,8 @@ class Purchase_Model_DbTable_Dbpayment extends Zend_Db_Table_Abstract
 				$where .= " AND r.vendor_id =".$search['suppliyer_id'];
 			}
 			$dbg = new Application_Model_DbTable_DbGlobal();
-			$where.=$dbg->getAccessPermission();
-			$order=" ORDER BY id DESC ";
+			$where.=$dbg->getAccessPermission('r.`branch_id`');
+			$order=" GROUP BY r.id ORDER BY id DESC ";
 			return $db->fetchAll($sql.$where.$order);
 	}
 	function getPaymentById($id){

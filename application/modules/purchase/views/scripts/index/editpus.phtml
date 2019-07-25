@@ -1,381 +1,289 @@
 <?php 
-	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	$form=$this->form;
-	$url_submit = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'add'));
-	$url_cancel = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'index'),null,true);
-	$date_now = date("m/d/Y");
+$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+//print_r($this->product);
 ?>
+<title><?php echo $tr->translate("PRINT_PO");?></title>
 <style>
-      table.table-bordered tbody th, table.table-bordered tbody td{width:2px;}
+	ol.term{margin-left:30px;!important}
 </style>
-<title><?php echo $tr->translate("EDIT_PURCAHSE_ORDER");?></title>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("EDIT_PURCAHSE_ORDER")?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("PRINT_PO");?>
 				</div>
-				<div class="tools" >
-					<a href="<?php echo $url_cancel;?>" class="btn btn-sm pull-right" style="color:white;">
-					 
-					</a>
-				</div>
-			</div>
-			<div class="portlet-body form">
-				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
-					<div class="form-body">
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_CODE");?> <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("request_no");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("DATE_REQUEST");?><span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('date_request');?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("PLAN");?> <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("plan");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("LOCATION_NAME");?><span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('branch');?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("NUMBER_WORK_SPACE");?> <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("number_work_space");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("DATE_REQUEST_WORK_PLACE");?><span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('date_request_work_space');?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("REASON");?> <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("remark");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("STATUS");?><span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('status');?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-						<div class="col-md-12">
-							<label class="control-label col-md-2 col-lg-2">
-								<button type="button" class="btn red delete col-md-12">
-									<i class="fa fa-barcode"></i>
-									<span>Scan </span>	
-								</button>
-							</label>
-							<label class="control-label col-md-8">
-								<!--<select data-placeholder="Select..." class="form-control select2me" id="add_item" name="add_item" Onchange="getItemOrder();"  style="width:100% ;margin:0 auto;">
-											<?php //echo $this->items; ?>
-								</select>-->
-								
-								<input type="hidden" class="form-control" id="add_item" name="add_item" Onchange="getItemOrder();" style="width:100%;" placeholder="<?php echo $tr->translate("SELECT_PRODUCT");?>"/>
-							</label>
-							<label class="control-label col-md-2 col-lg-2 col-sm-12">
-								<button type="button" class="btn red delete col-md-12">
-								<!-- 	<input type="checkbox" Onclick="Confirmmessage()" id="free" name="free" />
-									<span>&nbsp;&nbsp;Free</span>
-									-->
-								</button> 
-							</label>
-						</div>
-						</div>
-						<div class="portlet-body">
-							<table class="table table-striped table-bordered table-hover" id="table_order" style="font-size:12px;">
-								<tr height="33px">
-									<td style="width:4%;" class="center"><?php echo $tr->translate("DEL");?></td>
-									<td style=" width:4%;" class="center"><?php echo $tr->translate("NUM");?></td>
-									<td style="white-space:nowrap;" class="center"><?php echo $tr->translate("ITEM_CODE");?></td>
-									<td style="white-space:nowrap;" class="center"><?php echo $tr->translate("ITEM_NAME_CAP");?></td>
-									<td style="white-space:nowrap;" class="center"><?php echo $tr->translate("QTY_UNIT");?></td>
-									<td style="white-space:nowrap;" class="center"><?php echo $tr->translate("MEASURE");?></td>
-									<td style="white-space:nowrap;" class="center"><?php echo $tr->translate("DATE_IN");?></td>
-									<td style="white-space:nowrap;" class="center"><?php echo $tr->translate("REMARK");?></td>
-								</tr>
-							</table>
-							<input type="hidden" id="identity" name="identity" />
-							
-						</div>
-						<div class="form-group">
-							<div  class="col-md-12 col-md-offset-4 col-md-8">
-								<a href="<?php echo $this->baseUrl();?>/purchase/index/polist"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
-								<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
-							</div>
-						</div>
+						<div class="btn-group pull-right">
+							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+							   Actions <i class="fa fa-angle-down"></i>
+							 </button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#" onclick="doPrint();">
+											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
+										</a>
+									</li>
+									<li>
+										<a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+									</li>
+									
+								</ul>
 					</div>
-				</form>
 			</div>
+            <div class="portlet-body form frmfilter">
+					<div style="clear:both;"></div>	
+	<div style=" min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm">
+	<div id="divPrint" style="width: 100%; margin-top:15px;">
+	<style>
+		.style{
+			line-height: 20px;font-size: 9px !important;
+			font-family: 'Khmer OS Battambang';
+		}
+		ul{margin: 0;padding:0;}
+		table tr td ul li{text-align: center;list-style: none;line-height: 25px;}
+		th{padding: 0px;}
+		ul.pur_info li{line-height:18px; 
+				font-weight: normal !important;}
+		ul.pur_info li strong{font-weight: bold;}
+       .hover:hover{background: #ccc;}
+	   
+	</style>
+		<table style="font-family: 'Khmer OS Content'; width:100%;">
+			<tbody>
+			<tr>
+		    	<td align="center">
+		        	<table width="100%" style="font-family: 'Khmer OS Battambang';" cellpadding="0" cellpadding="0">
+		            	<tbody>
+						<tr>
+		                	<td width="20%" valign="top"><img src="<?php echo $this->baseUrl();?>/images/logo/<?php echo $this->title_reprot["logo"]?>"></td>
+								<td width="60%" valign="top" style="line-height:30px">
+									<ul>
+										<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
+										<li style="text-align:center; font-size:18px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
+										<li style="text-align:center; font-size:18px; margin-top:25px; font-family:'Khmer OS Muol Light'"><?php echo $tr->translate("PRINT_PO");?></li>
+									</ul>
+								</td>
+								<td width="20%" style="text-align:center; font-size: 11px;white-space: nowrap;">
+								</td>
+		                </tr> 
+		                <tr>
+		                	<td colspan="3" valign="top"><br />
+		                		<table width="100%" cellpadding="0" cellspacing="0">
+		                			<tbody>
+		                			<tr>
+		                				<td width="35%" style="font-size: 12px;" valign="top">
+											<table width="100%" style="font-size: 12px;">
+												<tr style="line-height:20px;">
+													<td style="text-align: left;white-space: nowrap;"><?php echo $tr->translate("PLAN");?></td>
+													<td>:</td>
+													<td style="text-align: left;white-space: nowrap;"><?php echo $this->product[0]['plan'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: left;white-space: nowrap;"><?php echo $tr->translate("BRANCH_NAME");?></td>
+													<td>:</td>
+													<td style="text-align: left;white-space: nowrap;"><?php echo $this->product[0]['branch_name'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: left;white-space: nowrap;"><?php echo $tr->translate("SUPPLIER_NAME");?> </td>
+													<td>:</td>
+													<td style="text-align: left;white-space: nowrap;"><?php echo $this->product[0]['vendor_name'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: left;white-space: nowrap;"><?php echo $tr->translate("CONTACT_NAME");?> </td>
+													<td>:</td>
+													<td style="text-align: left;white-space: nowrap;"><?php echo $this->product[0]['contact_name'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: left;white-space: nowrap;"><?php echo $tr->translate("CONTACT_NUM");?> </td>
+													<td>:</td>
+													<td style="text-align: left;white-space: nowrap;"><?php echo $this->product[0]['v_phone'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: left;white-space: nowrap;"><?php echo $tr->translate("EMAIL");?> </td>
+													<td>:</td>
+													<td style="text-align: left;white-space: nowrap;"><?php //echo $this->product[0]['mr_date'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: left;white-space: nowrap;"><?php echo $tr->translate("ADDRESS");?> </td>
+													<td>:</td>
+													<td style="text-align: left;white-space: nowrap;"><?php echo $this->product[0]['add_name'];?></td>
+												</tr>
+											</table>
+											
+		                				</td>
+		                				<td width="30%"></td>
+		                				<td width="35%" style="text-align: right;right:0;font-size: 12px;">
+											<table width="100%" style="font-size: 12px;">
+												<tr style="line-height:20px;">
+													<td style="text-align: right;white-space: nowrap;"><?php echo $tr->translate("PURCHASE_NO");?> :</td>
+													<td style="text-align: right;white-space: nowrap;"><?php echo $this->product[0]['order_number'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: right;white-space: nowrap;"><?php echo $tr->translate("PU_DATE");?> :</td>
+													<td style="text-align: right;white-space: nowrap;"><?php echo date("d-M-Y",strtotime($this->product[0]['date_order']));?></td>
+												</tr>
+												
+												<tr style="line-height:20px;">
+													<td style="text-align: right;white-space: nowrap;"><?php echo $tr->translate("MR_NO");?> :</td>
+													<td style="text-align: right;white-space: nowrap;"><?php echo $this->product[0]['mr_no'];?></td>
+												</tr>
+												<tr style="line-height:20px;">
+													<td style="text-align: right;white-space: nowrap;"><?php echo $tr->translate("MR_DATE");?> :</td>
+													<td style="text-align: right;white-space: nowrap;"><?php echo date("d-M-Y",strtotime($this->product[0]['mr_date']));?></td>
+												</tr>
+											</table>
+											<div style="border: 1px solid #000;padding: 5px;">
+												<ul class='pur_info'>
+												<li style="text-align: left;"><?php echo $tr->translate("SHIP_TO");?> : <?php //echo date("d/m/Y",strtotime($this->product[0]['date_order']));?></li>
+			                					<li style="text-align: left;"><?php echo $tr->translate("RECEIVER");?> : <?php echo $this->title_reprot['contact'];?></li>
+			                					<li style="text-align: left;"><?php echo $tr->translate("PHONE");?> : <?php echo $this->title_reprot['phone'];?></li>
+												<li style="text-align: left;"><?php echo $tr->translate("EMAIL");?> : <?php echo $this->title_reprot['email'];?></li>
+			                					<li style="text-align: left;"><?php echo $tr->translate("ADDRESS");?> : <?php echo $this->title_reprot['address'];?></li>
+		                					</ul>
+											</div>
+		                				</td>
+		                			</tr>
+				                </tbody></table>
+				              </td>
+				           </tr>   
+		            </tbody></table>
+		        </td>
+		    </tr>
+		    <tr>
+		    	<td class="table2excel" align="center">
+		    	<form method="post"  enctype="application/x-www-form-urlencoded">
+		            <table border="1" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0">
+		                 <tbody><tr bgcolor="#ccc" class="style" align="center" style="background:#ccc !important;font-weight:bold; line-height: 35px; font-size:14px !important; padding:1px 0px; white-space: nowrap; ">
+		                    <th width="5%"><?php echo $tr->translate("NUM");?></th>
+							<th><?php echo $tr->translate("ITEM_NAME");?></th>
+							<th><?php echo $tr->translate("MODEL");?></th>
+							<th><?php echo $tr->translate("PRODUCT_FROM");?></th>
+							<th><?php echo $tr->translate("MEASURE");?></th>
+							<th><?php echo $tr->translate("QTY");?></th>
+							<th width="10%">&nbsp;<?php echo $tr->translate("ITEM_PRICE");?></th>
+							<th><?php echo $tr->translate("TOTAL");?></th>
+		                </tr>
+		                <?php $num=1; 
+		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
+		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
+		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
+						$count = count($this->product);
+						$count_i = 8;
+						$total =0;
+						$identity='';
+						$str = '';
+		                if(!empty($this->product))foreach ($this->product AS $index => $rs){ 
+		               	if($index==0){
+		                		$str=$index+1;
+		                	}else{
+		                		$str.=",".($index+1);
+		                }
+		                
+							$inx = $index+1;
+							$total = $total+($rs["qty_order"]*$rs["price"]);
+						
+						?>
+						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+						   <td align="center"><?php echo $index+1?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?>
+						   		<input class="form-control" name="id<?php echo $inx;?>" id="id<?php echo $inx;?>" type="hidden" value="<?php echo $rs["po_id"];?>" />
+						   		<input class="form-control" name="pro_id<?php echo $inx;?>" id="pro_id<?php echo $inx;?>" type="hidden" value="<?php echo $rs["pro_id"];?>" />
+						   </td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["pro_brand"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["pro_from"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["measure"];?></td>
+						   <td style="white-space: nowrap;"><input onkeyup="calculate(<?php echo $inx; ?>);" class="form-control" name="qty_order<?php echo $inx;?>" id="qty_order<?php echo $inx;?>" type="text" value="<?php echo number_format($rs["qty_order"],2);?>" /></td>
+						   <td><input class="form-control" onkeyup="calculate(<?php echo $inx; ?>);" name="price<?php echo $inx;?>" id="price<?php echo $inx;?>" type="text" value="<?php echo number_format($rs["price"],4);?>" /></td>
+						   <td><input readonly class="form-control" name="total<?php echo $inx;?>" id="total<?php echo $inx;?>" type="text" value="<?php echo number_format($rs["qty_order"]*$rs["price"],4);?>" /></td>
+						</tr>
+						   <?php 
+                    }?>
+					<?php if($count<8){
+						$loop = 8 - $count;
+						for($i=1;$i<=$loop;$i++){
+					?>
+							<tr class='hover' style="border:1px solid #000;">
+						   <td align="center">&nbsp;<?php echo $inx+$i?></td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td style="white-space: nowrap;">&nbsp;</td>
+						   <td>&nbsp;</td>
+						   <td>&nbsp;</td>
+						   <td>&nbsp;</td>
+						   <td>&nbsp;</td>
+						</tr>
+					<?php 
+						}
+					}
+					?>
+					<?php 
+						$vat = ($this->product[0]['vat']*$total)/100;
+						$grand_total = $total + $vat;
+					?>
+					<tr>
+						<td colspan="5" style="border:1px solid #fff;border-top:1px solid #000;border-right:1px solid #000;"></td>
+						<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;<?php echo $tr->translate("SUB_TOTAL_CAP");?></td>
+						<td><input class="form-control" name="total_amount" id="total_amount" type="text" value="<?php echo number_format($total,2);?>" /></td>
+					</tr>
+					<tr>
+						<td colspan="5" style="border:1px solid #fff;border-top:1px solid #000;border-right:1px solid #000;"></td>
+						<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;<?php echo $tr->translate("TAX")."(".number_format($this->product[0]['vat'],2)."%)";?>
+							<input class="form-control" name="vat" id="vat" type="hidden" value="<?php echo number_format($this->product[0]['vat'],2);?>" />
+						</td>
+						<td><input class="form-control" name="total_vat" id="total_vat" type="text" value="<?php echo number_format($vat,2);?>" /></td>
+					</tr>
+					<tr>
+						<td colspan="5" style="border:1px solid #fff;border-top:1px solid #000;border-right:1px solid #000;"></td>
+						<td colspan="2" style="border-left:1px solid #000;">&nbsp;&nbsp;<?php echo $tr->translate("GRAND_TOTAL");?></td>
+						<td><input class="form-control" id="grand_total" name="grand_total" type="text" value="<?php echo number_format($grand_total,4);?>" />
+							<input type="hidden" name="identity" id="identity" value="<?php echo $str;?>" />
+							<input type="hidden" name="poid" id="poid" value="<?php echo $this->product[0]['id'];?>" />
+							<input type="hidden" name="re_id" id="re_id" value="<?php echo $this->product[0]['re_id'];?>" />
+							
+						</td>
+					</tr>
+		           </tbody>
+		           </table>
+		           		<button type="submit" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> រក្សាទុក/បន្ថែមថ្មី </button>
+		           </form>
+		    		</td>
+		    	</tr>
+			</tbody>
+		</table>
 		</div>
+	  </div>		
 	</div>
+	 </div>
+   </div>
 </div>
+<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
-$('#frm').submit(function() {
-	branch_id = $("#plan").val();
-	if(branch_id=='' || branch_id==-1){
-		alert("សូមជ្រើសរើសគម្រោង !");
-		$('#plan').select2('open');
-		return false;
-	}
-	identity =$("#identity").val();
-	if(identity=='' || identity==-1){
-		alert("ទិន្នន័យមិនអាចរក្សាទុកបានទេ ។សូមត្រួតពិនិត្យមើលម្តងទៀត");
-		$('#add_item').select2('open');
-		return false;
-	}	
-	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\n តើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
-	if (r == true) {
-	    return true;
-	} else {
-	   return false;
-	}
-});	
-
-itemss = <?php echo Zend_Json::encode($this->product)?>;
-$(document).ready(function() {
-	initList();
-	select2Speed();
-});
-function select2Speed(){
-	 $('#add_item').select2({
-            data : _.map(_.range(0, itemss.length), function (i) {
-				//alert(itemss);
-                  return {
-                      id  : itemss[i].id,
-                      text: itemss[i].item_code+"-"+itemss[i].item_name
-                  };
-            }),
-            dropdownCssClass : 'capitalize',
-            containerCssClass: 'capitalize',
-            // configure as multiple select
-            //multiple         : true,
-            // text for loading more results
-            formatLoadMore   : 'Loading more...',
-            query            : function (q) {
-            // pageSize is number of results to show in dropdown
-                var pageSize,
-                    results;
-                    pageSize = 20;
-                    results  = _.filter(this.data, function (e) {
-                        return (q.term === "" || e.text.toUpperCase().indexOf(q.term.toUpperCase()) >= 0);
-                 });
-                q.callback({
-                    results: results.slice((q.page - 1) * pageSize, q.page * pageSize),
-                    // retrieve more when user hits bottom
-                    more   : results.length >= q.page * pageSize
-                });
-            }
-        });
+function doPrint() {
+	var printContents = document.getElementById('divPrint').innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
 }
-var index5 = 0;num=0;
-var option5 = '<?php echo $this->items; ?>';
-var baseUrl = '<?php echo BASE_URL; ?>';
-var template = '';
-var value = '';
-pqty = 1;
-var index=0;
-
-function initList() {
-	index5=0;
+function calculate(index){
+	qty = $("#qty_order"+index).val();
+	price = $("#price"+index).val();
+	total = qty*price;
+	$("#total"+index).val(total);
+	Subtotal();
+}
+function Subtotal() {
 	var identity = $('#identity').val();
 	var arrays = identity.split(',');
-	if(arrays!=""){
-		a = arrays.length;
-		//alert(a);
-		index= parseInt(a)+1;
-	}else{
-		index=1;
-	}
-	var template;
-	var option5 = '<?php echo $this->items;?>';
-	<?php if(!empty($this->item)) {
-		foreach($this->item AS $i=>$r){?>
-	index5++; 
-	template='<tr id="row_order_'+index5+'" style="height:33px;">';
-	var inp = '';
-	
-	template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
-	template+='<td width="2%" class="center"><label id="lbno_'+index5+'">'+index+'<label></td>';
-	template+='<td style="text-align:center;"><?php echo $r["item_code"];?></td>';
-	template+='<td class="center"><?php echo $r["item_name"];?><input type="hidden" id="item_id_'+index5+'" name="item_id_'+index5+'"  /></td>';
-	template+='<td><input type="hidden" class="form-control" required="1" id="old_qty_'+index5+'" name="old_qty_'+index5+'"/><input type="text" class="form-control" required="1" id="qty_'+index5+'" name="qty_'+index5+'" value="1"/></td>';
-	template+='<td><?php echo $r["measure"];?></td>';
-	template+='<td width="2%" class="center"><input type="text" name="date_in_'+index5+'" id="date_in_'+index5+'" class="validate[required] form-control date-picker" value="<?php echo date("m/d/Y",strtotime($r["date_in"]));?>" /></td>';
-	template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" value="<?php echo $r["remark"]?>"/></span></td>';
-	template+="</tr>";
-	$('#table_order').append(template);
-	
-	$("#item_id_"+index5).val("<?php echo $r['pro_id'];?>");
-	$("#qty_"+index5).val("<?php echo $r['qty'];?>");
-	$("#old_qty_"+index5).val("<?php echo $r['qty'];?>");
-	$('#date_in_'+index5).datepicker();
-	
-	//getQtyById(index5);
-	
-
-	if($('#identity').val()!="") {
-		var identity = $('#identity').val();
-		$('#identity').val(identity+','+index5);
-	} else {$('#identity').val(index5);}
-	
-	$("#row_order_0").remove();
-		<?php } }?>
-		newNo();
-}
-
-<?php $url_product =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'get-product-name')); ?>
-function addRow(item_id) {
-	index5++; //var first = index5;
-	var identity = $('#identity').val();
-	var arrays = identity.split(',');
-	if(arrays!=""){
-		a = arrays.length;
-		//alert(a);
-		index= parseInt(a)+1;
-	}else{
-		index=1;
-	}
-	$.ajax({
-		url:"<?php echo $url_product;?>",
-		type:"post",
-		data:{'item_id':item_id},
-		success: function(data){
-			//alert(data);
-			rs = $.parseJSON(data);	
-			for(i=1; i<index5; i++){
-				new_item=parseInt(item_id);
-				items = parseInt($("#item_id_"+i).val());
-				if(new_item==items){		
-					newqty = parseInt($("#qty_"+i).val());
-					newqty = newqty+1;
-					$("#qty_"+i).val(newqty);
-					return false;
-				}
-			}
-			template='<tr id="row_order_'+index5+'" style="height:33px;">';
-			var inp = '';
-			
-			template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
-			template+='<td width="2%" class="center"><label id="lbno_'+index5+'">'+index+'<label></td>';
-			template+='<td width="2%" class="center">'+rs.item_code+'<input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" value="'+rs.item_id+'" /></td>';
-			template+='<td width="2%" class="center">'+rs.item_name+'</td>';
-			template+='<td><input type="text" class="form-control" required="1" id="qty_'+index5+'" name="qty_'+index5+'" value="1"/></td>';
-			template+='<td width="2%" class="center">'+rs.measure+'</td>';
-			template+='<td width="2%" class="center"><input type="text" name="date_in_'+index5+'" id="date_in_'+index5+'" class="validate[required] form-control date-picker" /></td>';
-			template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" /></span></td>';
-			template+="</tr>";
-			$('#table_order').append(template);
-			//$('#item_id_'index5).select2me();
-			if($('#identity').val()!="") {
-				var identity = $('#identity').val();
-				$('#identity').val(identity+','+index5);
-			} else {$('#identity').val(index5);}
-			$("#item_id_"+index5).val(item_id);
-			$('#date_in_'+index5).datepicker();
-			date = '<?php echo $date_now;?>';
-			$('#date_in_'+index5).val(date);
-			$("#row_order_0").remove();
-		},
-		error:function(e){
-							//alert(e);
-		}
-	});
-	
-}
-
-<?php $url_code =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'get-request-code')); ?>
-function getRequestCode(){
-	branch_id = $('#branch').val();
-	$.ajax({
-		url:"<?php echo $url_code;?>",
-		type:"post",
-		data:{'branch_id':branch_id},
-		success: function(data){
-			//alert(data);
-			rs = $.parseJSON(data);	
-			$('#request_no').val(rs);
-		},
-		error:function(e){
-							//alert(e);
-		}
-	});
-}
-function getItemOrder(){
-	item_ids=$("#add_item").val();
-	$('#add_item').val('').trigger("liszt:updated");
-	if(item_ids==-1){
-		return false;
-	}
-	addRow(item_ids);
-	$("#add_item").val("");
-}
-function deleteRecord(index) {
-	var identity = $('#identity').val();
-	var arrays = identity.split(',');
+	total=0;
 	for(var i=0;i<arrays.length;i++) {
-		if(arrays[i] == index) arrays.splice(i,1);
+		total+=parseFloat($('#total'+arrays[i]).val());
 	}
-	var strings = arrays.join(',');
-	$('#identity').val(strings);
-	$("#row_order_"+index).remove();
-	newNo();
-}
-function newNo(){
-	a=0;
-	var identity = $('#identity').val();
-	var arrays = identity.split(',');
-	for(var i=0;i<arrays.length;i++) { a++;
-		$('#lbno_'+arrays[i]).text(a);
-		//$('#lbno'+arrays[i]).append(a);
-	}
+	vat = $("#vat").val();
+	total_vat =(vat*total/100) 
+	$("#total_amount").val(total);
+	$("#total_vat").val(total_vat);
+	grad_total = total_vat+total;
+	$("#grand_total").val(grad_total);
 }
 </script>

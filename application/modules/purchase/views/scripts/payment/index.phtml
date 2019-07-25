@@ -4,7 +4,6 @@
 	$edit = $this->url(array('module'=>'purchase','controller'=>'payment','action'=>'edit',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
-	//print_r($this->rs);
 ?>
 <meta charset="utf-8" />
 <div class="row">
@@ -41,6 +40,7 @@
 						<thead>
 							<tr>
 								<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
+								<th class="tdheader"><?php echo  $tr->translate("PU_NO");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("POL_NUMBER");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("POL_DATE");?></th>
 								<th class="tdheader"><?php echo  $tr->translate("BRANCH");?></th>
@@ -98,6 +98,7 @@
 							?>
 								<tr class="normal">
 									<td class="items-no"><?php echo $key+1;?></td>
+									<td class="items"><?php echo $rs["purchase_no"];?></td>
 									<td class="items"><?php echo $rs["pol_no"];?></td>
 									<td class="items"><?php echo date('d-M-Y',strtotime($rs["expense_date"]));?></td>
 									<td class="items"><?php echo $rs["branch_name"];?></td>

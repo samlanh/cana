@@ -45,6 +45,7 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 	function getProductPruchaseById($id){//2
 		$db = $this->getAdapter();
 		$sql=" SELECT 
+				.p.id,
 				 (SELECT name FROM `tb_sublocation` WHERE id=p.branch_id) AS branch_name,
 				 p.order_number,p.date_order,p.date_in,p.remark,
 				 (SELECT item_name FROM `tb_product` WHERE id= po.pro_id LIMIT 1) AS item_name,
@@ -65,9 +66,12 @@ Class report_Model_DbQuery extends Zend_Db_Table_Abstract{
 				   (SELECT pr.`re_code` FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id`LIMIT 1) AS mr_no,
 				  (SELECT pr.`date_request` FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id`LIMIT 1) AS mr_date,
 				  (SELECT `name` FROM `tb_plan` AS pl WHERE pl.id=(SELECT pr.plan_id FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id` LIMIT 1) LIMIT 1) AS plan,
-				 po.qty_order,po.price,po.sub_total,p.net_total,
+				 po.id aS po_id,
+				 p.re_id,
 				 p.paid,p.discount_real,p.tax,
 				 p.balance,
+				 po.qty_order,po.price,po.sub_total,p.net_total,
+				 po.`pro_id`,
 				 po.`pro_brand`,
 				 po.`pro_from`,
 				 p.vat

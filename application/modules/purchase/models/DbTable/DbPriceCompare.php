@@ -177,7 +177,7 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 				FROM
 				  `tb_su_price_idcompare` AS s,
 				  `tb_purchase_request` AS p 
-				WHERE s.`re_id` = p.`id` AND p.date_request BETWEEN '$start_date' AND '$end_date'";
+				WHERE s.`re_id` = p.`id` AND p.appr_date BETWEEN '$start_date' AND '$end_date'";
 		$where ='';
 		$groupby = " GROUP BY s.`re_id`";
 		
@@ -216,25 +216,21 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY  s.`is_approve` ASC, id DESC ";
+// 		echo $sql.$where.$groupby.$order;
 		return $db->fetchAll($sql.$where.$groupby.$order);
 	}
 	
 	function add($data){
 		try{
-			
 			$db=$this->getAdapter();
 			$db->beginTransaction();
-			
 			$sql = "SELECT s.`id` FROM `tb_su_price_idcompare` AS s WHERE s.`re_id`=".$data["id"];
 			$rsult = $db->fetchOne($sql);
 			if(!empty($rsult)){
-			    
 			    $sql = "DELETE FROM tb_su_price_idcompare WHERE re_id=".$data["id"];
 			    $db->query($sql);
 			    $sql = "DELETE FROM tb_pro_compare WHERE re_id=".$data["id"];
 			    $db->query($sql);
-			    //Application_Form_FrmMessage::message('This Transaction is has beed compared!');
-				//return true;
 			}
 			
 			$db_global = new Application_Model_DbTable_DbGlobal();

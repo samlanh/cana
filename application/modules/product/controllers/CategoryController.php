@@ -75,7 +75,6 @@ public function init()
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			$data["id"] = $id;
-			//$db = new Product_Model_DbTable_DbCategory();
 			$db->edit($data);
 			if($data['saveclose']){
 				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS", '/product/category/index');

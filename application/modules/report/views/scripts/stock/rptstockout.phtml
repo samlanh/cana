@@ -6,7 +6,6 @@ $category ='';
 if(!empty($result)){
 	$category = $result[0]["cattegory"];
 }
-//print_r($result);
 ?>
 <?php $formFilter = $this->formFilter; ?>
 <title><?php echo $tr->translate("STOCK_OUT");?></title>
@@ -18,20 +17,19 @@ if(!empty($result)){
 					<i class="fa fa-globe"></i><?php echo $tr->translate("STOCK_OUT");?>
 				</div>
 						<div class="btn-group pull-right">
-							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
-							   <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
-							 </button>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#" onclick="doPrint();">
-											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
-									</li>
-									
-								</ul>
+						    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+						     <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
+						    </button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#" onclick="doPrint();">
+										<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+								</li>
+							</ul>
 					</div>
 			</div>
             <div class="portlet-body form frmfilter">
@@ -68,8 +66,8 @@ if(!empty($result)){
 				table thead tr th{
 					line-height:30px;
 					background:#ccc;
-					font-size:15px;
-					padding:3px;
+					font-size:14px;
+					padding:1px;
 				}
 				table tr td{
 					font-size:12px;
@@ -110,27 +108,13 @@ if(!empty($result)){
 									</ul>
 								</td>
 							</tr> 
-						
-		                <tr>
-		                	<td colspan="3" valign="top">
-		                		<table width="100%" cellpadding="0" cellspacing="0">
-		                			<tbody><tr>
-		                				<td style="font-size: 11px;">
-		                				    <span style="white-space: nowrap;"><?php //echo $tr->translate("ADDRESS_COMPANY");?></span>
-		                					<br><?php //echo $tr->translate("TEL_COMPANY");?> 
-		                				</td>
-		                				<td width="65%"></td>
-		                			</tr>
-				                </tbody></table>
-				              </td>
-				           </tr>   
 						</tbody>
 					</table>
 		        </td>
 		    </tr>
 		    <tr>
 		    	<td id="exportExcel">
-		            <table class="collape tablesorter" style="border-collapse:collapse;border:0px solid #000; font-size:12px;" width="100%" cellspacing="0" border="1">
+		            <table border="1" class="collape tablesorter" style="border-collapse:collapse;border:1px solid #000; font-size:12px;" width="100%" cellspacing="0" border="1">
 		                 <tbody>
 						  <?php 
 						  $type = array("1"=>"លក់",2=>"ស្នើសម្ភារ");
@@ -139,8 +123,8 @@ if(!empty($result)){
 						   $total_price =0;
 						   $total_amount = 0;
 						   $currency ='';
-						   if(!empty($this->stockin)){
-							   foreach ($this->stockin AS $index => $rs){
+						   if(!empty($this->stockout)){
+							   foreach ($this->stockout AS $index => $rs){
 								   $total_qty =  $total_qty+ $rs["qty_order"];
 								   $total_price =  $total_price+$rs["price"];
 								   $total_amount= $total_amount+$rs["sub_total"];
@@ -159,8 +143,10 @@ if(!empty($result)){
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
+						   <td style="white-space: nowrap;text-align:center;border: none;">&nbsp;</td>
 						</tr>
-						<tr bgcolor="#ccc" class="style tdborder" align="center" style="font-weight:bold; line-height: 35px;border:1px solid #000; font-size:12px; padding:1px 0px; white-space: nowrap;font-family:'Khmer OS Muol Light' ">
+						<tr class="style tdborder" align="center" style="background:#ccc !important;font-weight:bold; line-height: 35px;border:1px solid #000; font-size:12px; padding:1px 0px; white-space: nowrap;font-family:'Khmer OS Muol Light' ">
 		                    <td class="tdheader">&nbsp;<?php echo $tr->translate("DATE");?></td>
 							<td class="tdheader"><?php echo $tr->translate("CODE");?></td>
 							<td class="tdheader">&nbsp;<?php echo $tr->translate("ITEM_NAME");?></td>
@@ -169,11 +155,12 @@ if(!empty($result)){
 							<td class="tdheader"><?php echo $tr->translate("U/PRICE");?></td>
 							<td class="tdheader"><?php echo $tr->translate("AMOUNT");?></td>
 							<td class="tdheader">&nbsp;<?php echo $tr->translate("SALE_NO");?></td>
-							<td class="tdheader">&nbsp;<?php echo $tr->translate("SELLER");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("អ្នកស្នើបើក");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("DEPARTMENT");?></td>
+							<td class="tdheader">&nbsp;<?php echo $tr->translate("បញ្ជាក់ការងារ");?></td>
 							<td class="tdheader">&nbsp;<?php echo $tr->translate("TYPE");?></td>
-							<td class="tdheader">&nbsp;<?php echo $tr->translate("REMARK");?></td>
 		                </tr> 
-		                <?php if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){?>
+		                <?php if(!empty($this->stockout))foreach ($this->stockout AS $index => $rs){?>
 						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-M-Y',strtotime($rs["date_sold"]))?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
@@ -183,36 +170,40 @@ if(!empty($result)){
 						<td style="white-space: nowrap;">&nbsp;$<span style="float:right"><span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
 						   <td style="white-space: nowrap;">&nbsp;$<span style="float:right"><?php echo $rs["sub_total"];?></span></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["sale_no"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["user"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["request_byname"];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["work_plan"];?></td>
+						   <td>&nbsp;<?php echo $rs["work_type"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $type[$rs["type"]];?></td>
-						   <td>&nbsp;<?php echo $rs["note_sale"];?></td>
 						</tr>
 						<?php 
 							 
 						}?>
 		                </tbody>
 		           </table>
-		            
 		              <br>
 		              <table align="center" width="100%">
 						   <tbody>
-					   <tr style="font-size: 11px;">
-					        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">អនុម័តដោយ</td>
-					        <td></td>
-							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ត្រួតពិនិត្យដោយ</td>
-							<td></td>
-							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">រៀបចំដោយ</td>
-					   </tr>
-					   <tr height="70px">
-					   		<td colspan="5"> </td>
-					   </tr>
-					   <tr style="font-size: 11px;">
-					        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ប្រធានឃ្លាំង</td>
-					        <td></td>
-							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">អ្នកត្រួតពិនិត្យឃ្លាំង</td>
-							<td></td>
-							<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">ឃ្លាំង</td>
-					   </tr>
+							   <tr style="font-size: 11px;">
+							        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">Received by</td>
+							        <td></td>
+									<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">Approved by</td>
+									<td></td>
+									<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">Check by</td>
+									<td></td>
+									<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light'">Prepared by</td>
+							   </tr>
+							   <tr height="70px">
+							   		<td colspan="5"> </td>
+							   </tr>
+							   <tr style="font-size: 11px;">
+							        <td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light';border-bottom:1px solid #000;"></td>
+							        <td></td>
+									<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light';border-bottom:1px solid #000;"></td>
+									<td></td>
+									<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light';border-bottom:1px solid #000;"></td>
+									<td></td>
+									<td style="width:20%;text-align:center;font-size:13px; font-family:'Khmer OS Muol Light';border-bottom:1px solid #000;"></td>
+							   </tr>
 						</tbody>
 					</table>	
 		    		</td>

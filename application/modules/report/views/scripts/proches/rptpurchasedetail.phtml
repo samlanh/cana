@@ -99,7 +99,7 @@ $brach_name =  $this->branch;
 									<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
 									<li style="text-align:center; font-size:18px; font-family:font-family:'Khmer OS Muol Light',serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
 		                			<li style="text-align:center; font-size:18px;margin: 10px 0px 0px 0px;font-family:'Khmer OS Muol Light',serif,header-font;"><?php echo $tr->translate("RPT_PURCHASE_DETAIL");?></li>
-		                			<li style="text-align:center; font-size:15px; margin: 0px 0px 0px 0px;"><?php echo date("d-M-Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d-M-Y",strtotime($this->rssearch['end_date']));?></li>
+		                			<li style="text-align:center; font-size:15px; margin: 0px 0px 0px 0px;"><?php if(!empty($this->rssearch['start_date'])){echo date("d-M-Y",strtotime($this->rssearch['start_date']));?> ដល់ <?php echo date("d-M-Y",strtotime($this->rssearch['end_date']));}?></li>
 		                		</ul>
 		                	</td>
 		                    <td width="20%"></td>

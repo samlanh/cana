@@ -128,7 +128,6 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY id DESC ";
- 		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
@@ -157,7 +156,6 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		$user = $this->GetuserInfo();
 		$GetUserId = $user['user_id'];
-		//print_r($data);exit();
 		$identity = $data["identity"];
 		$ids=explode(',',$data['identity']);
 		try{

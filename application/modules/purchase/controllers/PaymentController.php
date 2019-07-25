@@ -43,9 +43,6 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		$link=array(
 				'module'=>'purchase','controller'=>'payment','action'=>'edit',
 		);
-// 		$link1=array(
-// 				'module'=>'sales','controller'=>'index','action'=>'viewapp',
-// 		);
 		
 		$list = new Application_Form_Frmlist();
 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('receipt_no'=>$link,'customer_name'=>$link,'branch_name'=>$link,
@@ -157,13 +154,12 @@ class Purchase_PaymentController extends Zend_Controller_Action
 			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
 		}
 		else{
-			$search =array(
+			$search = array(
 					'text_search'		=>	'',
 					'start_date'		=>	date("d/m/Y"),
 					'branch'			=>	'',
 					'suppliyer_id'		=>	0,
 					'end_date'			=>	date("d/m/Y"),
-					//'po_invoice_status'	=>	'',
 					);
 		}
 		$db = new Purchase_Model_DbTable_Dbpayment();

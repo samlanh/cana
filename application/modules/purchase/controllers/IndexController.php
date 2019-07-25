@@ -130,30 +130,24 @@ class Purchase_indexController extends Zend_Controller_Action
 	}
 	
 	public function editpusAction(){
-		$id = $this->getRequest()->getParam('id');
-		$db = new Purchase_Model_DbTable_DbRequest();
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
-			$data["id"]  = $id;
-			try {
-				$db->edit($data);
-				Application_Form_FrmMessage::message("Request has been Saved!");
-				Application_Form_FrmMessage::redirectUrl("/purchase/index");
-			}catch (Exception $e){
-				Application_Form_FrmMessage::message('INSERT_FAIL');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
-			}
+			$db = new Purchase_Model_DbTable_DbMakePurchase();
+			$db->editPO($data);
+			Application_Form_FrmMessage::Sucessfull("EDEIT_SUCCESS", "/purchase/index/polist");
 		}
-		$this->view->items = $db->getProductOption();
-		$this->view->item = $db->getRequestDetail($id);
-		$rs = $db->getRequestById($id);
-		$form = new Purchase_Form_FrmRequest();
-		$this->view->form = $form->add($rs);
-	
-		$items = new Application_Model_GlobalClass();
-		$this->view->product = $items->getAllProduct();
-			
+		//editPO // submit value
+		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+		if(empty($id)){
+			$this->_redirect("/report/index/rpt-purchase");
+		}
+		$query = new report_Model_DbQuery();
+		$this->view->product =  $query->getProductPruchaseById($id);
+		
+		$session_user=new Zend_Session_Namespace('auth');
+		$db = new Application_Model_DbTable_DbGlobal();
+		$this->view->title_reprot = $db->getTitleReportNew($session_user->location_id);
+		$this->view->term = $db->getTermConditionByType(1);//1=purchase,2=sale,3=quote
 	}
 	public function editAction(){
 		$id = $this->getRequest()->getParam('id');
