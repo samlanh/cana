@@ -1,23 +1,19 @@
 <?php 
-defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
-$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-$form=$this->form;
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$form=$this->form;
 	$url_submit =  $this->url(array('module'=>'product','controller'=>'index','action'=>'edit'));
     $url_cencel =  $this->url(array('module'=>'product','controller'=>'index','action'=>'index'),null,true);
-    $url_check =  $this->url(array('module'=>'product','controller'=>'index','action'=>'check'));
     $url_new = $this->url(array('module'=>'product','controller'=>'index','action'=>'add'));
 ?>						 
 <title><?php echo $tr->translate("EDIT_PRODUCT");?></title>
-<body>
-
-		<form class="form-horizontal" method="post" action="<?php //echo $url_submit;?>" >				
-					<div class="portlet box blue">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class="fa fa-gift"></i><?php echo $tr->translate("EDIT_PRODUCT");?>
-							</div>
-							<div class="pull-right"><a href="<?php echo $url_cencel;?>" class="btn btn-sm red" style="line-height: 35px;"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></a></div>
-						</div>
+		<form class="form-horizontal" method="post" action="" autocomplete="off">				
+			<div class="portlet box blue">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="fa fa-gift"></i><?php echo $tr->translate("EDIT_PRODUCT");?>
+					</div>
+					<div class="pull-right"><a href="<?php echo $url_cencel;?>" class="btn btn-sm red" style="line-height: 35px;"><i class="fa fa-times"></i><?php echo $tr->translate("GO_BACK");?></a></div>
+				</div>
 						<div class="portlet-body">
 							<div class="tabbable-custom ">
 								<ul class="nav nav-tabs ">
@@ -27,114 +23,80 @@ $form=$this->form;
 									</li>
 								</ul>
 								<div class="tab-content">
-									<div class="tab-pane active" id="tab_5_1">
-									<!--<div class="portlet box blue">
-								<div class="portlet-title">
-									<div class="caption">
-											<i class="fa fa-globe"></i><?php echo $tr->translate("PRODUCT_INFO");?>
-									</div>
-									
-								</div>-->
+								<div class="tab-pane active" id="tab_5_1">
 								<div class="portlet-body form">
-									 
-										<div class="form-body">
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("CATEGORY");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('category');?>
-														</div>
-														
-														<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_CODE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('pro_code');?>
-															<?php echo $form->getElement('int_code');?>
-														</div>
+									<div class="form-body">
+										<div class="form-group">
+											<label class="col-md-2 control-label"><?php echo $tr->translate("CATEGORY");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('category');?>
+												</div>
+												<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_CODE");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('pro_code');?>
+													<?php echo $form->getElement('int_code');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_NAME");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('name');?>
+												</div>
+												<label class="col-md-2 control-label"><?php echo $tr->translate("BARCODE");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('barcode');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-2 control-label"><?php echo $tr->translate("SERIAL_NAME");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('serial');?>
+												</div>
+												<label class="col-md-2 control-label"><?php echo $tr->translate("BRAND_NAME");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('brand');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-2 control-label"><?php echo $tr->translate("MODEL");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('model');?>
+												</div>
+												<label class="col-md-2 control-label"><?php echo $tr->translate("SIZE");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('size');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-2 control-label"><?php echo $tr->translate("COLOR");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('color');?>
+												</div>
+												<label class="col-md-2 control-label"><?php echo $tr->translate("NOTE");?></label>
+												<div class="col-md-4">
+													<?php echo $form->getElement('description');?>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-md-2 control-label"><?php echo $tr->translate("MEASURE");?></label>
+												<div class="col-md-2">
+													<?php echo $form->getElement('measure');?>
+												</div>
+												<div class="col-md-2">
+													<?php echo $form->getElement('unit');?>
+												</div>
+												<label class="col-md-1 control-label" id="lb_measure" style="text-align: center;"></label>
+											    <label class="col-md-1 control-label"><?php echo $tr->translate("IS_METERAIL");?></label>
+												<div class="col-md-4">
+													<div class="col-md-4" style="margin-top:10px">
+													<?php echo $form->getElement('is_meterail');?>
 													</div>
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_NAME");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('name');?>
-														</div>
-														
-														<label class="col-md-2 control-label"><?php echo $tr->translate("BARCODE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('barcode');?>
-														</div>
-															
-														
-														
-													</div>
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("SERIAL_NAME");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('serial');?>
-														</div>
-														<label class="col-md-2 control-label"><?php echo $tr->translate("BRAND_NAME");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('brand');?>
-														</div>
-														
-														
-													</div>
-													<div class="form-group">
-														
-														<label class="col-md-2 control-label"><?php echo $tr->translate("MODEL");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('model');?>
-														</div>
-														<label class="col-md-2 control-label"><?php echo $tr->translate("SIZE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('size');?>
-														</div>
-													</div>
-													
-																
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("COLOR");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('color');?>
-														</div>
-														<label class="col-md-2 control-label"><?php echo $tr->translate("NOTE");?></label>
-														<div class="col-md-4">
-															<?php echo $form->getElement('description');?>
-														</div>
-													</div>
-													<div class="form-group">
-														<label class="col-md-2 control-label"><?php echo $tr->translate("MEASURE");?></label>
-														<div class="col-md-2">
-															<?php echo $form->getElement('measure');?>
-														</div>
-														
-														<div class="col-md-2">
-															<?php echo $form->getElement('unit');?>
-														</div>
-														
-														<label class="col-md-1 control-label" id="lb_measure" style="text-align: center;"></label>
-													   
-													    <label class="col-md-1 control-label"><?php echo $tr->translate("IS_METERAIL");?></label>
-														<div class="col-md-4">
-															<div class="col-md-4" style="margin-top:10px">
-															<?php echo $form->getElement('is_meterail');?>
-															
-															</div>
-															<div class="col-md-8" style="opacity:0;"><?php echo $form->getElement('price');?></div>
-														</div>
-													
-														<!--  <label class="col-md-1 control-label" style="text-align: center;"> </label>
-														
-														<div class="col-md-2">
-															<?php //echo $form->getElement('qty_unit');?>
-														</div>
-														
-														<div class="col-md-2">
-															<?php //echo $form->getElement('label');?>
-														</div>
-														-->
-														</div>
+													<div class="col-md-8" style="opacity:0;"><?php echo $form->getElement('price');?></div>
+												</div>
+												</div>
 													<div class="form-group">
 														<label class="col-md-2 control-label"><?php echo $tr->translate("CONVERTOR");?></label>
 														<div class="col-md-4" >
-															<?php //echo $form->getElement('price');?>
 															<div class="col-md-2" style="margin-top:10px">
 																<?php echo $form->getElement('is_convertor');?>
 															</div>
@@ -154,7 +116,6 @@ $form=$this->form;
 														<?php echo $form->getElement('branch');?>
 														<div class="form-group">
 														</div>
-													
 														<div class="portlet-body">
 															<div class="table-responsive">
 																<table class="table table-bordered">
@@ -168,51 +129,23 @@ $form=$this->form;
 																	<!--<th><?php echo $tr->translate("ACTION");?></th>-->
 																</tr>
 																</thead>
-																<tbody id="tr_location">
-																
-																</tbody>
+																	<tbody id="tr_location">
+																	</tbody>
 																</table>
 															</div>
-															<input type="hidden" name="identity" id="identity" value="<?php //echo $identity;?>" >
+															<input type="hidden" name="identity" id="identity" value="" >
 														</div>
 													</div>
-												
-										<!--<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("PRODUCT_PRICE_INFO");?></h3>
-										<?php echo $form->getElement('price_type');?>
-										<div class="form-group"></div>
-										<div class="portlet-body">
-											<div class="table-responsive">
-												<table class="table table-bordered">
-													<thead style="background: #f5f5f5;">
-														<tr>
-															<th>#</th>
-															<th><?php echo $tr->translate("TYPE_NAME");?></th>
-															<th><?php echo $tr->translate("PRICE");?></th>
-															<th><?php echo $tr->translate("REMARK");?></th>
-															<th><?php echo $tr->translate("ACTION");?></th>
-														</tr>
-													</thead>
-													<tbody id="tr_price_type">
-													</tbody>
-												</table>
-											</div>
-												<input type="hidden" name="identity_price" id="identity_price" value="<?php //echo $identity;?>" >
-										</div>-->
-										<div class="form-group">
-											<div  class="col-md-12 col-md-offset-4 col-md-8">
-												<a href="<?php echo $url_cencel; ?>"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
-												<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("GO_EDIT")?></button>
-												
-											</div>
-										</div>
-							<!--</div>-->
+													<div class="form-group">
+														<div  class="col-md-12 col-md-offset-4 col-md-8">
+															<a href="<?php echo $url_cencel; ?>"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
+															<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("GO_EDIT")?></button>
+														</div>
+													</div>
 							</div>
-							
 						</div>
 					</div>
-							
 			</form>	
-
 <!--Popup Form Brand-->
 <?php $formBrand = $this->frmBrand; ?>
 <div id="brandpopup" class="modal fade" tabindex="-1" data-width="1200">
@@ -224,7 +157,7 @@ $form=$this->form;
 			<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("ADD_NEW_CUSTOMER");?>
+					<i class="icon-home"></i><?php echo $tr->translate("ADD_NEW_BRAND");?>
 				</div>
 				<div class="caption pull-right">
 					<a href="<?php echo $url_new;?>" >
@@ -236,30 +169,26 @@ $form=$this->form;
 				<form id="frmbrand" name="frmcustomer" class="form-horizontal" enctype="multipart/form-data" method="post">
 				<div class="form-body">
 					<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
-								<div class="col-md-4">
-									<?php echo $formBrand->getElement('parent');?>
-								</div>
-												
-								<label class="col-md-2 control-label"><?php echo $tr->translate("BRAND_NAME");?></label>
-								<div class="col-md-4">
-									<?php echo $formBrand->getElement('brand_name');?>
-								</div>
-												
+							<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
+							<div class="col-md-4">
+								<?php echo $formBrand->getElement('parent');?>
 							</div>
-							<div class="form-group">
-												
-								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
-								<div class="col-md-4">
-									<?php echo $formBrand->getElement('status');?>
-								</div>
-												
-								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
-								<div class="col-md-4">
-									<?php echo $formBrand->getElement('remark');?>
-								</div>
-					</div>
-					
+											
+							<label class="col-md-2 control-label"><?php echo $tr->translate("BRAND_NAME");?></label>
+							<div class="col-md-4">
+								<?php echo $formBrand->getElement('brand_name');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+							<div class="col-md-4">
+								<?php echo $formBrand->getElement('status');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+							<div class="col-md-4">
+								<?php echo $formBrand->getElement('remark');?>
+							</div>
+						</div>
 					<div class="form-group">
 						<label  class="col-md-12 col-md-offset-4 col-md-8">
 							<button type="button" name="btnsavenew" onclick="addNewBrand();" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_BRAND")?> </button>
@@ -463,8 +392,6 @@ $form=$this->form;
 			      
 <script>
 $( document ).ready(function() {
-	//ItemAutoCompleted();
-	//ItemCodeAutoCompleted();
 	addProLocation();
 	addPriceType();
 	isConvertor();
@@ -509,10 +436,22 @@ function isConvertor(){
 	}
 	
 	function addNewProLocation(){
-			index++;
+			
 			var branch_text = $("#branch");
 			var txt_br = $("option:selected",branch_text).text();
 			var branch_id = $("#branch").val();
+			var iden = $("#identity").val();
+			var arrays = iden.split(',');
+			if(arrays!=""){
+				 for(var i=0;i< arrays.length;i++) {
+					 readychoose = $('#branch_id_'+arrays[i]).val();
+					 if(readychoose==branch_id){
+						alert("បានជ្រើសរើសរួចហើយ");
+					 	return false;
+					 }
+				}
+			}
+			index++;
 			template='<tr id="row_location_'+index+'">';
 			template+='<td>'+index+'</td>';
 			template+='<td>'+txt_br+'<input type="hidden" id="branch_id_'+index+'" name="branch_id_'+index+'" value="'+branch_id+'" </td>';
@@ -588,11 +527,7 @@ function isConvertor(){
 			$('#identity_price').val(strings);
 			$("#row_price_"+index).remove();
 		}
-		
-
-		// total price
 	}
-	
 	function getPopupBrand(){
 		val = $('#brand').val();
 		if(val==-1){
@@ -625,7 +560,6 @@ function isConvertor(){
 			$('#savecolor').show();
 		}
 	}
-	
 	function getPopupModel(){
 		val = $('#model').val();
 		if(val==-1){
@@ -652,7 +586,6 @@ function isConvertor(){
 	
 	<?php $url_add_brand =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'add-brand')); ?>
 	function addNewBrand(){
-		//alert(1);
 		var brand_name  = $("#brand_name").val();
 		$.ajax({
 			url: "<?php echo $url_add_brand;?>",
@@ -665,7 +598,6 @@ function isConvertor(){
 				$('#brandpopup').modal('hide');
 			},
 			error:function(err){
-				alert("faile insert");
 			   
 			}
 		});
@@ -686,7 +618,6 @@ function isConvertor(){
 				$('#categorypopup').modal('hide');
 			},
 			error:function(err){
-				alert("faile insert");
 			   
 			}
 		});
@@ -707,7 +638,6 @@ function isConvertor(){
 				$('#measurepopup').modal('hide');
 			},
 			error:function(err){
-				alert("faile insert");
 			   
 			}
 		});
@@ -715,7 +645,6 @@ function isConvertor(){
 	
 	<?php $url_add_color =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'add-other')); ?>
 	function addNewColor(){
-		//alert(1);
 		var title  = $("#title_en").val();
 		$.ajax({
 			url: "<?php echo $url_add_color;?>",
@@ -735,7 +664,6 @@ function isConvertor(){
 	}
 	
 	function addNewModel(){
-		//alert(1);
 		var title  = $("#title_en").val();
 		$.ajax({
 			url: "<?php echo $url_add_color;?>",
@@ -755,7 +683,6 @@ function isConvertor(){
 	}
 	
 	function addNewSize(){
-		//alert(1);
 		var title  = $("#title_en").val();
 		$.ajax({
 			url: "<?php echo $url_add_color;?>",
@@ -768,31 +695,26 @@ function isConvertor(){
 				$('#otherpopup').modal('hide');
 			},
 			error:function(err){
-				alert("faile insert");
 			   
 			}
 		});
 	}
-<?php $url_code =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'get-product-prefix')); ?>
-function getProductPrefix(){
-	//alert(1);
-				id=$("#category").val();
-				
-				$.ajax({
-						url:"<?php echo $url_code;?>",
-						type:"post",
-						data:{'id':id},
-						success: function(data){
-							//alert(data);
-							value = $.parseJSON(data);
-							$('#pro_code').val(value.p_code);
-							$('#int_code').val(value.int_code);
-						},
-						error:function(e){
-							alert(e);
-						}
-					});
-}
+	<?php $url_code =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'get-product-prefix')); ?>
+	function getProductPrefix(){
+		id=$("#category").val();
+		$.ajax({
+				url:"<?php echo $url_code;?>",
+				type:"post",
+				data:{'id':id},
+				success: function(data){
+					value = $.parseJSON(data);
+					$('#pro_code').val(value.p_code);
+					$('#int_code').val(value.int_code);
+				},
+				error:function(e){
+				}
+			});
+	}
 </script>		
 </body>
 </html>

@@ -1,12 +1,9 @@
 <?php 
-$user_info = new Application_Model_DbTable_DbGetUserInfo();
-$result = $user_info->getUserInfo();
-$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-$session_user=new Zend_Session_Namespace('auth');
-// $last_name=$session_user->last_name;
-// $username = $session_user->first_name;
-// echo $last_name.''.$username;exit();
-$request=Zend_Controller_Front::getInstance()->getRequest();
+// 	$user_info = new Application_Model_DbTable_DbGetUserInfo();
+// 	$result = $user_info->getUserInfo();
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$session_user=new Zend_Session_Namespace('auth');
+	$request=Zend_Controller_Front::getInstance()->getRequest();
 ?>
 	<div class="page-header-inner">
 		<!-- BEGIN LOGO -->
@@ -275,7 +272,7 @@ $request=Zend_Controller_Front::getInstance()->getRequest();
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 				<li class="dropdown dropdown-user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" class="img-circle" src="<?php echo $this->baseUrl()?>/images/<?php echo(empty($session_user->photo)?"no-profile.gif":$session_user->photo);?>"/>
+					<!-- <img alt="" class="img-circle" src="<?php //echo $this->baseUrl()?>/images/<?php //echo(empty($session_user->photo)?"no-profile.gif":$session_user->photo);?>"/> -->
 					<span class="username username-hide-on-mobile">
 					<?php echo $session_user->fullname;
 					     $id=$session_user->user_id;
@@ -345,5 +342,4 @@ function changeLange(lang){
 		}
 	});
 }
-		
 	</script>

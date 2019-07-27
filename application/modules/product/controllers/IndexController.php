@@ -38,20 +38,20 @@ public function init()
     			'stock_type'=>-1
     		);
     	}
-		$columns=array("BRANCH","ITEM_CODE","ITEM_NAME", "BARCODE",
-				"SERIAL_NO","TRADE_MARKE","CATEGORY","MODEL","MEASURE","QTY","STATUS","ACTION");
+		$columns=array("ITEM_CODE","ITEM_NAME", "BARCODE",
+				"SERIAL_NO","TRADE_MARKE","CATEGORY","MODEL","MEASURE","STATUS");
 		$link=array(
 				'module'=>'product','controller'=>'index','action'=>'edit',
 		);
 		$link1=array(
-				'module'=>'product','controller'=>'index','action'=>'delete',
+				//'module'=>'product','controller'=>'index','action'=>'delete',
 		);
 		
 		$rows = $db->getAllProduct($data);
 		$list = new Application_Form_Frmlist();
-		$this->view->list=$list->getCheckList(0, $columns, $rows, array('branch'=>$link,'item_code'=>$link,'item_name'=>$link,
+		$this->view->list=$list->getCheckList(0, $columns, $rows, array('item_code'=>$link,'item_name'=>$link,
 				'barcode'=>$link,'DELETE'=>$link1));			
-    	$this->view->product = $db->getAllProduct($data);
+    	
     	$formFilter = new Product_Form_FrmProduct();
     	$this->view->formFilter = $formFilter->productFilter();
     	Application_Model_Decorator::removeAllDecorator($formFilter); 

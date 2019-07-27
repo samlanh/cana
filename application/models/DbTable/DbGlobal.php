@@ -15,7 +15,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	 */
 	 function getAllProduct(){
 		 $db = $this->getAdapter();
-		 $sql = "SELECT p.`item_code`,p.`item_name` FROM tb_product AS p";
+		 $sql = "SELECT p.`item_code`,p.`item_name` FROM tb_product AS p ";
 		 return $db->fetchAll($sql);
 	 }
 	 

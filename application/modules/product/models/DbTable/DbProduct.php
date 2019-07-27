@@ -144,12 +144,9 @@ $db->getProfiler()->setEnabled(false);
   
   function getAllProduct($data){
   	$db = $this->getAdapter();
-  	$db_globle = new Application_Model_DbTable_DbGlobal();
-	//(SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=3  AND p.`model_id`=v.`key_code` LIMIT 1) AS size,
-	//(SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=4  AND p.`model_id`=v.`key_code` LIMIT 1) AS color,
+  	$db_globle = new Application_Model_DbTable_DbGlobal();// (SELECT b.name FROM `tb_sublocation` AS b WHERE b.id=pl.`location_id` LIMIT 1) AS branch,
   	$sql ="SELECT 
 			  p.`id`,
-			  (SELECT b.name FROM `tb_sublocation` AS b WHERE b.id=pl.`location_id` LIMIT 1) AS branch,
 			  p.`item_code`,
 			  p.`item_name` ,
 			  p.`barcode`,
@@ -158,16 +155,11 @@ $db->getProfiler()->setEnabled(false);
 			  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
 			  (SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=2  AND p.`model_id`=v.`key_code` LIMIT 1) AS model,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
-			  SUM(pl.`qty`) AS qty,
-			  (SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status ,
-			  'DELETE'
-			  
+			  (SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=5  AND p.`status`=v.`key_code` LIMIT 1) AS status 
 			FROM
 			  `tb_product` AS p ,
-			  `tb_prolocation` AS pl,
 			  tb_category as c
-			WHERE p.`id`=pl.`pro_id` AND p.cate_id=c.id ";
-  	//for pity cash:AND c.is_none_stock!=1
+			WHERE p.cate_id=c.id ";
   	$where = '';
   	if($data["ad_search"]!=""){
   		$s_where=array();
@@ -176,15 +168,14 @@ $db->getProfiler()->setEnabled(false);
   		$s_where[]=" p.barcode LIKE '%{$s_search}%'";
   		$s_where[]= " p.item_code LIKE '%{$s_search}%'";
   		$s_where[]= " p.serial_number LIKE '%{$s_search}%'";
-  		//$s_where[]= " cate LIKE '%{$s_search}%'";
   		$where.=' AND ('.implode(' OR ', $s_where).')';
   	}
   	if(@$data["stock_type"]>-1){
   		$where.=' AND c.is_none_stock='.$data["stock_type"];
   	}
-  	if($data["branch"]!=""){
-  		$where.=' AND pl.`location_id`='.$data["branch"];
-  	}
+//   	if($data["branch"]!=""){
+//   		$where.=' AND pl.`location_id`='.$data["branch"];
+//   	}
   	if($data["brand"]!=""){
   		$where.=' AND p.brand_id='.$data["brand"];
   	}
@@ -209,9 +200,8 @@ $db->getProfiler()->setEnabled(false);
   	if($data["status"]!=""){
   		$where.=' AND p.status='.$data["status"];
   	}
-  	$location = $db_globle->getAccessPermission('pl.`location_id`');
+  	$location ='';// $db_globle->getAccessPermission('pl.`location_id`');
   	$group_by = " GROUP BY p.id ";
-  	//echo $sql.$where.$location.$group_by;
   	return $db->fetchAll($sql.$where.$location.$group_by);
   	
   }
@@ -431,7 +421,6 @@ function checkCateparent($id){
 				$p_code = $data["pro_code"];
 				$int_code = $data["int_code"];
 			}
-		//	echo $p_code;exit();
     		$arr = array(
     			'item_name'		=>	$data["name"],
     			'item_code'		=>	$p_code,
@@ -448,7 +437,7 @@ function checkCateparent($id){
 //     			'unit_label'	=>	$data["label"],
     			'user_id'		=>	$this->getUserId(),
     			'note'			=>	$data["description"],
-    			'status'		=>	$data["status"],
+    			'status'		=>	1,
 				'price'			=>	$data["price"],
 				'is_convertor'	=>	@$data["is_convertor"],
 				'convertor_measure'	=>	$data["convertor_measure"],

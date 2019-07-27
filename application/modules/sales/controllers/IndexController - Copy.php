@@ -6,11 +6,6 @@ class Sales_IndexController extends Zend_Controller_Action
     {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$db = new Application_Model_DbTable_DbGlobal();
-		$rs = $db->getValidUserUrl();
-		if(empty($rs)){
-			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
-		}
     }
     protected function GetuserInfoAction(){
     	$user_info = new Application_Model_DbTable_DbGetUserInfo();
@@ -67,7 +62,6 @@ class Sales_IndexController extends Zend_Controller_Action
 				}elseif(isset($data["save_print"])){
 					Application_Form_FrmMessage::redirectUrl("/sales/index/viewsale?id=".$id);
 				}
-				Application_Form_FrmMessage::redirectUrl("/sales/index/add");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();
@@ -103,7 +97,7 @@ class Sales_IndexController extends Zend_Controller_Action
 				}else{
 					Application_Form_FrmMessage::message('No Data to Submit');
 				}
-				Application_Form_FrmMessage::Sucessfull("INSERT_SUCESS","/sales/index");
+				Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/makeso");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message('UPDATE_FAIL');
 				$err =$e->getMessage();
@@ -128,52 +122,8 @@ class Sales_IndexController extends Zend_Controller_Action
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->term_opt = $db->getAllTermCondition(1);
-	}
-
+	}	
 	function editAction(){
-		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-		$dbq = new Sales_Model_DbTable_DbSaleOrder();
-		$db = new Application_Model_DbTable_DbGlobal();
-		if($this->getRequest()->isPost()) {
-			$data = $this->getRequest()->getPost();
-			try {
-				if(!empty($data['identity'])){
-					$dbq->editSO($data);
-					Application_Form_FrmMessage::message('UPDATE_SUCESS');
-				}if(!empty($data['save_close'])){
-					Application_Form_FrmMessage::redirectUrl("/sales/index");
-				}elseif(isset($data["save_print"])){
-					Application_Form_FrmMessage::redirectUrl("/sales/index/viewsale?id=".$id);
-				}
-				//Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/index");
-			}catch (Exception $e){
-				Application_Form_FrmMessage::message('UPDATE_FAIL');
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
-			}
-		}
-		$row = $dbq->getSaleorderItemById($id);
-		if(empty($row)){
-			//Application_Form_FrmMessage::Sucessfull("NO_DATA","/sales/index");
-		}if($row['is_approved']==1){
-			Application_Form_FrmMessage::Sucessfull("SALE_ORDER_WARNING","/sales/index");
-		}
-		$this->view->rs = $dbq->getSaleItem($id);
-		$this->view->rsterm = $dbq->getTermconditionByid($id);
-		
-		///link left not yet get from DbpurchaseOrder
-		$frm_purchase = new Sales_Form_FrmSales(null);
-		$form_sale = $frm_purchase->SaleOrder($row);
-		Application_Model_Decorator::removeAllDecorator($form_sale);
-		$this->view->form_sale = $form_sale;
-		 
-		// item option in select
-		$items = new Application_Model_GlobalClass();
-		$this->view->items = $items->getProductOption();
-		$this->view->term_opt = $db->getAllTermCondition(1);
-	}
-	
-	function editoldAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		$dbq = new Sales_Model_DbTable_DbSaleOrder();
 		$db = new Application_Model_DbTable_DbGlobal();
@@ -219,16 +169,15 @@ class Sales_IndexController extends Zend_Controller_Action
 	function addrequestAction(){
 		$db = new Application_Model_DbTable_DbGlobal();
 		if($this->getRequest()->isPost()) {
-			
+			$data = $this->getRequest()->getPost();
 			try {
-				$data = $this->getRequest()->getPost();
-				
 				$dbq = new Sales_Model_DbTable_DbRequest();
 				if(!empty($data['identity'])){
 					$id = $dbq->addRequestOrder($data);
 				}
-				if(isset($data['save_close'])){
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS", '/sales/index/requestlist');
+				Application_Form_FrmMessage::message("INSERT_SUCESS");
+				if(!empty($data['save_close'])){
+					Application_Form_FrmMessage::redirectUrl("/sales/index/requestlist");
 				}elseif(isset($data["save_print"])){
 					Application_Form_FrmMessage::redirectUrl("/sales/index/viewrequest/id/".$id);
 				}
@@ -250,22 +199,12 @@ class Sales_IndexController extends Zend_Controller_Action
 		$this->view->worktype = $items->getWorkType();
 		$this->view->term_opt = $db->getAllTermCondition(1);
 		
-		$this->view->product = $items->getAllProduct();
-		
+		$this->view->work_type = $db->getWorkType();
 		
 		$formpopup = new Sales_Form_FrmCustomer(null);
 		$formpopup = $formpopup->Formcustomer(null);
 		Application_Model_Decorator::removeAllDecorator($formpopup);
 		$this->view->form_customer = $formpopup;
-		
-		$frm_purchase = new Sales_Form_FrmStaff();
-		$form_sale = $frm_purchase->SaleOrder();
-		$this->view->form_staff = $form_sale;
-		
-		$formSales = new Sales_Form_FrmPlan();
-		$formStockAdd = $formSales->frmWorkPlan(null);
-		Application_Model_Decorator::removeAllDecorator($formStockAdd);
-		$this->view->form_department = $formStockAdd;
 	}
 	
 	function editrequestAction(){
@@ -280,11 +219,11 @@ class Sales_IndexController extends Zend_Controller_Action
 					$dbq->updateRequestOrder($data);
 				}
 				if(!empty($data['save_close'])){
-					Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/index/requestlist");
+					Application_Form_FrmMessage::redirectUrl("/sales/index/requestlist");
 				}elseif(isset($data["save_print"])){
 					Application_Form_FrmMessage::redirectUrl("/sales/index/viewrequest/id/".$id);
 				}else{
-					Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/index/addrequest");
+					Application_Form_FrmMessage::redirectUrl("/sales/index/addrequest");
 				}
 				//Application_Form_FrmMessage::Sucessfull("UPDATE_SUCESS","/sales/index/requestlist");
 			}catch (Exception $e){
@@ -303,13 +242,11 @@ class Sales_IndexController extends Zend_Controller_Action
 		$form_sale = $frm_purchase->SaleOrder($row);
 		Application_Model_Decorator::removeAllDecorator($form_sale);
 		$this->view->form_sale = $form_sale;
-		$this->view->work_id = $row["work_plan"];
 		
 		 
 		// item option in select
 		$items = new Application_Model_GlobalClass();
 		$this->view->items = $items->getProductOption();
-		$this->view->product = $items->getAllProduct();
 		$this->view->worktype = $items->getWorkType();
 		$this->view->term_opt = $db->getAllTermCondition(1);
 	}
@@ -402,9 +339,9 @@ class Sales_IndexController extends Zend_Controller_Action
 			$data["id"] = $id;
 			$query->checkRequest($data);
 			if(isset($data["save_print"])){
-				Application_Form_FrmMessage::Sucessfull("CHECK_SUCESS","/sales/index/viewrequest/id/".$id);
+				Application_Form_FrmMessage::redirectUrl("/sales/index/viewrequest/id/".$id);
 			}else{
-				Application_Form_FrmMessage::Sucessfull("CHECK_SUCESS","/sales/index/checkrequest");
+				Application_Form_FrmMessage::redirectUrl("/sales/index/checkrequest");
 			}
 		}
 		$session_user=new Zend_Session_Namespace('auth');
@@ -465,9 +402,9 @@ class Sales_IndexController extends Zend_Controller_Action
 			$data["id"] = $id;
 			$query->addDelivery($data);
 			if(isset($data["save_print"])){
-				Application_Form_FrmMessage::redirectUrl("DELIVER_SUCESS","/sales/index/viewrequest/id/".$id);
+				Application_Form_FrmMessage::redirectUrl("/sales/index/viewrequest/id/".$id);
 			}else{
-				Application_Form_FrmMessage::Sucessfull("DELIVER_SUCESS","/sales/index/checkrequest");
+				Application_Form_FrmMessage::redirectUrl("/sales/index/checkrequest");
 			}
 		}
 		$session_user=new Zend_Session_Namespace('auth');
@@ -564,7 +501,7 @@ class Sales_IndexController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()){
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_DbSaleOrder();
-			$qo = $db->getProductPrice($post['item_id'],$post['branch_id'],$post["customer_id"]);
+			$qo = $db->getProductPrice($post['item_id'],$post['branch_id']);
 			echo Zend_Json::encode($qo);
 			exit();
 		}
@@ -574,26 +511,6 @@ class Sales_IndexController extends Zend_Controller_Action
 			$post=$this->getRequest()->getPost();
 			$db = new Sales_Model_DbTable_DbSaleOrder();
 			$qo = $db->getProductOption(1,$post['customer_id'],$post['branch_id']);
-			echo Zend_Json::encode($qo);
-			exit();
-		}
-	}
-	
-	function getstaffAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Application_Model_DbTable_DbGlobal();
-			$qo = $db->getAllStaffByID($post['id']);
-			echo Zend_Json::encode($qo);
-			exit();
-		}
-	}
-	
-	function getworkplanAction(){
-		if($this->getRequest()->isPost()){
-			$post=$this->getRequest()->getPost();
-			$db = new Application_Model_DbTable_DbGlobal();
-			$qo = $db->getAllWorkPlanByID($post['id'],1);
 			echo Zend_Json::encode($qo);
 			exit();
 		}
