@@ -23,12 +23,12 @@ class Purchase_ComparepricecheckController extends Zend_Controller_Action
 		else{
 			$search =array(
 					'text_search'		=>	'',
-					'start_date'		=>	date("Y-m-01"),
 					'branch'			=>	'',
 					'plan'				=>	'',
 					'suppliyer_id'		=>	0,
+					'start_date'		=>	date("Y-m-d"),
 					'end_date'			=>	date("Y-m-d"),
-					'po_pedding'	=>	1,
+					'po_pedding'	=>	'',
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbPriceCompare();

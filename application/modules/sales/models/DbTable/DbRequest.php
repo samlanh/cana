@@ -134,11 +134,8 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 					"branch_id"     	=> 		$data["branch_id"],
 					"sale_no"       	=> 		$data["apno"],//$data['txt_order'],
 					"date_sold"     	=> 		date("Y-m-d",strtotime($data['order_date'])),
-					//"saleagent_id"  	=> 		$data['saleagent_id'],
 					'number_work_request'	=>	$data["request_no"],
 					'date_work_request'		=>	date("Y-m-d",strtotime($data["request_date"])),
-					//"payment_method" => 	$data['payment_name'],
-					//"currency_id"    => 	$data['currency'],
 					"remark"         	=> 		$data['remark'],
 					"all_total"      	=> 		$data['totalAmoun'],
 					'all_total_after'	=>		$data["totalAmoun"],
@@ -150,13 +147,11 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 					"paid_after"        => 		0,
 					"balance"      	 	=> 	$data['all_total'],
 					"balance_after"     => 	$data['all_total'],
-					//"tax"			 =>     $data["total_tax"],
 					"user_mod"       	=> 		$GetUserId,
 					'pending_status' 	=>		1,
 					'appr_status' 		=>		0,
 					"date"      	 	=> 		date("Y-m-d"),
 					"type"				=>		2,
-					//"re_type"			=>		$data["re_type"],
 					"work_plan"			=>		$data["work_plan"],
 					
 			);
@@ -171,13 +166,10 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 				$data_item= array(
 						'saleorder_id'	=> 	$sale_id,
 						'pro_id'	  	=> 	$data['item_id_'.$i],
-						//'qty_unit'		=>	$data['qty_unit_'.$i],
-						//'qty_detail'  	=> 	$data['qty_per_unit_'.$i],
 						'qty_order'	  	=> 	$data['qty'.$i],
 						'qty_order_after'	  	=> 	$data['qty'.$i],
 						'price'		  	=> 	$data['price'.$i],
 						'old_price'   	=>  $data['current_qty'.$i],
-						//'disc_value'  	=> 	$data['real-value'.$i],//check it
 						'sub_total'	  	=> 	$data['total'.$i],
 						'work_type'	  	=> 	$data['work_type_'.$i],
 						'remark'	  	=> 	$data['remark_'.$i],
@@ -372,7 +364,6 @@ class Sales_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			
 			if($data["apprrove"]==1){
 			$appr_status = 0;
 			$pending_status=4;

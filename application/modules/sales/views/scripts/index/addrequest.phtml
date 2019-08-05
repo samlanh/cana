@@ -19,7 +19,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="a" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="a" action="" class="form-horizontal" enctype="multipart/form-data" method="post">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php //echo $tr->translate("BRANCH_NAME");?><span class="required">
@@ -715,9 +715,6 @@ pqty = 1;
 var index=1;
 <?php $url_qty =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'getqtybyid')); ?>
 function addRow(item_id) {
-	//item_id=$("#item_id_"+index).val();
-				//qty_unit=$("#qty_unit_"+index).val();
-				//qty_per_unit=$("#qty_per_unit_"+index).val();
 				branch_id = $("#branch_id").val();
 				if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");}
 				
@@ -734,13 +731,6 @@ function addRow(item_id) {
 								for(i=1; i<index5; i++){
 									new_item=parseInt(item_id);
 									items = parseInt($("#item_id_"+i).val());
-									/*if(new_item==items){
-										qty = ($("#qty"+i).val()=='')?0 : $("#qty"+i).val();
-										new_qty = parseFloat(qty)+1;
-										$("#qty"+i).val(new_qty);
-										calculatePrice(i);
-										return false;
-									}*/
 								}
 								template='<tr id="row_order_'+index5+'" style="height:33px;">';
 								var inp = '';
@@ -782,7 +772,6 @@ function addRow(item_id) {
 							}
 						},
 						error:function(e){
-							//alert(e);
 						}
 				});
 }
@@ -805,24 +794,22 @@ function addtermcondition(t_id){
 }
 <?php $url_qty =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'getqtybyid')); ?>
 function getQtyById(index){//use
-				item_id=$("#item_id_"+index).val();
-				branch_id = $("#branch_id").val();
-				if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");}
-				
-					$.ajax({
-						url:"<?php echo $url_qty;?>",
-						type:"post",
-						data:{'item_id':item_id,'branch_id':branch_id},
-						success: function(data){
-							item_qty = $.parseJSON(data);			
-							$("#current_qty"+index).val(item_qty.qty);
-							$("#price"+index).val(item_qty.price);
-							calculatePrice(index);
-						},
-						error:function(e){
-						}
-				});
-			
+		item_id=$("#item_id_"+index).val();
+		branch_id = $("#branch_id").val();
+		if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");}				
+			$.ajax({
+				url:"<?php echo $url_qty;?>",
+				type:"post",
+				data:{'item_id':item_id,'branch_id':branch_id},
+				success: function(data){
+					item_qty = $.parseJSON(data);			
+					$("#current_qty"+index).val(item_qty.qty);
+					$("#price"+index).val(item_qty.price);
+					calculatePrice(index);
+				},
+				error:function(e){
+				}
+		});
 }
 <?php $url_price =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'getproductprice')); ?>
 function getProductPrice(product_id,recordid){
@@ -840,7 +827,6 @@ function getProductPrice(product_id,recordid){
 				data = $.parseJSON(data);			
 				$("#price"+recordid).val(data.price);
 				$("#oldprice_"+recordid).val(data.price);
-				
 				calculatePrice(recordid);
 			},
 			error:function(e){
@@ -961,7 +947,6 @@ function ShowPopupProduct(product_id){
 	}
 	else{
 		getQtyById(product_id);
-		//getProductPrice(product_id);
 	}
 }
 function AddLocation(){
@@ -973,22 +958,22 @@ function AddLocation(){
 <?php $url_code =  $this->url(array('module'=>'sales','controller'=>'index','action'=>'getsonumber')); ?>
 function getsaleOrderNumber(){
 	branch_id=$("#branch_id").val();
-				if(branch_id=="" || branch_id ==null || branch_id==-1){
-					return false;
-				}
-				else{
-				$.ajax({
-						url:"<?php echo $url_code;?>",
-						type:"post",
-						data:{'branch_id':branch_id},
-						success: function(data){
-							so = $.parseJSON(data);
-							$("#txt_order").val(so);
-						},
-						error:function(){
-						}
-					});
-				}	
+	if(branch_id=="" || branch_id ==null || branch_id==-1){
+		return false;
+	}
+	else{
+	$.ajax({
+			url:"<?php echo $url_code;?>",
+			type:"post",
+			data:{'branch_id':branch_id},
+			success: function(data){
+				so = $.parseJSON(data);
+				$("#txt_order").val(so);
+			},
+			error:function(){
+			}
+		});
+	}	
 }
 function getCustomerInfo(){
 	customer_id = $("#customer_id").val();
@@ -1046,7 +1031,6 @@ function getQuotenumber(){
 						type:"post",
 						data:{'branch_id':branch_id},
 						success: function(data){
-							//alert(data);
 							qo = $.parseJSON(data);
 							$("#apno").val(qo);
 						},

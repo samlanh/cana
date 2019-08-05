@@ -1,12 +1,10 @@
 <?php 
-defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
-$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-$form=$this->form;
+	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$form=$this->form;
 	$url_submit =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add'));
     $url_cencel =  $this->url(array('module'=>'product','controller'=>'index','action'=>'index'),null,true);
-    $url_check =  $this->url(array('module'=>'product','controller'=>'index','action'=>'check'));
     $url_new = $this->url(array('module'=>'product','controller'=>'index','action'=>'add'));
-	$a = "G12000";
 ?>						 
 <title><?php echo $tr->translate("ADD_NEW_PRODUCT");?></title>
 <body>
@@ -37,8 +35,9 @@ $form=$this->form;
 													</div>
 													<label class="col-md-2 control-label"><?php echo $tr->translate("PRODUCT_CODE");?></label>
 													<div class="col-md-4">
-														<?php echo $form->getElement('pro_code');?>
-														<?php echo $form->getElement('int_code');?>
+														<div class="col-md-6"><?php echo $form->getElement('pro_code');?></div>
+														<label class="col-md-3 control-label"><?php echo $tr->translate("START_NUMBER");?></label>
+														<div class="col-md-3"><?php echo $form->getElement('int_code');?></div>
 													</div>
 												</div>
 												<div class="form-group">
@@ -233,7 +232,6 @@ $form=$this->form;
         </div>
     </div>
  </div>	
-
 <?php $formcat = $this->frmCat; ?>
 <div id="categorypopup" class="modal fade" tabindex="-1" data-width="1200">
       <div class="modal-dialog">
@@ -453,9 +451,7 @@ $('#frm').submit(function() {
 	} else {
 	   return false;
 	}
-	
 });	
-
 $( document ).ready(function() {
 	addProLocation();
 	addNewPriceType();

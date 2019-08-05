@@ -147,29 +147,16 @@ class Sales_DeliveryController extends Zend_Controller_Action
 	
 	function addrequestAction(){
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-    	if(empty($id)){
-    		$this->_redirect("/sales/delivery");
-    	}
-    	$query = new Sales_Model_DbTable_Dbdeliverys();
-    	$this->view->product =  $query->getProductSaleById($id);
-		$row = $query->getProductSaleById($id);
-	
-    	if(empty($row)){
-    		$this->_redirect("/sales/delivery/");
-    	}
-    	$db= new Application_Model_DbTable_DbGlobal();
-    	$this->view->rscondition = $db->getTermConditionByIdIinvocie(4, null);
-		
+		if(empty($id)){
+			$this->_redirect("/sales/delivery");
+		}
 		if($this->getRequest()->isPost()) {
 			$data = $this->getRequest()->getPost();
 			$data["id"] = $id;
 			try {
 				$dbq = new Sales_Model_DbTable_Dbdeliverys();				
 				$returnid = $dbq->addRequestDeliver($id);
-				if(!empty($data["saveprint"])){
-					
-					Application_Form_FrmMessage::Sucessfull("DELIVERY_SUCCESS", "/sales/index/requestdelivery");
-				}
+				Application_Form_FrmMessage::Sucessfull("DELIVERY_SUCCESS", "/sales/index/requestdelivery");
 				
 			}catch (Exception $e){
 				$err =$e->getMessage();
@@ -177,6 +164,17 @@ class Sales_DeliveryController extends Zend_Controller_Action
 				
 			}
 		}
+		
+		
+		$query = new Sales_Model_DbTable_Dbdeliverys();
+		$this->view->product =  $query->getProductSaleById($id);
+		$row = $query->getProductSaleById($id);
+		
+		if(empty($row)){
+			$this->_redirect("/sales/delivery/");
+		}
+		$db= new Application_Model_DbTable_DbGlobal();
+		$this->view->rscondition = $db->getTermConditionByIdIinvocie(4, null);
 		
 		$query = new Sales_Model_DbTable_DbRequest();
 		$this->view->product =  $query->getRequestById($id);

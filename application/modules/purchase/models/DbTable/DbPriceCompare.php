@@ -166,19 +166,23 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 				  p.`number_request`,
 				  s.`pur_date`,
 				  s.pedding as pedding_stat,
-				  (SELECT pl.`name` FROM `tb_plan` AS pl WHERE pl.id=p.`plan_id`) AS plan,
+				  (SELECT pl.`name` FROM `tb_plan` AS pl WHERE pl.id=p.`plan_id` LIMIT 1) AS plan,
 				s.`is_approve`,
-				   (SELECT pl.`name` FROM `tb_sublocation` AS pl WHERE pl.`id`=p.`branch_id`) AS branch,
-				  (SELECT fullname FROM `tb_acl_user` AS u WHERE u.`user_id` = p.`user_id`) AS `user`,
-				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code=s.`appr_status` AND v.type=12) AS app_status, 
-				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code=s.`pedding` AND v.type=11) AS pedding,
-				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code=s.`status` AND v.type=5) AS  `status`,
+				   (SELECT pl.`name` FROM `tb_sublocation` AS pl WHERE pl.`id`=p.`branch_id` LIMIT 1) AS branch,
+				  (SELECT fullname FROM `tb_acl_user` AS u WHERE u.`user_id` = p.`user_id` LIMIT 1) AS `user`,
+				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code=s.`appr_status` AND v.type=12 LIMIT 1) AS app_status, 
+				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code=s.`pedding` AND v.type=11 LIMIT 1) AS pedding,
+				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code=s.`status` AND v.type=5 LIMIT 1) AS  `status`,
 				  (SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = P.user_id LIMIT 1 ) AS user_name
 				FROM
 				  `tb_su_price_idcompare` AS s,
 				  `tb_purchase_request` AS p 
-				WHERE s.`re_id` = p.`id` AND p.date_request BETWEEN '$start_date' AND '$end_date'";
+				WHERE s.`re_id` = p.`id` ";
 		$where ='';
+		$from_date =(empty($search['start_date']))? '1': " p.date_request >= '".$start_date." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " p.date_request <= '".$end_date." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
 		$groupby = " GROUP BY s.`re_id`";
 		
 		if(empty($search['search_bydate'])){

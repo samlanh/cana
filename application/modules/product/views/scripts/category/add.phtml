@@ -28,7 +28,6 @@
 								<div class="col-md-4">
 									<?php echo $formFilter->getElement('cat_name');?>
 								</div>
-												
 							</div>
 							<div class="form-group">
 								<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
@@ -61,13 +60,11 @@
 									<?php echo $formFilter->getElement('status');?>
 								</div>
 							</div>
-						
 							<div class="form-group">
 								<div  class="col-md-12 col-md-offset-4 col-md-8">
 									<a href="<?php echo $this->baseUrl();?>/product/category/index"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
 									<button type="submit" name="saveclose" id="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 									<button type="submit" name="btnsavenew" id="save_close" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
-									
 								</div>
 							</div>
 					</div>
@@ -77,7 +74,7 @@
 	</div>
 </div>
 <script>
-$( document ).ready(function() {
+$(document).ready(function() {
 	CatetgoryAutoCompleted();
 	CatetgoryStartCodeAutoCompleted();
 });
@@ -95,8 +92,7 @@ $( document ).ready(function() {
 				}
 			},
 			error:function(e){
-				alert(e);
-				}
+			}
 		});
 	}
 <?php $url_code =  $this->url(array('module'=>'','controller'=>'ajax','action'=>'get-prefixy-exist')); ?>
@@ -113,13 +109,7 @@ $( document ).ready(function() {
 				}
 			},
 			error:function(e){
-				alert(e);
-				}
+			}
 		});
 	}
-</script>
-<script>
-$(document).ready(function () {
-    
-});
 </script>

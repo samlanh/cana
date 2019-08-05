@@ -71,8 +71,6 @@ class Application_Form_Frmsearch extends Zend_Form
 			//$startDateValue=date("m/d/Y");
 		}
 		if($startDateValue==""){
-			//$startDateValue=date("m/01/Y");
-			//$startDateValue=date("m/d/Y");
 		}
 		
 		$startDateElement = new Zend_Form_Element_Text('start_date');

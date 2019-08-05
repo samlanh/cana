@@ -404,7 +404,7 @@ $db->getProfiler()->setEnabled(false);
 							
 							//update Product Table
 							$arr_pro   = array(
-								'price'   	=> 		$cost_price,
+								'price'   	=> 	$cost_price,
 							);
 							$this->_name="tb_product";
 							$where=" id = ".$row_product['id'];

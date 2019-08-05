@@ -1,6 +1,5 @@
 <?php 
-$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-//print_r($this->product);
+	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title><?php echo $tr->translate("REQUEST_ITEM_FROM_STOCK");?></title>
 <div class="row">
@@ -10,22 +9,6 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("REQUEST_ITEM_FROM_STOCK");?>
 				</div>
-						<!--<div class="btn-group pull-right">
-							 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
-							   Actions <i class="fa fa-angle-down"></i>
-							 </button>
-								<ul class="dropdown-menu" role="menu">
-									<li>
-										<a href="#" onclick="doPrint();">
-											<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;Print
-										</a>
-									</li>
-									<li>
-										<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
-									</li>
-									
-								</ul>
-					</div>-->
 			</div>
             <div class="portlet-body form frmfilter">
 					<div style="clear:both;"></div>	
@@ -68,21 +51,6 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 										<td colspan="3" style="width:100%">
 											<table width="100%" cellpadding="0" cellspacing="0" style="font-size:12px !important;">
 												<tr>
-													<!--<td style="font-size:12px !important;">
-														<div >
-															<label  style="float:left; white-space:nowrap; padding-right: 18px;" ><input <?php if($this->product[0]['re_type']==1){echo 'checked="cheched"';} ?> type="checkbox" name="" style="float:left !important;"/>E</label>
-															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input <?php if($this->product[0]['re_type']==2){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>W</label>
-															<label  style="float:left; white-space:nowrap; padding-right: 18px;"><input <?php if($this->product[0]['re_type']==3){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>G</label>
-															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==4){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>M</label>
-															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==5){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>P</label>
-															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==6){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>S</label>
-															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==7){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>MT</label>
-															<label style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==8){echo 'checked="cheched"';}?>type="checkbox" name="" style="float:left !important;"/>K</label>
-															<label  style="float:left; white-space:nowrap; padding-right: 18px;"><input  <?php if($this->product[0]['re_type']==9){echo 'checked="cheched"';}?> type="checkbox" name="" style="float:left !important;"/>OT................................................ថ្ងៃទី :   .............<?php echo $this->product[0]['date_sold'];?>............</label>
-															
-														</div>
-														
-													</td>-->
 													<td width="80%"></td>
 													<td width="5%"><?php echo $tr->translate("REQUEST_NO");?> : </td>
 													<td width="15%"><?php echo $this->product[0]['sale_no']?></td>
@@ -94,7 +62,6 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 												</tr>
 											</table>
 										</td>
-										
 									</tr>
 									<tr>
 										<td style="width:40%">
@@ -113,9 +80,7 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 										<td style="width:40%">
 											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
 												<tr>
-													<td>
-														<?php echo $tr->translate("DATE_REQUEST_WORK_SPACE");?> : 
-													</td>
+													<td><?php echo $tr->translate("DATE_REQUEST_WORK_SPACE");?> : </td>
 													<td style="border-bottom:1px dotted #000; width:60%;">
 														<?php echo date("d-M-Y",strtotime($this->product[0]['date_work_request']));?>
 													</td>
@@ -151,27 +116,21 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 										</td>
 									</tr>
 									<tr>
-										
 										<td style="width:40%">
 											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
 												<tr>
-													<td>
-														<?php echo $tr->translate("PLAN");?> : 
-													</td>
+													<td><?php echo $tr->translate("PLAN");?> : </td>
 													<td style="border-bottom:1px dotted #000; width:60%;">
 														<?php echo $this->product[0]['plant'];?>
 													</td>
 												</tr>
 											</table>
-											
 										</td>
 										<td width="20%"></td>
 										<td style="width:40%">
 											<table style="border-collapse:collapse; font-size:12px;" width="100%" cellspacing="0">
 												<tr>
-													<td>
-														<?php echo $tr->translate("DEPARTMENT");?> : 
-													</td>
+													<td><?php echo $tr->translate("DEPARTMENT");?> : </td>
 													<td style="border-bottom:1px dotted #000; width:60%;">
 														<?php echo $this->product[0]['work_plan'];?>
 													</td>
@@ -201,82 +160,75 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 							<th><?php echo $tr->translate("NOTE_WORK");?></th>
 							<th width="5%"> <?php echo $tr->translate("NUM_REMARK");?></th>
 		                </tr>
-		                <?php $num=1; 
-		                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
-		                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
-		                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
+		                <?php 
+			                $num=1; 
+			                $r_netotal = 0;$r_paid = 0; $r_balance = 0;
+			                $d_netotal = 0;$d_paid = 0; $d_balance = 0;
+			                $b_netotal = 0;$b_paid = 0; $b_balance = 0;
 						$count = count($this->product);
 		                if(!empty($this->product))foreach ($this->product AS $index => $rs){ $inx = $index+1;?>
-						<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["qty_order"],2);?></td>
-						   <td>&nbsp;<?php echo $rs["measure"];?></td>
-						   <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
-						    <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"]*$rs["qty_order"],2);?></span></td>
-						   <td>&nbsp;<?php echo $rs["work_type"];?></td>
-						   <td>&nbsp;<?php echo $rs["remark"];?></td>
-						   <td>&nbsp;<?php echo $rs["note"];?></td>
-						</tr>
-						   <?php 
+							<tr class='row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
+							   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
+							   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["qty_order"],2);?></td>
+							   <td>&nbsp;<?php echo $rs["measure"];?></td>
+							   <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
+							    <td>&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"]*$rs["qty_order"],2);?></span></td>
+							   <td>&nbsp;<?php echo $rs["work_type"];?></td>
+							   <td>&nbsp;<?php echo $rs["remark"];?></td>
+							   <td>&nbsp;<?php echo $rs["note"];?></td>
+							</tr>
+						<?php 
                     }?>
                    <?php if($count<10){
 						$loop = 10 - $count;
 						for($i=1;$i<=$loop;$i++){
 					?>
-							<tr class='hover' style="border:1px solid #000;">
+						<tr class='hover' style="border:1px solid #000;">
 						   <td align="center">&nbsp;<?php echo $inx+$i?></td>
 						   <td style="white-space: nowrap;">&nbsp;</td>
 						   <td style="white-space: nowrap;">&nbsp;</td>
 						   <td style="white-space: nowrap;">&nbsp;</td>
 						   <td>&nbsp;</td>
-						   <td align="center">&nbsp;<?php //echo $inx+$i?></td>
+						   <td align="center"></td>
 						   <td style="white-space: nowrap;">&nbsp;</td>
 						   <td style="white-space: nowrap;">&nbsp;</td>
 						   <td style="white-space: nowrap;">&nbsp;</td>
 						   <td>&nbsp;</td>
 						</tr>
 					<?php 
-							
 						}
 					}
 					?>
-		            </tbody>
-		           </table>
-		              
+		            		</tbody>
+		           		</table>
 		    		</td>
 		    	</tr>
 			</tbody>
 		</table>
 		<br>
-			<form method="post" >
-
-					<div class="form-group">
-							
-							<div  class="col-md-12 col-md-offset-4 col-md-8">
-								<a href="<?php echo $this->baseUrl();?>/sales/index"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
-								<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
-								<!--<button type="submit" name="save_print" class="btn btn-primary"><i class="fa fa-print"></i> <?php echo $tr->translate("SAVE_PRINT")?></button>-->
-												
-							</div>
-						</div>
+			<form method="post" id="frm">
+				<div class="form-group">
+					<div  class="col-md-12 col-md-offset-4 col-md-8">
+						<a href="<?php echo $this->baseUrl();?>/sales/index"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
+						<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+					</div>
+				</div>
 			</form>
-			
 		</div>
-		
-	  </div>		
+	  	</div>		
 	</div>
 	 </div>
    </div>
 </div>
-<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
-function doPrint() {
-	window.frames["print_frame"].document.body.innerHTML=document.getElementById('divPrint').innerHTML;
-    window.frames["print_frame"].window.focus();
-    window.frames["print_frame"].window.print();
-    //hideDialog();
-}
-
+$('#frm').submit(function(){
+	var r = confirm("\tសូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\t\n \tតើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?\t");
+	if (r == true) {
+	    return true;
+	} else {
+	   return false;
+	}
+});	
 </script>

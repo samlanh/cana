@@ -30,7 +30,6 @@ class Purchase_ComparepriceController extends Zend_Controller_Action
 					);
 		}
 		$db = new Purchase_Model_DbTable_DbPriceCompare();
-		
 		$rows = $db->getAllCompare($search);
 		$this->view->rs = $rows;
 		$formFilter = new Application_Form_Frmsearch();

@@ -280,7 +280,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		
 		if(!empty($search['purchaser'])){
-		    $where.= " AND (SELECT pur.user_mod FROM `tb_purchase_order` AS pur WHERE pur.id=r.`purchase_id`)=".$search['purchaser'];
+		    $where.= " AND (SELECT pur.user_mod FROM `tb_purchase_order` AS pur WHERE pur.id=r.`purchase_id` LIMIT 1)=".$search['purchaser'];
 		}
 		
 		if($search["category"]!="" AND $search["category"]>0){
@@ -295,7 +295,6 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission('branch');
 		$order=" ORDER BY r.`date_in` ASC";
-		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 		
@@ -315,7 +314,6 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  s.`sub_total`,
 				  s.`sale_no`,
 				  s.`user`,
-				  s.currency,
 				  s.`customer`,
 				  s.type,
 				  s.note_sale 
@@ -324,7 +322,8 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				  `v_sale_order` AS s 
 				WHERE 
 				p.is_meterail=0
-				AND p.id = s.`pro_id` ";
+				AND p.id = s.`pro_id`
+				AND s.pending_status=5 ";
 
 		$from_date =date("Y-m-d",strtotime($search['start_date']));
 		$to_date = date("Y-m-d",strtotime($search['end_date']));

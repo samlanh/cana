@@ -768,12 +768,12 @@ function checkCateparent($id){
 		return $rows;
 	}
 	
-	function getProductPrefix($id){
+	function getProductPrefix($cate_id){
 		$db=$this->getAdapter();
-		$sql="SELECT prefix,start_code,is_none_stock FROM `tb_category` WHERE id=$id ";
+		$sql="SELECT prefix,start_code,is_none_stock FROM `tb_category` WHERE id=$cate_id ";
 		$row=$db->fetchRow($sql);
 
-		$sql_p="SELECT int_code FROM `tb_product` WHERE cate_id=$id ORDER BY id DESC  LIMIT 1";
+		$sql_p="SELECT int_code FROM `tb_product` WHERE cate_id=$cate_id ORDER BY id DESC  LIMIT 1";
 		$rowp=$db->fetchOne($sql_p);		
 		if($row['is_none_stock']==1){//មិនរាប់ស្តុក
 			if(!empty($rowp)){

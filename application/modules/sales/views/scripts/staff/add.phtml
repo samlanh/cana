@@ -3,7 +3,6 @@
 	$form=$this->form_sale;
 	$url_submit = $this->url(array('module'=>'sales','controller'=>'staff','action'=>'add'));
 	$url_cancel = $this->url(array('module'=>'sales','controller'=>'staff','action'=>'index'));
-	$url_new = $this->url(array('module'=>'sales','controller'=>'quoatation','action'=>'edit'));
 ?>
 <title><?php echo $tr->translate("STAFF");?></title>
 <div class="row">
@@ -16,7 +15,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="form_sample_2" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="form_sample_2" action="" class="form-horizontal" enctype="multipart/form-data" method="post">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2">
@@ -48,8 +47,7 @@
 									<?php echo $form->getElement('phone');?>
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php  echo $tr->translate("EMAIL");?><span class="required">
-								 </span>
+							<label class="control-label col-md-2"><?php  echo $tr->translate("EMAIL");?>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
@@ -58,8 +56,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("STATUS");?><span class="required">
-								</span>
+							<label class="control-label col-md-2"><?php echo $tr->translate("STATUS");?>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
@@ -89,26 +86,23 @@
 function productOption(){
 	customer_id=$('#customer_id').val();
 	branch_id=$('#branch_id').val();
-	//alert(branch_id);
 	$.ajax({
-						url:"<?php echo $url_product_option;?>",
-						type:"post",
-						data:{'customer_id':customer_id,'branch_id':branch_id},
-						success: function(data){
-							//alert(data);
-							if(data!=null || data!=""){
-								
-								item = $.parseJSON(data);		
-								document.getElementById('add_item').innerHTML=item;
-							}else{
-								alert("No date in quote");
-							}
-						},
-						error:function(e){
-							//alert(e);
-						}
-				});
-	
+			url:"<?php echo $url_product_option;?>",
+			type:"post",
+			data:{'customer_id':customer_id,'branch_id':branch_id},
+			success: function(data){
+				//alert(data);
+				if(data!=null || data!=""){
+					
+					item = $.parseJSON(data);		
+					document.getElementById('add_item').innerHTML=item;
+				}else{
+					alert("No date in quote");
+				}
+			},
+			error:function(e){
+			}
+	});
 }
 
 <?php $url_product =  $this->url(array('module'=>'sales','controller'=>'index','action'=>'get-product')); ?>
@@ -128,7 +122,6 @@ function addRow(item_id) {
 		type:"post",
 		data:{'item_id':item_id,'branch_id':branch_id,'customer_id':customer_id},
 		success: function(data){
-			//alert(data);
 			data = $.parseJSON(data);		
 			index5++; //var first = index5;
 			index=index+1;
@@ -156,43 +149,36 @@ function addRow(item_id) {
 			} else {$('#identity').val(index5);}
 			$("#item_id_"+index5).val(item_id);
 			getQtyById(index5);
-			//getProductPrice(item_id,index5);
 			$("#paid").val(0);
 			$("#row_order_0").remove();
 		},
 		error:function(e){
-							//alert(e);
 		}
 	});
 }
 
 <?php $url_product =  $this->url(array('module'=>'sales','controller'=>'index','action'=>'get-product')); ?>
 function getQtyById(index){//use
-				item_id=$("#item_id_"+index).val();
-				branch_id = $("#branch_id").val();
-				if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");}
-				
-					$.ajax({
-						url:"<?php echo $url_product;?>",
-						type:"post",
-						data:{'item_id':item_id,'branch_id':branch_id},
-						success: function(data){
-							alert(data);
-							item_qty = $.parseJSON(data);		
-							$("#current_qty"+index).val(item_qty.qty);
-						},
-						error:function(e){
-							//alert(e);
-						}
-				});
+	item_id=$("#item_id_"+index).val();
+	branch_id = $("#branch_id").val();
+	if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");}
+		$.ajax({
+			url:"<?php echo $url_product;?>",
+			type:"post",
+			data:{'item_id':item_id,'branch_id':branch_id},
+			success: function(data){
+				alert(data);
+				item_qty = $.parseJSON(data);		
+				$("#current_qty"+index).val(item_qty.qty);
+			},
+			error:function(e){
+			}
+	});
 			
 }
 $( document ).ready(function() {
 <?php if($this->rsq['is_approved']!=1){?>
-	//getsaleOrderNumber();
 <?php }?>
-	//initList();
-	//initListTermcondition();
 });
 function initList() {
 	index5=0;
@@ -222,17 +208,12 @@ function initList() {
 	
 	$("#item_id_"+index5).val("<?php echo $r['pro_id'];?>");
 	$("#qty"+index5).val("<?php echo $r['qty_order'];?>");
-	//$("#qty_unit_"+index5).val("<?php echo $r['qty_unit'];?>");
-	
-	//$("#qty_per_unit_"+index5).val("<?php echo $r['qty_detail'];?>");
 	$("#total"+index5).val("<?php echo $r['sub_total'];?>");
 	$("#price"+index5).val("<?php echo $r['price'];?>");
 	$("#oldprice_"+index5).val("<?php echo $r['price'];?>");
 	$("#dis_value"+index5).val("<?php echo $r['benefit_plus'];?>");
 	document.getElementById('lb_measure_'+index5).innerHTML = '<?php echo $r['measure'];?>';
 	getQtyItemById(index5);
-	//getQtyById(index5);
-	//getProductPrice(item_id,index5);
 
 	if($('#identity').val()!="") {
 		var identity = $('#identity').val();
@@ -282,11 +263,7 @@ function addtermcondition(t_id){
 }
 <?php $url_qty =  $this->url(array('module'=>'sales','controller'=>'quoatation','action'=>'getqtybyid')); ?>
 function getQtyItemById(index){//use
-	
 				item_id=$("#item_id_"+index).val();
-				//qty_unit=$("#qty_unit_"+index).val();
-				//qty_per_unit=$("#qty_per_unit_"+index).val();
-
 				branch_id = $("#branch_id").val();
 				if(branch_id=='' || branch_id==-1){alert("Please Select Branch First ");}
 				

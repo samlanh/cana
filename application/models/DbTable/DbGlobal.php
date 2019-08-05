@@ -32,7 +32,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	function getBranch(){
 		$db = $this->getAdapter();
 		$db_globle = new Application_Model_DbTable_DbGlobal();
-		$sql = "SELECT l.id,l.`name` FROM `tb_sublocation` AS l WHERE l.`status`=1";
+		$sql = "SELECT l.id,l.`name` FROM `tb_sublocation` AS l WHERE l.`status`=1 ";
 		$location = $db_globle->getAccessPermission('l.`id`');
 		return $db->fetchAll($sql.$location);
 	}
@@ -40,7 +40,8 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	function getPurchasePedding(){
 		$db = $this->getAdapter();
 		$db_globle = new Application_Model_DbTable_DbGlobal();
-		$sql = "SELECT v.`key_code` as id,v.`name_en` as name FROM `tb_view` AS v WHERE v.`type`=11 AND v.`status`=1 AND v.`key_code`!=0 ORDER BY v.`key_code`";
+		$sql = "SELECT v.`key_code` as id,v.`name_en` as name 
+			FROM `tb_view` AS v WHERE v.`type`=11 AND v.`status`=1 AND v.`key_code`!=0 ORDER BY v.`key_code` ";
 		return $db->fetchAll($sql);
 	}
 	
@@ -70,7 +71,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 				  AND ua.`user_type_id` = $level 
 				  AND a.`module` = '".$module."' 
 				  AND a.`controller` = '".$controller."' 
-				  AND a.`action` = '".$action."'";
+				  AND a.`action` = '".$action."' LIMIT 1 ";
 		return $db->fetchRow($sql);
 	}
 	
@@ -727,7 +728,6 @@ function getDnNo($completed=null,$opt=null){
 	 function getAllLocation($opt=null){
    		   		$db=$this->getAdapter();
    		$sql=" SELECT id,`name` FROM `tb_sublocation` WHERE `name`!='' AND status=1  ";
-//    		$sql.=$this->getAccessPermission("id");
    		$result = $this->getUserInfo();
    		$sql.= " AND ".$this->getAllLocationByUser($result['user_id']);
 		//echo $sql;
@@ -746,13 +746,10 @@ function getDnNo($completed=null,$opt=null){
     	if($result['level']==1){
     		return " 1 ";
     	}
-    	$sql=" SELECT * FROM `tb_acl_ubranch` WHERE user_id=$user_id ";
-    	
-    	//echo $sql;exit();
+    	$sql=" SELECT location_id FROM `tb_acl_ubranch` WHERE user_id=$user_id ";
     	$rows = $db->fetchAll($sql);
     	$s_where = array();
     	$where='';
-		//print_r($rows);exit();
     	if(!empty($rows)){
     		foreach ($rows as $rs){
     			$s_where[] = $branch_name." = {$rs['location_id']}";

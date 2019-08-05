@@ -69,7 +69,7 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql = "SELECT 
 				  p.`id`,
-				  (SELECT s.name FROM `tb_sublocation` AS s WHERE s.id=p.`branch_id`) AS branch,
+				  (SELECT s.name FROM `tb_sublocation` AS s WHERE s.id=p.`branch_id` LIMIT 1 ) AS branch,
 				  p.`re_code`,
 				  p.`date_request`,
 				  p.`status` ,
@@ -77,12 +77,12 @@ class Purchase_Model_DbTable_DbRequest extends Zend_Db_Table_Abstract
 				  p.`date_from_work_space`,
 				  p.check_date,
 				  p.`number_request`,
-				  (SELECT pl.`name` FROM `tb_plan` AS pl WHERE pl.id=p.`plan_id`) AS plan,
+				  (SELECT pl.`name` FROM `tb_plan` AS pl WHERE pl.id=p.`plan_id` LIMIT 1 ) AS plan,
 				  p.`pedding` AS pedding_stat,
 				  p.`appr_status` AS appr_stat,
-				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code = p.`status` AND v.type=5) AS `pstatus`,
-				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code = p.`appr_status` AND v.type=12) AS `app_status`,
-				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code = p.`pedding` AND v.type=11) AS `pedding`,
+				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code = p.`status` AND v.type=5 LIMIT 1) AS `pstatus`,
+				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code = p.`appr_status` AND v.type=12 LIMIT 1 ) AS `app_status`,
+				  (SELECT name_en FROM `tb_view` AS v WHERE v.key_code = p.`pedding` AND v.type=11 LIMIT 1) AS `pedding`,
 				  (SELECT u.username FROM tb_acl_user AS u WHERE u.user_id = P.user_id LIMIT 1 ) AS user_name,
 				  (SELECT s.is_edit FROM `tb_su_price_idcompare` AS s WHERE s.re_id=p.id LIMIT 1) AS is_edit
 				FROM

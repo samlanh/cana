@@ -27,12 +27,10 @@ class Product_Form_FrmProduct extends Zend_Form
 		$pro_code->setValue($p_code);
 		
 		
-		$int_code = new Zend_Form_Element_Hidden("int_code");
+		$int_code = new Zend_Form_Element_Text("int_code");
 		$int_code->setAttribs(array(
 				'class'=>'form-control',
-				//'required'=>'required'
 		));
-		$int_code->setValue($p_code);
 		$this->addElement($int_code);
 		 
 		$serial = new Zend_Form_Element_Text("serial");
