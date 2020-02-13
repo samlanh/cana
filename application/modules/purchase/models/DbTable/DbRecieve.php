@@ -290,9 +290,7 @@ class Purchase_Model_DbTable_DbRecieve extends Zend_Db_Table_Abstract
 		$GetUserId = $user['user_id'];
 		try{
 			$identity = $data["identity"];
-// 			echo $data['totalAmoun_after']+(($data['totalAmoun_after']*$data["vat"])/100);
 			if($identity!=""){
-				
 				$orderdata = array(
 					'purchase_id'		=>	$data["pu_code"],
 					'dn_number'			=>	$data["dn_no"],
@@ -1204,20 +1202,20 @@ class Purchase_Model_DbTable_DbRecieve extends Zend_Db_Table_Abstract
 				  ro.`dn_number`,
 				  ro.date_order,
 				  ro.date_in,
-				  (SELECT pl.name FROM `tb_sublocation` AS pl WHERE pl.id=ro.`LocationId`) AS branch,
-				  (SELECT v.v_name FROM tb_vendor AS v WHERE v.vendor_id = ro.vendor_id) AS vendor_name,
+				  (SELECT pl.name FROM `tb_sublocation` AS pl WHERE pl.id=ro.`LocationId` LIMIT 1) AS branch,
+				  (SELECT v.v_name FROM tb_vendor AS v WHERE v.vendor_id = ro.vendor_id LIMIT 1) AS vendor_name,
 				  ro.all_total,
-				  (SELECT  u.username FROM tb_acl_user AS u WHERE u.user_id = ro.user_mod) AS user_name ,
+				  (SELECT  u.username FROM tb_acl_user AS u WHERE u.user_id = ro.user_mod LIMIT 1) AS user_name ,
 				   p.`order_number` AS po_no,
-				  (SELECT p.name FROM tb_plan AS p WHERE p.id=(SELECT pr.plan_id FROM `tb_purchase_request` AS pr WHERE pr.id=(SELECT po.`re_id` FROM `tb_purchase_order` AS po WHERE po.`id`=ro.`purchase_id`) LIMIT 1) LIMIT 1) AS plan
+				  (SELECT p.name FROM tb_plan AS p WHERE p.id=(SELECT pr.plan_id FROM `tb_purchase_request` AS pr WHERE pr.id=(SELECT po.`re_id` FROM `tb_purchase_order` AS po WHERE po.`id`=ro.`purchase_id` LIMIT 1) LIMIT 1) LIMIT 1) AS plan
 				FROM
 				  tb_recieve_order AS ro ,
 				  `tb_purchase_order` AS p
 				WHERE ro.`status` = 1 AND p.id=ro.`purchase_id` ";
 		$order=" ORDER BY ro.order_id DESC  ";
 		$where='';
-		$from_date =(empty($search['start_date']))? '1': "  ro.date_order >= '".$search['start_date']."'";
-		$to_date = (empty($search['end_date']))? '1': "   ro.date_order <= '".$search['end_date']."'";
+		$from_date =(empty($search['start_date']))? '1': "  ro.date_in >= '".$search['start_date']."'";
+		$to_date = (empty($search['end_date']))? '1': "   ro.date_in <= '".$search['end_date']."'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();

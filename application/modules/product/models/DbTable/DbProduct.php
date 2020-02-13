@@ -152,6 +152,7 @@ $db->getProfiler()->setEnabled(false);
 			  p.`barcode`,
   			  p.`serial_number`,
 			  (SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
+			  (SELECT SUM(qty) FROM `tb_prolocation` WHERE pro_id=p.id LIMIT 1) as qty,
 			  (SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
 			  (SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=2  AND p.`model_id`=v.`key_code` LIMIT 1) AS model,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure,
@@ -200,10 +201,60 @@ $db->getProfiler()->setEnabled(false);
   	if($data["status"]!=""){
   		$where.=' AND p.status='.$data["status"];
   	}
-  	$location ='';// $db_globle->getAccessPermission('pl.`location_id`');
+  	$location ='';
   	$group_by = " GROUP BY p.id ";
   	return $db->fetchAll($sql.$where.$location.$group_by);
   	
+  }
+  function getSearchClosing($data){
+  	$db = $this->getAdapter();
+  	$db_globle = new Application_Model_DbTable_DbGlobal();
+  		$sql ="SELECT
+			  	p.`id`,
+			  	p.`item_code`,
+			  	p.`item_name` ,
+			  	p.`barcode`,
+			  	p.`serial_number`,
+			  	(SELECT b.`name` FROM `tb_brand` AS b WHERE b.`id`=p.`brand_id` LIMIT 1) AS brand,
+			  	(SELECT SUM(qty) FROM `tb_prolocation` WHERE pro_id=p.id LIMIT 1) as qty,
+			  	(SELECT c.name FROM `tb_category` AS  c WHERE c.id=p.`cate_id` LIMIT 1) AS cat,
+			  	(SELECT v.`name_kh` FROM tb_view AS v WHERE v.`type`=2  AND p.`model_id`=v.`key_code` LIMIT 1) AS model,
+			  	(SELECT m.name FROM `tb_measure` AS m WHERE m.id = p.`measure_id` LIMIT 1) AS measure
+  			FROM
+		  		`tb_product` AS p ,
+		  		tb_category as c
+		  	WHERE p.cate_id=c.id ";
+  	$where = '';
+  	if($data["ad_search"]!=""){
+  		$s_where=array();
+  		$s_search = addslashes(trim($data['ad_search']));
+  		$s_where[]= " p.item_name LIKE '%{$s_search}%'";
+  		$s_where[]=" p.barcode LIKE '%{$s_search}%'";
+  		$s_where[]= " p.item_code LIKE '%{$s_search}%'";
+  		$s_where[]= " p.serial_number LIKE '%{$s_search}%'";
+  		$where.=' AND ('.implode(' OR ', $s_where).')';
+  	}
+  	if(@$data["stock_type"]>-1){
+  		$where.=' AND c.is_none_stock='.$data["stock_type"];
+  	}
+//   	if($data["branch"]!=""){
+//   	  	$where.=' AND pl.`location_id`='.$data["branch"];
+//   	}
+  	
+  	if($data["category"]>0){
+  		$category_id = $data["category"];
+  		$parent = $this->checkCateparent($category_id);
+  		if ($parent['parent_id']==0){
+  			$sql.=" AND (p.cate_id=".$category_id." OR (SELECT c.`parent_id` FROM `tb_category` AS c WHERE c.`id` =p.cate_id AND p.cate_id LIMIT 1) = $category_id)";
+  		}else{
+  			$where.=' AND p.cate_id='.$category_id;
+  		}
+  	}
+  	
+  	$location ='';
+  	$group_by = " GROUP BY p.id ";
+  	return $db->fetchAll($sql.$where.$location.$group_by);
+  	 
   }
 function checkCateparent($id){
   $db = $this->getAdapter();
@@ -797,5 +848,37 @@ function checkCateparent($id){
 			 
 			return array("p_code"=>$pre.$p_code,"int_code"=>$p_code);
 		}
-	}   
+	} 
+	function submitClosingStock($data){
+		
+		$db = $this->getAdapter();
+		$this->_name='tb_closing';
+		
+		$arr = array(
+			'from_date'	  => date('Y-m-d',strtotime($data['from_date'])),
+			'to_date'	  => date('Y-m-d',strtotime($data['to_date'])),
+			'closing_date'=> date('Y-m-d'),
+			'user_id'	  => $this->getUserId(),
+			'create_date' => date('Y-m-d'),
+			'modify_date' => date('Y-m-d'),
+		);
+		$this->_name="tb_closing";
+		$id = $this->insert($arr);
+		
+		if(!empty($data['identity'])){
+			$identitys = explode(',',$data['identity']);
+			foreach($identitys as $i)
+			{
+				$arr1 = array(
+					'closing_id'   =>$id,
+					'branch_id'		=>	1,
+					'pro_id'		=>	$data['pro_id'.$i],
+					'qty_begining'	=>	$data['qty_'.$i],
+				);
+				$this->_name = "tb_closing_detail";
+				$this->insert($arr1);
+			}
+		}
+		return 1;
+	}  
 }

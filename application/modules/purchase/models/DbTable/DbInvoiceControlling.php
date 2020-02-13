@@ -84,27 +84,6 @@ class Purchase_Model_DbTable_DbInvoiceControlling extends Zend_Db_Table_Abstract
 	}
 	function getAllReceiveInvoiceById($id){
 		$db = $this->getAdapter();
-		/*$sql = "SELECT 
-				  r.`order_id`,
-				  r.`purchase_id`,
-				  r.`recieve_number`,
-				  r.`invoice_no`,
-				  r.`vendor_id`,
-				  r.LocationId,
-				  (SELECT p.`order_number` FROM `tb_purchase_order` AS p WHERE p.id=r.`purchase_id` LIMIT 1) AS purchase_no,
-				  (SELECT p.`re_id` FROM `tb_purchase_order` AS p WHERE p.id=r.`purchase_id` LIMIT 1) AS request_id,
-				  r.`invoice_date`,
-				  r.`receive_invoice_date`,
-				  r.`date_order`,
-				  r.`date_in`,
-				  (SELECT s.name FROM `tb_sublocation` AS s WHERE s.id=r.`LocationId` LIMIT 1),
-				  (SELECT p.name FROM `tb_plan` AS p WHERE p.id=(SELECT pr.plan_id FROM `tb_purchase_request` AS pr WHERE pr.id=(SELECT po.re_id FROM `tb_purchase_order` AS po WHERE po.id=r.`purchase_id` LIMIT 1) LIMIT 1) LIMIT 1) AS plan,
-				  (SELECT v.`v_name` FROM `tb_vendor` AS v WHERE v.`vendor_id`=r.`vendor_id` LIMIT 1) AS vendor,
-				  r.`all_total_after`,
-				  r.`tax`
-				FROM
-				  `tb_recieve_order` AS r 
-				WHERE r.order_id=$id";*/
 		$sql ="SELECT 
 				  r.`id`,
 				  r.`invoice_no`,
@@ -128,7 +107,6 @@ class Purchase_Model_DbTable_DbInvoiceControlling extends Zend_Db_Table_Abstract
 				  `tb_purchase_invoice` AS r WHERE r.id=$id";
 		return $db->fetchRow($sql);
 	}
-	
 	
 	function  add($data){
 		$db = $this->getAdapter();

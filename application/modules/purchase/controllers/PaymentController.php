@@ -91,18 +91,11 @@ class Purchase_PaymentController extends Zend_Controller_Action
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';//number of vendor payment
 		$db = new Purchase_Model_DbTable_Dbpayment();
 		$db_globle = new Application_Model_DbTable_DbGlobal();
-		
 		$row = $db->getPaymentById($id);
 		$this->view->product = $row ;
-// 		echo $row[0]['invoice_id'];
 		$rsproduct = $db->getAllItemReceived($id);
-		//$rsproduct = $db->getAllItemReceived($row[0]['invoice_id']);
-		$this->view->rsproduct = $rsproduct;
-		
-		
+		$this->view->rsproduct = $rsproduct;		
 		$rs=$this->view->rsrequest = @$db->getRequestInfoBypurchaseId($rsproduct[0]['purchase_id']);
-		
-		
 		$session_user=new Zend_Session_Namespace('auth');
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
 	}

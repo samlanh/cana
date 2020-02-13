@@ -246,11 +246,12 @@ function initList() {
 	template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
 	template+='<td width="2%" class="center"><label id="lbno_'+index5+'">'+index+'<label></td>';
 	template+='<td style="text-align:center;"><?php echo $r["item_code"];?></td>';
-	template+='<td class="center"><?php echo $r["item_name"];?><input type="hidden" id="item_id_'+index5+'" name="item_id_'+index5+'"  /></td>';
+	template+='<td class="center"><?php echo str_replace("'", '', $r["item_name"]);?><input type="hidden" id="item_id_'+index5+'" name="item_id_'+index5+'"  /></td>';
 	template+='<td><input type="hidden" class="form-control" required="1" id="old_qty_'+index5+'" name="old_qty_'+index5+'"/><input type="text" class="form-control" required="1" id="qty_'+index5+'" name="qty_'+index5+'" value="1"/></td>';
 	template+='<td><?php echo $r["measure"];?></td>';
 	template+='<td width="2%" class="center"><input type="text" name="date_in_'+index5+'" id="date_in_'+index5+'" class="validate[required] form-control date-picker" value="<?php echo date("m/d/Y",strtotime($r["date_in"]));?>" /></td>';
-	template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" value="<?php echo $r["remark"]?>"/></span></td>';
+	remark = '<?php echo str_replace("'", '', $r["remark"]);?>';
+	template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" value="'+remark+'"/></span></td>';
 	template+="</tr>";
 	$('#table_order').append(template);
 	
@@ -259,9 +260,6 @@ function initList() {
 	$("#old_qty_"+index5).val("<?php echo $r['qty'];?>");
 	$('#date_in_'+index5).datepicker();
 	
-	//getQtyById(index5);
-	
-
 	if($('#identity').val()!="") {
 		var identity = $('#identity').val();
 		$('#identity').val(identity+','+index5);

@@ -32,7 +32,7 @@ $db = new report_Model_DbStock();
 					</div>
 			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
@@ -107,7 +107,7 @@ $db = new report_Model_DbStock();
 									<li style="text-align:center; font-size:20px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
 									<li style="text-align:center; font-size:18px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
 		                			<li style="text-align:center; font-size:18px;margin: 10px 0px 0px 0px;font-family:'Khmer OS Muol Light',serif,header-font;"> <?php echo $tr->translate("RPT_WORKING_STONE");?></li>
-									<li style="text-align:center; font-size:13px;"><?php echo date("d/m/Y",strtotime($this->start_date));?> ដល់ <?php echo date("d/m/Y",strtotime($this->end_date));?></li>
+									<li style="text-align:center; font-size:13px;"><?php if(!empty($this->start_date)){ echo date("d/m/Y",strtotime($this->start_date));?> ដល់ <?php } echo date("d/m/Y",strtotime($this->end_date));?></li>
 		                		</ul>
 		                	</td>
 		                    <td width="20%"></td>

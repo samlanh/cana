@@ -225,10 +225,8 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 	
 	function add($data){
 		try{
-			
 			$db=$this->getAdapter();
 			$db->beginTransaction();
-			
 			$sql = "SELECT s.`id` FROM `tb_su_price_idcompare` AS s WHERE s.`re_id`=".$data["id"];
 			$rsult = $db->fetchOne($sql);
 			if(!empty($rsult)){
@@ -237,8 +235,6 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 			    $db->query($sql);
 			    $sql = "DELETE FROM tb_pro_compare WHERE re_id=".$data["id"];
 			    $db->query($sql);
-			    //Application_Form_FrmMessage::message('This Transaction is has beed compared!');
-				//return true;
 			}
 			
 			$db_global = new Application_Model_DbTable_DbGlobal();
@@ -246,16 +242,16 @@ class Purchase_Model_DbTable_DbPriceCompare extends Zend_Db_Table_Abstract
 			$GetUserId= $session_user->user_id;
 			for($i=1;$i<=4;$i++){
 				$arr=array(
-						're_id'			=> $data["id"],
-						'code'			=>	$data["c_code"],
-						'su_id'			=> $data["su_id_".$i],
-						'is_vat'		=>	@$data["vat_".$i],
-						'is_approve'	=>	0,
-						'appr_status'	=> 	0,
-						'pedding'		=>	4,
-						'pur_date'		=>	date("Y-m-d"),
-						'is_edit'		=>	1,
-						'remark'		=>	$data["note"]
+					're_id'			=> $data["id"],
+					'code'			=>	$data["c_code"],
+					'su_id'			=> $data["su_id_".$i],
+					'is_vat'		=>	@$data["vat_".$i],
+					'is_approve'	=>	0,
+					'appr_status'	=> 	0,
+					'pedding'		=>	4,
+					'pur_date'		=>	date("Y-m-d"),
+					'is_edit'		=>	1,
+					'remark'		=>	$data["note"]
 				);
 				$this->insert($arr);
 			}

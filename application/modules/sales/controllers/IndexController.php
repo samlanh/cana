@@ -222,7 +222,6 @@ class Sales_IndexController extends Zend_Controller_Action
 			
 			try {
 				$data = $this->getRequest()->getPost();
-				
 				$dbq = new Sales_Model_DbTable_DbRequest();
 				if(!empty($data['identity'])){
 					$id = $dbq->addRequestOrder($data);

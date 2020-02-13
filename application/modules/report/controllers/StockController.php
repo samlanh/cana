@@ -23,30 +23,29 @@ class report_StockController extends Zend_Controller_Action
     	
     
     }
-    
     public function rptstocksummaryAction()
     {
     	$db = new report_Model_DbStock();
 		$data = array();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
-    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+    		$data['start_date']= $data['start_date'];
+    		$data['end_date']=  $data['end_date'];
     	}else{
     		$data = array(
-    				'ad_search'		=>	'',
-    				'start_date'	=>	date('2016-m-d'),
-    				'end_date'		=>	date('Y-m-d'),
-    				'category'		=>	35,
-    		        'product_id'      => -1,
-    				'suppliyer_id'	=>	-1,
-    		        'branch'		=>	0
+    			'ad_search'		=>	'',
+    			'start_date'	=>	date('2016-m-d'),
+    			'end_date'		=>	date('Y-m-d'),
+    			'category'		=>	35,
+    		    'product_id'    => -1,
+    			'suppliyer_id'	=>	-1,
+    		    'branch'		=>	0
     		);
     	}
 		$this->view->start_date = $data["start_date"];
 		$this->view->end_date = $data["end_date"];
 		$this->view->search = $data;
-    	$this->view->stockin = $db->getAllProduct($data);
+    	$this->view->stockin = $db->getAllStockSummaryreport($data);
 	
     	$formFilter = new report_Form_FrmSearch();
     	$this->view->formFilter = $formFilter->formSearch($data);
@@ -76,6 +75,7 @@ class report_StockController extends Zend_Controller_Action
     				'end_date'		=>	date('Y-m-d'),
     				'category'		=>	-1,
     				'suppliyer_id'	=>	-1,
+    				'add_item'		=>	-1,
     				'branch'		=>-1,
     		);
     	}
@@ -102,16 +102,13 @@ class report_StockController extends Zend_Controller_Action
     				'start_date'	=>	date('Y-m-1'),
     				'end_date'		=>	date('Y-m-d'),
     				'category'		=>	-1,
-    				//'suppliyer_id'	=>	-1,
+    				'add_item'		=>	-1,
     				'branch'		=>-1,
     		);
     	}
 		$this->view->start_date = $data["start_date"];
 		$this->view->end_date = $data["end_date"];
-		
     	$this->view->stockout = $db->getAllStockoutport($data);
-		
-		
     	$formFilter = new report_Form_FrmSearch();
     	$frm_search = $formFilter->formSearch();
     	Application_Model_Decorator::removeAllDecorator($frm_search);
@@ -122,18 +119,15 @@ class report_StockController extends Zend_Controller_Action
 		$session_user=new Zend_Session_Namespace('auth');
 		$db_globle = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db_globle->getTitleReport($session_user->location_id);
-    
     }
-	
-	
 	
 	public function rptworkingstoneAction()
     {
     	$db = new report_Model_DbStock();
     	if($this->getRequest()->isPost()){
     		$data = $this->getRequest()->getPost();
-    		$data['start_date']=date("Y-m-d",strtotime($data['start_date']));
-    		$data['end_date']=date("Y-m-d",strtotime($data['end_date']));
+    		$data['start_date']=$data['start_date'];
+    		$data['end_date']=$data['end_date'];
     	}else{
     		$data = array(
     				'ad_search'		=>	'',
@@ -153,7 +147,6 @@ class report_StockController extends Zend_Controller_Action
 		
     	$formFilter = new report_Form_FrmSearch();
     	$this->view->formFilter = $formFilter->formSearch();
-    	//Application_Model_Decorator::removeAllDecorator($formFilter);
 		$items = new Application_Model_GlobalClass();
 		$this->view->items = $items->getProductOption();
 		$session_user=new Zend_Session_Namespace('auth');

@@ -593,7 +593,6 @@ $( document ).ready(function() {
 function select2Speed(name){
 	 $('#add_item').select2({
             data : _.map(_.range(0, itemss.length), function (i) {
-				//alert(itemss);
                   return {
                       id  : itemss[i].id,
                       text: itemss[i].item_code+"-"+itemss[i].item_name
@@ -664,7 +663,6 @@ function addDepartment(){
 		success: function(data){
 			rs = $.parseJSON(data);
 			title = $("#name_department").val();
-			alert(title);
 			$('#work_plan').append($("<option></option>").attr("value",rs).attr("selected",true).text(title));                       
 			$("#work_plan").select2();
 			$('#apartment').modal('hide');
@@ -698,9 +696,7 @@ function getWork(){
 		data:{'id':id},
 		success: function(data){
 			data = $.parseJSON(data);
-			//alert(data);
 			document.getElementById('work_plan').innerHTML=data;
-			//$("#work_plan").append(data);
 		}
 	});
 }

@@ -19,29 +19,29 @@ class Purchase_ReceiveController extends Zend_Controller_Action
     }
 	public function indexAction(){
 		if($this->getRequest()->isPost()){
-				$search = $this->getRequest()->getPost();
-				$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
-				$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
+			$search = $this->getRequest()->getPost();
+			$search['start_date']=date("Y-m-d",strtotime($search['start_date']));
+			$search['end_date']=date("Y-m-d",strtotime($search['end_date']));
 		}
 		else{
 			$search =array(
-					'text_search'		=>	'',
-					'start_date'		=>	date("Y-m-01"),
-					'branch'			=>	'',
-					'suppliyer_id'		=>	0,
-					'end_date'			=>	date("Y-m-d"),
-					);
+				'text_search'		=>	'',
+				'start_date'		=>	date("Y-m-01"),
+				'branch'			=>	'',
+				'suppliyer_id'		=>	0,
+				'end_date'			=>	date("Y-m-d"),
+			);
 		}
 			$db = new Purchase_Model_DbTable_DbRecieve();
 			$rows = $db->getAllReceivedOrder($search);
-			$glClass = new Application_Model_GlobalClass();
-			$columns=array("PURCHASE_ORDER_CAP","ORDER_DATE_CAP", "VENDOR_NAME_CAP","TOTAL_CAP_DOLLAR","BY_USER_CAP");
-			$link=array(
-					'module'=>'purchase','controller'=>'receive','action'=>'detail-purchase-order',
-			);
-			$urlEdit = BASE_URL . "/purchase/index/update-purchase-order-test";
-			$list = new Application_Form_Frmlist();
-			$this->view->list=$list->getCheckList(1, $columns, $rows, array('order'=>$link),$urlEdit);
+// 			$glClass = new Application_Model_GlobalClass();
+// 			$columns=array("PURCHASE_ORDER_CAP","ORDER_DATE_CAP", "VENDOR_NAME_CAP","TOTAL_CAP_DOLLAR","BY_USER_CAP");
+// 			$link=array(
+// 					'module'=>'purchase','controller'=>'receive','action'=>'detail-purchase-order',
+// 			);
+// 			$urlEdit = BASE_URL . "/purchase/index/update-purchase-order-test";
+// 			$list = new Application_Form_Frmlist();
+// 			$this->view->list=$list->getCheckList(1, $columns, $rows, array('order'=>$link),$urlEdit);
 			
 			$this->view->rs = $rows;
 			$formFilter = new Application_Form_Frmsearch();

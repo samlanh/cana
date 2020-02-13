@@ -31,9 +31,7 @@ class Purchase_MakepurchaseController extends Zend_Controller_Action
 					'po_pedding'	=>	6,
 					);
 		}
-		//$db = new Purchase_Model_DbTable_DbPriceCompare();
 		$db = new Purchase_Model_DbTable_DbMakePurchase();
-		
 		$rows = $db->getAllCompare($search);
 		$this->view->rs = $rows;
 		$formFilter = new Application_Form_Frmsearch();

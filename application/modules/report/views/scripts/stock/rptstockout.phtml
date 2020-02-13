@@ -16,30 +16,30 @@ if(!empty($result)){
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("STOCK_OUT");?>
 				</div>
-						<div class="btn-group pull-right">
-						    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
-						     <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
-						    </button>
-							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a href="#" onclick="doPrint();">
-										<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
-									</a>
-								</li>
-								<li>
-									<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
-								</li>
-							</ul>
-					</div>
+				<div class="btn-group pull-right">
+				    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+				     <?php echo $tr->translate("ACTIONS");?> <i class="fa fa-angle-down"></i>
+				    </button>
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							<a href="#" onclick="doPrint();">
+								<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a>
+						</li>
+					</ul>
+				</div>
 			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" style="border-bottom: 1px solid #ccc;" action="<?php //echo $formFilter->getAction(); ?>">
+				<form method="post" style="border-bottom: 1px solid #ccc;" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('ad_search');?></label>
 						<label class="control-label col-md-3">
-								<select data-placeholder="Select..." class="form-control select2me " style="text-align: left;" id="add_item" name="add_item" Onchange="getItemOrder();" >
+							<select data-placeholder="Select..." class="form-control select2me " style="text-align: left;" id="add_item" name="add_item" Onchange="getItemOrder();" >
 								<?php echo $this->items; ?>
-								</select>
+							</select>
 						</label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('branch');?></label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('category');?></label>
@@ -54,12 +54,12 @@ if(!empty($result)){
 					<div style="clear:both;"></div>	
 				</form> 
 	<div style=" min-height:28cm; margin:25 0 0 0; padding:0px 0.2cm">
-	<div id="divPrint" style="width: 100%;">
-		<style>
-			.style{
-					line-height: 20px;font-size: 9px !important;
-					font-family: 'Khmer OS Battambang';
-				}
+		<div id="divPrint" style="width: 100%;">
+			<style>
+				.style{
+						line-height: 20px;font-size: 9px !important;
+						font-family: 'Khmer OS Battambang';
+					}
 				ul{margin: 0;padding:0;}
 				table tr td ul li{text-align: center;list-style: none;line-height: 25px; }
 				th{padding: 0px;}
@@ -98,7 +98,7 @@ if(!empty($result)){
 									<li style="text-align:center; font-size:18px; font-family:'Khmer OS Muol Light'"><?php echo $this->title_reprot["title_report_kh"]?></li>
 									<li style="text-align:center; font-size:16px; font-family:serif,header-font; font-weight:600;"><?php echo $this->title_reprot["title_report_en"]?></li>
 		                			<li style="text-align:center; font-size:16px;margin: 10px 0px 0px 0px;font-family:'Khmer OS Muol Light',serif,header-font;"> <?php echo $tr->translate("STOCK_OUT");?></li>
-									<li style="text-align:center; font-size:12px;"><?php echo date("d-M-Y",strtotime($this->start_date));?> ដល់ <?php echo date("d-M-Y",strtotime($this->end_date));?></li>
+									<li style="text-align:center; font-size:12px;"><?php  if(!empty($this->start_date)){echo date("d-m-Y",strtotime($this->start_date));?> ដល់ <?php } echo date("d-m-Y",strtotime($this->end_date));?></li>
 		                		</ul>
 								</td>
 								<td width="20%" style="text-align:center; font-size: 11px;white-space: nowrap;">
@@ -160,7 +160,7 @@ if(!empty($result)){
 		                </tr> 
 		                <?php if(!empty($this->stockout))foreach ($this->stockout AS $index => $rs){?>
 						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-M-Y',strtotime($rs["date_sold"]))?></td>
+						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-m-Y',strtotime($rs["date_sold"]))?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty_order"];?></td>

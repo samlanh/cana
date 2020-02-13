@@ -51,7 +51,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
-	function getAllProduct($search){
+	function getAllStockSummaryreport($search){//function getAllProduct($search){
 		$db= $this->getAdapter();
 		$user_info = $this->GetuserInfo();
 		$loc = $user_info["branch_id"];
@@ -63,6 +63,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			  pl.`qty`,
 			  pl.price,
 			  pl.`location_id`,
+			  (SELECT qty_begining FROM `tb_closing` AS c,`tb_closing_detail` AS cd WHERE c.id=cd.closing_id AND pro_id=p.id AND cd.branch_id =pl.`location_id` LIMIT 1) As qty_begining,
 			  (SELECT g.name FROM `tb_category` AS g WHERE g.id=p.`cate_id` LIMIT 1) AS cat_name,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=p.`measure_id` LIMIT 1) AS measure,
 			  (SELECT   v.`date_order` FROM  v_receive_purchase AS v WHERE  v.`pro_id`=p.`id` LIMIT 1)AS date_order,
@@ -94,13 +95,12 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		    $where .= " AND pl.`location_id` = ".$search['branch'];
 		}
 		
-		if($search['product_id']>0){
-		    $where .= " AND p.`id` = ".$search['product_id'];
-		}
-		
-		if($search['suppliyer_id']>0){
-		    $where .= " AND  (SELECT   v.`vendor_id` FROM  v_receive_purchase AS v WHERE  v.`pro_id`=p.`id` LIMIT 1)=".$search['suppliyer_id'];
-		}
+// 		if($search['product_id']>0){
+// 		    $where .= " AND p.`id` = ".$search['product_id'];
+// 		}
+// 		if($search['suppliyer_id']>0){
+// 		    $where .= " AND  (SELECT   v.`vendor_id` FROM  v_receive_purchase AS v WHERE  v.`pro_id`=p.`id` LIMIT 1)=".$search['suppliyer_id'];
+// 		}
 
 		if($search["category"]>-1){
 			$category_id = $search["category"];
@@ -171,7 +171,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		return $db->fetchRow($sql.$where.$groupby);
 	}
 	
-	function getDeliByPro($id,$data){
+	function getDeliByPro($pro_id,$data){
 		$db= $this->getAdapter();
 		$user_info = $this->GetuserInfo();
 		$loc = $user_info["branch_id"];
@@ -184,7 +184,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			FROM
 			  `tb_deliverynote` AS d,
 			  `tb_deliver_detail` AS dd 
-			WHERE d.`id` = dd.`deliver_id` AND dd.`pro_id` = $id ";
+			WHERE d.`id` = dd.`deliver_id` AND dd.`pro_id` = $pro_id ";
 			$groupby = " GROUP BY dd.`pro_id`";
 		return $db->fetchRow($sql.$where.$groupby);
 	}
@@ -240,11 +240,11 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 	public function getAllStockinReport($search){//1
 		$db= $this->getAdapter();
 		$sql=" SELECT 
-				  r.`date_in`,
-				  p.`item_code`,
-				  p.`item_name`,
-				  p.`measure`,
-				  p.`cattegory`,
+					  r.`date_in`,
+					  p.`item_code`,
+					  p.`item_name`,
+					  p.`measure`,
+					  p.`cattegory`,
 					r.* 
 				FROM
 				  `v_product` AS p,
@@ -264,8 +264,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " p.`item_code` LIKE '%{$s_search}%'";
 			$s_where[] = " p.`item_name` LIKE '%{$s_search}%'";
+			
 			$s_where[] = " p.`measure` LIKE '%{$s_search}%'";
-			$s_where[] = " r.`order_number` LIKE '%{$s_search}%'";
+			$s_where[] = " r.`po_no` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`recieve_number` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`supplier` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`purchaser` LIKE '%{$s_search}%'";
@@ -277,6 +278,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		if($search['branch']>0){
 			$where.= " AND branch = ".$search['branch'];
+		}
+		if($search['add_item']>0){
+			$where.= " AND r.id = ".$search['add_item'];
 		}
 		
 		if(!empty($search['purchaser'])){
@@ -343,7 +347,6 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			$s_where[] = " s.`user` LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
-		
 		if($search['category']>-1 AND $search["category"]>-1){
 			if($search["category"]>-1){
 				$category_id = $search["category"];
@@ -355,12 +358,15 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				}
 			}
 		}
+		if($search["add_item"]>-1){
+			$where.=' AND p.id='.$search["add_item"];
+		}
 		
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY s.`sale_no`";
-	
 		return $db->fetchAll($sql.$where.$order);
+		
 	}
 	
 	function getVendor(){

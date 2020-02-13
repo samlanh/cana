@@ -60,8 +60,9 @@
 										});
 								</script>
 								<div id="pagination_'.$id.'" class="pager" >
-											<form >
-												<table  style="width: 200px;"><tr>
+									<form>
+										<table  style="width: 200px;">
+											<tr>
 												<td><img src="'.BASE_URL.'/images/first.gif" class="first"/></td>
 												<td><img src="'.BASE_URL.'/images/previous.gif" class="prev"/></td>
 												<td><input type="text" class="pagedisplay"/></td>
@@ -80,14 +81,13 @@
 													<option value="100">100</option>
 													</select>
 												</td>
-												</tr>
-												</table>
-											</form>
-									</div>	';
+											</tr>
+										</table>
+									</form>
+							</div>';
 							$footer="";
 							if(!empty($this->rs)){
-								foreach ($this->rs as $key=>$rs){
-									
+								foreach ($this->rs as $key=>$rs){		
 							?>
 								<tr class="normal">
 									<td class="items-no"><?php echo $key+1;?></td>
@@ -96,15 +96,13 @@
 									<td class="items"><?php echo $rs["plan"];?></td>
 									<td class="items"><?php echo $rs["branch"];?></td>
 									<td class="items"><?php echo $rs["recieve_number"];?></td>
-									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_in"]));?></td>
+									<td class="items"><?php echo date('d-m-Y',strtotime($rs["date_in"]));?></td>
 									<td class="items"><?php echo $rs["vendor_name"];?></td>
 									<td class="items">$<span style="float:right"><?php echo number_format($rs["all_total"],2);?></span></td>
 									<td class="items"><?php echo $rs["user_name"];?></td>
 									<td class="items-no" style="white-space: nowrap;">
-										<a <?php //echo $edit_status;?> href="<?php echo $this->baseUrl();?>/purchase/receive/edit/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("EDIT");?></a> |
+										<a href="<?php echo $this->baseUrl();?>/purchase/receive/edit/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("EDIT");?></a> |
 										<a target="_blank" href="<?php echo $this->baseUrl();?>/purchase/receive/receivenote/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("PRINT_RECEIVE_ORDER");?></a>​ 
-										<!--<a target="_blank" href="<?php echo $this->baseUrl();?>/purchase/receive/purproductdetail/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("PRINT_PAYMENT");?></a>-->
-										
 									</td>
 								</tr>
 							<?php $counter='<strong style="float:right;padding:5px">Number of record(s): '.count($this->rs).'</strong>'; 

@@ -130,13 +130,13 @@ $formFilter = $this->formFilter;
 		                if(!empty($this->product))foreach ($this->product AS $index => $row){?>
 						<tr class="odd gradeX" id="item_<?php echo $index; ?>">
 								<td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1; ?></td>
-								<td style="white-space: nowrap;" class="center">&nbsp;<?php echo $row["branch"]?></td>
+								<td style="white-space: nowrap;" class="center">&nbsp;<?php //echo $row["branch"]?></td>
 								<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_code"]?></td>
 								<td style="white-space: nowrap;">&nbsp;<?php echo $row["item_name"]?></td>
 								<td style="white-space: nowrap;">&nbsp;<?php echo $row["barcode"]?></td>
-								<td style="" class="center"><?php echo $row["cat"]?></td>
-								<td style="white-space: nowrap;" class="center"><?php echo $row["measure"]?></td>
-								<td style="white-space: nowrap;" class="center"><?php echo $row["qty"]?></td>
+								<td><?php echo $row["cat"]?></td>
+								<td style="white-space: nowrap;"><?php echo $row["measure"]?></td>
+								<td style="white-space: nowrap;"><?php echo $row["qty"]?></td>
 									<!--<td style="white-space:nowrap"class="center">
 										<?php //if($row["status"] == 1){?>
 										<span class="label label-sm label-success"><?php //echo $tr->translate("ACTIVE");?> </span>

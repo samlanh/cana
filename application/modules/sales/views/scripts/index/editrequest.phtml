@@ -274,37 +274,13 @@
 		</div>
 	</div>
 </div>
-
 <script>
- 
  itemss = <?php echo Zend_Json::encode($this->product)?>;
  is_set =0;
-$( document ).ready(function() {
-	//addPlanAddr();
-
-	select2Speed('add_item');
-	//alert("ready loaded");
-	/*$("#a").submit(function () {
-		$('[name="save_close"]').val(1);
-        $("#save_close").attr("disabled", true);
-        return true;
-    });*/
-	
-	/*$('#save_close').click(function(){
-        $("#orderFrm").submit(function () {
-			window.location ="<?php echo $this->baseUrl();?>/sales/index/requestlist";
-		$(this).find(':input[type=submit]').prop('disabled', true);
-		window.location.href ="<?php echo $this->baseUrl();?>/sales/index/requestlist";
-		});
-        
-    });*/
-
-// $("#work_plan").append("");
- getWork();
-  initList();
- //alert(<?php echo $this->work_id;?>);
-
- 
+$(document).ready(function(){
+	 select2Speed('add_item');
+	 getWork();
+	 initList();
 });
 function select2Speed(name){
 	 $('#add_item').select2({
@@ -356,6 +332,8 @@ function getStaff(){
 function getWork(){
 	$('#work_plan').val('').trigger('change');
 	id = $("#plan").val();
+	if(id==''){
+		return false;}
 	$.ajax({
 		url:"<?php echo $url_work_plan;?>",
 		type:"post",
@@ -818,9 +796,10 @@ function addPlanAddr(){
              $('#plan_addr').val(rs);                       
         },
         error:function(err){
-            alert("faile insert");
-           
         }
     });
+}
+function addWorkPlan(){
+	
 }
 </script>	

@@ -188,7 +188,6 @@ class Purchase_Model_DbTable_DbPriceCompareApprove extends Zend_Db_Table_Abstrac
 	
 	function edit($data){
 		try{
-			//print_r($data);exit();
 			$db=$this->getAdapter();
 			$db->beginTransaction();
 			$db_global = new Application_Model_DbTable_DbGlobal();
@@ -202,22 +201,21 @@ class Purchase_Model_DbTable_DbPriceCompareApprove extends Zend_Db_Table_Abstrac
 			
 			for($i=1;$i<=4;$i++){
 				$arr=array(
-						're_id'			=> $data["id"],
-						'su_id'			=> $data["su_id_".$i],
+					're_id'			=> $data["id"],
+					'su_id'			=> $data["su_id_".$i],
 				);
 				$this->insert($arr);
 			}
-			//$identity = $data["identity"];
 			$ids=explode(',',$data['identity']);
 			foreach($ids as $i){
 				for($j=1;$j<=4;$j++){
 					$arr_pro=array(
-							're_id'		=> 	$data["id"],
-							'pro_id'		=> 	$data["pro_id_".$i],
-							'su_id'			=> 	$data["su_id_".$i],
-							'price'			=>	$data["su_price_".$i."_".$j],
-							'qty'			=>	$data["pro_qty_".$i],
-							'is_check'		=>	@$data["checkbox_".$i."_".$j]
+						're_id'		=> 	$data["id"],
+						'pro_id'	=> 	$data["pro_id_".$i],
+						'su_id'		=> 	$data["su_id_".$i],
+						'price'		=>	$data["su_price_".$i."_".$j],
+						'qty'		=>	$data["pro_qty_".$i],
+						'is_check'	=>	@$data["checkbox_".$i."_".$j]
 					);
 					$this->_name="tb_pro_compare";
 					$this->insert($arr_pro);
@@ -234,7 +232,6 @@ class Purchase_Model_DbTable_DbPriceCompareApprove extends Zend_Db_Table_Abstrac
 			$where = "id=".$data["id"];
 			$this->update($arr_re,$where);
 			$db->commit();
-			//return $GetProductId;
 		}catch(Exception $e){
 			$db->rollBack();
 			Application_Form_FrmMessage::message('INSERT_FAIL');
