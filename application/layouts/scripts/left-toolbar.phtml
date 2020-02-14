@@ -16,7 +16,7 @@
 	//module user 
 	$url_user_list = array($this->url(array('module'=>'rsvacl','controller'=>'user','action'=>'index'),null, true), "MENU_RSVACL_USER_INDEX");
 	$url_user_add = array($this->url(array('module'=>'rsvacl','controller'=>'user','action'=>'add'),null, true), "MENU_RSVACL_USER_ADD_USER");
-	$url_add_user_access = array($this->url(array('module'=>'rsvacl','controller'=>'useraccess','action'=>'index'),null, true), "MENU_RSVACL_USER_ACCESS_ADD");
+	$url_add_user_access = array($this->url(array('module'=>'rsvacl','controller'=>'useraccess','action'=>'index'),null, true), "USERACCESS");
 	$url_user_acl_list = array($this->url(array('module'=>'rsvacl','controller'=>'acl','action'=>'index'),null, true), "MENU_RSVACL_USER_ACL_LIST");
 	$url_user_type = array($this->url(array('module'=>'rsvacl','controller'=>'usertype','action'=>'index'),null, true), "MENU_RSVACL_USER_TYPE_LIST");
 	
@@ -39,13 +39,76 @@ $module_str  = array(
 		'sales'=>'SALES_INVENTORY',
 		'report'=>'REPORT',
 		);	
+		
+		
+	$arr_module = $session_user->arr_acl;
+	$menu = array();
+	$module = '';
+	$controller=array();
+	$newarray=array();
+	if(!empty($arr_module)){
+		foreach ($arr_module as $key => $rs){
+			//
+			$lblcontroller = $rs['label'];
+			if($module!=$rs['module']){
+				$url =$this->url(array('module'=>$rs['module'],'controller'=>$rs['controller'],'action'=>$rs['action']), null, true);
+				//$newarray= array($rs['controller']=>$tr->translate(strtoupper($lblcontroller)));
+				$newarray= array($rs['controller']=>array('title'=>$tr->translate(strtoupper($lblcontroller)),'url'=>$url));
+				
+				$menu[$rs['module']]= $newarray;
+				$old_module=$rs['module'];
+			}else{
+				if($rs['is_menu']==1 && $rs['action']!="index"){
+					$url =$this->url(array('module'=>$rs['module'],'controller'=>$rs['controller'],'action'=>$rs['action']), null, true);
+					$newarray= array_merge($newarray,array($rs['controller']."".$rs['action']=>array('title'=>$tr->translate(strtoupper($lblcontroller)),'url'=>$url)));
+					//$newarray= array_merge($newarray,array($rs['controller']=>$tr->translate(strtoupper($lblcontroller))));
+					$menu[$rs['module']] = $newarray;
+				}else{
+					$url =$this->url(array('module'=>$rs['module'],'controller'=>$rs['controller'],'action'=>$rs['action']), null, true);
+				$newarray= array_merge($newarray,array($rs['controller']=>array('title'=>$tr->translate(strtoupper($lblcontroller)),'url'=>$url)));
+				//$newarray= array_merge($newarray,array($rs['controller']=>$tr->translate(strtoupper($lblcontroller))));
+			    $menu[$rs['module']] = $newarray;
+				}
+								
+			}
+			$module=$rs['module'];
+		}
+	}
+	//print_r($menu);exit();
+	$arr_param_menu = $menu;
+	$module = $request->getModuleName();
+	$controller = $request->getControllerName();
+	$actionName=$request->getActionName();
+	
+		$array_icon = array(
+      		'home'=>'<i class="fa fa-home" aria-hidden="true"></i>',
+      		'registrar'=>'<i class="fa fa-graduation-cap" aria-hidden="true"></i>',
+			'project'=>'<i class="fa fa-map-marker" aria-hidden="true"></i>',
+      		'group'=>'<i class="fa fa-users" aria-hidden="true"></i>',
+      		'purchase'=>'<i class="icon-tag" aria-hidden="true"></i>',
+			'product'=>'<i class="fa fa-database" aria-hidden="true"></i>',
+      		'1'=>'<i class="fa fa-money" aria-hidden="true"></i>',
+			'sales'=>'<i class="fa fa-shopping-cart" aria-hidden="true"></i>',
+			'incexp'=>'<i class="fa fa-money" aria-hidden="true"></i>',
+			'rent'=>'<i class="fa fa-money" aria-hidden="true"></i>',
+      		'other'=>'<i class="fa fa-book" aria-hidden="true"></i>',
+			'stock'=>'<i class="fa fa-cubes" aria-hidden="true"></i>',
+      		'report'=>'<i class="fa  fa-file-text" aria-hidden="true"></i>',
+      		'rsvacl'=>'<i class="fa  fa-cog" aria-hidden="true"></i>',
+      		'setting'=>'<i class="fa  fa-cogs" aria-hidden="true"></i>',
+      		'property'=>'<i class="fa  fa-cogs" aria-hidden="true"></i>',
+      );
+	
+	$arr_module = $session_user->arr_module;
+
+	$arr_acl = $session_user->arr_acl;
+	
  ?>
 <!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
 		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
 		<div class="page-sidebar navbar-collapse collapse">
-			
 			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 				<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
 				<li class="sidebar-toggler-wrapper" style="background:#6c5353;height: 41px; border-bottom:2px solid #9a9a9a !important;">
@@ -54,37 +117,57 @@ $module_str  = array(
 					</div>
 					<!-- END SIDEBAR TOGGLER BUTTON -->
 				</li>
-				<!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-				<?php if(!empty($db->getAllAclParentUserType($level))){ foreach ($db->getAllAclParentUserType($level) as $rs){ 
-					if($module==$rs["module"]){
-						$class_active='start active open';
-						break;
+				<?php if(!empty($arr_module)){ foreach ($arr_module as $rs){
+					$url =$this->url(array('module'=>$rs,'controller'=>'index','action'=>'index'), null, true);
+					if($rs=='issue'){$title=$tr->translate('ISSUE_PROPERTY_PLONG');}else{
+						//$title=$tr->translate(strtoupper($rs));
+						$title=$tr->translate(strtoupper($module_str[$rs]));
 					}
 				?>
-				<li class="<?php if($module==$rs["title"]){echo 'start active open';}?>">
-					<a href="javascript:;">
-					<i class="<?php echo $rs["icon"];?>"></i>
-					<span class="title"><?php echo $tr->translate($module_str[$rs["title"]]);?></span>
-					<span class="arrow "></span>
-					</a>
-					<ul class="sub-menu">
-						<?php if(!empty($db->getAllAclSubParentUserType($level,$rs["parent"]))){ foreach($db->getAllAclSubParentUserType($level,$rs["parent"]) as $row){?>
-						<?php if($row["lable"]!="NO_SUB"){?>
-						<li  class="start " style="padding: 6px 0 6px 2px;background:#6c5353">
-								<span style="color:#fff; "><i class="icon-arrow-right"></i><?php echo $tr->translate($row["lable"])?></span>
-						</li> 
+				<li <?php if ($rs==$module ){ echo 'class="active"';}?>>
+					
+						<?php if (count($arr_param_menu[$rs])>1){?>
+							<a><?php echo $array_icon[$rs];?> <?php echo $title;?> 
+							<?php if (!empty($arr_param_menu[$rs])){?><span class="arrow "></span><?php }?>
+							</a>
+							<?php if (!empty($arr_param_menu[$rs])){?>
+							
+							<ul class="sub-menu" <?php if ($rs==$module ){ echo 'style="display: block;"';}?>>
+							   <?php  foreach ($arr_param_menu[$rs] as $key => $sub){
+								//$urlsub = $this->url(array('module'=>$rs,'controller'=>$key,'action'=>'index'), null, true);
+								$urlsub = $sub['url'];
+								?>
+								<?php 
+								$activeLi="";
+								if($rs==$module AND $key==$controller."".$actionName){ 
+									$activeLi= 'class="active"';
+								}elseif ($rs==$module AND $key==$controller){
+									$activeLi= 'class="active"';
+								}
+								?>
+							  <li <?php echo $activeLi;?> > <a href="<?php echo $urlsub;?>"><i class="icon-arrow-right"></i> <?php echo $sub['title'];?></a></li>
+							   <?php }?>
+							</ul>
+							<?php }?>
+						<?php }else{?>
+							<?php  foreach ($arr_param_menu[$rs] as $key => $sub){
+								$urlsub = $this->url(array('module'=>$rs,'controller'=>$key,'action'=>'index'), null, true);
+								$title=$tr->translate(strtoupper($key));
+								if ($rs=="home" and $key=="index" ){
+									$title=$tr->translate(strtoupper($rs));
+								}
+								?>
+							<a href="<?php echo $urlsub;?>">
+							<?php echo $array_icon[$rs];?> <?php echo $title;?> 
+							</a>
+							<?php }?>
 						<?php }?>
-							<?php if(!empty($db->getAllAclUserTypeAndParent($rs["parent"],$level,$row["sub_parent"]))){ foreach($db->getAllAclUserTypeAndParent($rs["parent"],$level,$row["sub_parent"]) as $rows){?>
-								<li>
-									<a href="<?php echo $this->baseUrl()."/".$rows["module"]."/".$rows["controller"]."/".$rows["action"]?>">
-										<i class="icon-arrow-right"></i><?php echo $tr->translate($rows["lable"])?></a>
-									</a>
-								</li> 
-							<?php }}?>
-						<?php }}?>
-					</ul>
-				</li>
-				<?php }}?>
+					
+				 </li>
+				<?php }
+				}?>
+			
+			
 				<?php if($level==1){?>
 				<li class="start">
 					<a href="javascript:;">
@@ -95,7 +178,7 @@ $module_str  = array(
 					<ul class="sub-menu">
 						<li>
 	            			<a href="<?php echo $url_user_list[0]; ?>">
-		            			<i class="icon-user"></i><?php echo $tr->translate($url_user_list[1]);?>
+		            			<i class="icon-user"></i> <?php echo $tr->translate($url_user_list[1]);?>
 		            		</a>
 	            		</li> 
 	            		<!--<li>
@@ -115,7 +198,12 @@ $module_str  = array(
 	            		</li> -->
 	            		<li>
 	            			<a href="<?php echo $url_user_type[0]; ?>">
-		            			<i class="icon-settings"></i><span class="title"><?php echo $tr->translate($url_user_type[1]);?></span>
+		            			<i class="icon-settings"></i> <span class="title"><?php echo $tr->translate($url_user_type[1]);?></span>
+		            		</a>
+	            		</li> 
+						<li>
+	            			<a href="<?php echo $url_add_user_access[0]; ?>">
+		            			<i class="icon-settings"></i> <span class="title"><?php echo $tr->translate($url_add_user_access[1]);?></span>
 		            		</a>
 	            		</li> 
 					</ul>

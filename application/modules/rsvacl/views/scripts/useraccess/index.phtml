@@ -1,13 +1,21 @@
-<title>List User Right</title>
-<?php $tr = Application_Form_FrmLanguages::getCurrentlanguage();?>
+<?php 
+$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+?>
+
+<title><?php echo $tr->translate("USERACCESS")?></title>
+<?php $url = $this->baseUrl()."/rsvacl/useraccess/view-user-access?id="; ?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i>User Access</div>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("USERACCESS");?>
+				</div>
+			
 			</div>
-			<?php echo  $this->form;?>
+			<div class="portlet-body form">
+			<?php echo $this->list; ?>
+			</div>
 		</div>
 	</div>
 </div>

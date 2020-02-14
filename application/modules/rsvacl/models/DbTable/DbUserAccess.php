@@ -1,15 +1,18 @@
 <?php 
 
-class RsvAcl_Model_DbTable_DbUserAccess extends Zend_Db_Table_Abstract
+class Rsvacl_Model_DbTable_DbUserAccess extends Zend_Db_Table_Abstract
 {
 	protected  $_name = "tb_acl_user_access";
 	
+	 public static function getResultWarning(){
+          return array('err'=>1,'msg'=>'មិន​ទាន់​មាន​ទន្និន័យ​នូវ​ឡើយ​ទេ!');	
+    }
 	public function getUserAccess($id)
 	{
 		$db=RsvAcl_Model_DbTable_DbUserAccess::getAdapter();  
 		$sql = "SELECT ua.id,ut.user_type, CONCAT(acl.module,'/', acl.controller,'/', acl.action) AS user_access, ua.status FROM rsv_acl_user_access AS ua 
 					        INNER JOIN tb_acl_user_type AS ut ON (ua.user_type_id = ut.user_type_id)
-					        INNER JOIN rsv_acl_acl AS acl ON (acl.acl_id = ua.acl_id) WHERE ua.id =".$id;		
+					        INNER JOIN tb_acl_acl AS acl ON (acl.acl_id = ua.acl_id) WHERE ua.id =".$id;		
   		$stm=$db->query($sql);
   		$row=$stm->fetchAll();
   		if(!$row) return NULL;
@@ -64,17 +67,6 @@ class RsvAcl_Model_DbTable_DbUserAccess extends Zend_Db_Table_Abstract
 		$row=$this->fetchRow($select);
 		if(!$row) return NULL;
 		return $row['user_id'];
-	}
-	//function retrieve record users by column 
-	public function getUsers($column)
-	{		
-		$sql='user_id not in(select user_id from pdbs_acl) AND status=1 ';	
-		$select=$this->select();
-		$select->from($this,$column)
-			   ->where($sql);
-		$row=$this->fetchAll($select);
-		if(!$row) return NULL;		
-		return $row->toArray();
 	}
 	//function check user have exist
 	public function isUserExist($username)
@@ -136,10 +128,14 @@ class RsvAcl_Model_DbTable_DbUserAccess extends Zend_Db_Table_Abstract
     
     protected function checkExistAcl($data){
     	$sql = "SELECT id FROM ". $this->_name . " WHERE user_type_id='".$data['user_type_id']."' AND acl_id='". $data['acl_id'] . "'";
-    	
     	$row=$this->getAdapter()->fetchOne($sql);
     	if(!empty($row)) return true;
     	return false;
+    }
+    function getAllModule(){
+    	$db=$this->getAdapter();
+    	$sql="select module from tb_acl_acl WHERE status=1  group by module ";
+    	return $db->fetchAll($sql);
     }
 }
 ?>

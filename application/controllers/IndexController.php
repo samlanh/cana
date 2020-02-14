@@ -44,7 +44,7 @@ class IndexController extends Zend_Controller_Action
 							$arr_module[$i]=$arr_acl[$i]['module'];
 						}
 						$arr_module = array_unique($arr_module);
-						
+						$arr_module=$this->sortMenu($arr_module);
 						$session_user->arr_acl = $arr_acl;
 						$session_user->arr_module = $arr_module;
 												
@@ -70,7 +70,22 @@ class IndexController extends Zend_Controller_Action
 				$this->view->msg  = $tr->translate('EMAIL_NOT');
 			}
 		}
-	}		 
+	}
+	protected function sortMenu($menus){
+    	$menus_order = Array ( 'home','product','purchase','sales','report','rsvacl','setting');
+    	$temp_menu = Array();
+    	$menus=array_unique($menus);
+    	foreach ($menus_order as $i => $val){
+    		foreach ($menus as $k => $v){
+    			if($val == $v){
+    				$temp_menu[] = $val;
+    				unset($menus[$k]);
+    				break;
+    			}
+    		}
+    	}
+    	return $temp_menu;    	
+    }	
  	public function logoutAction()
     {
     	if($this->getRequest()->getParam('value')==1){

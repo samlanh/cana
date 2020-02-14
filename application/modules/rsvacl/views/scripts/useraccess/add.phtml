@@ -1,89 +1,327 @@
-<title>Add User Right</title>
-<?php $form=$this->form; ?>
+<?php  $tr = Application_Form_FrmLanguages::getCurrentlanguage();?>
+<title><?php echo $tr->translate("USERACCESS");?></title>
 <style>
-fieldset.fifthy {	
-	border-right: 0px;
-	width: 50%;	
-}
-table.user td{
-	vertical-align: top;
-	padding-left: 5px;	   
-}
+	fieldset.fifthy {	
+		border-right: 0px;
+		width: 30%;
+	}
+	fieldset.fifthy table{
+		padding-right: 1px;
+	}
+	table.user td{
+		vertical-align: top;   
+	}
 </style>       
-<script language="javascript">
-      var temp=-1;
-	function validateUser(field)
-	{
-		if(temp==1) return '* User name already exist!';
-		else temp==-1;
-	}
-    function validatePassword(field)
-	{
-    	var com=$('#confirm_password').val();
-    	var pwd=$('#password').val();
-		if(com!=pwd) return '* Password mismatch!';		 
-	}
-</script>
 <?php 
-	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	Application_Model_Decorator::removeAllDecorator($form);
-	$cancel_url=$this->url(array(
-		'module'=>'rsvacl',
-		'controller'=>'useraccess',
-		'action'=>'index',
-	)); 	
+	  $acl_name=($this->acl_name=='')? array(): $this->acl_name;	 
+	  $df=$this->data;
 ?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="icon-home"></i><?php echo $tr->translate("ADD_USER")?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("USERACCESS");?>
 				</div>
-				<div class="tools" >
-					<a href="<?php echo $cancel_url;?>" class="btn btn-sm pull-right" style="color:white;">
-					<i class="fa fa-undo"></i>	&nbsp;<?php echo $tr->translate("GO_BACK");?>
-					</a>
+				<div class="pull-right">
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
-					<div class="form-body">
-						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate('USER_TYPE');?><span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('user_type_id');?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate('USER_ACCESS');?><span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('acl_id');?>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<div class="input-icon right">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<button type="submit" name="btnsavenew" class="btn blue btn-block btn-lg"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
-							</div>
-							<div class="col-md-4">
+				<form name="frmsearch" action="" method="post">
+					<div class="card-box">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							 <div class="form-group">
+							   <label class="control-label col-md-12 col-sm-12 col-xs-12 title-blog bold" for="first-name">
+							   </label>
+							   <input type="hidden" name="fstatus" value="">
+									<input type="hidden" name="fact" value="">
 							</div>
 						</div>
 					</div>
 				</form>
+				<div class="card-box">
+					<div class="col-md-6 col-sm-6 col-xs-12">
+						<div class="form-group">
+						   <label class="control-label col-md-5 col-sm-5 col-xs-12" for="first-name"><?php echo $tr->translate("USER_TYPE");?> :
+						   </label>
+						   <div class="col-md-7 col-sm-7 col-xs-12">
+								<input type="text" required="true" name="user_type" id="user_type" placeholder="User Type" 
+								value="<?php echo $this->rs_usertype;?>"
+									 class='fullside' disabled/>
+						   </div>
+						</div>
+					   
+					 </div>
+				</div>
 			</div>
+			
+			<div class="portlet-body">
+					<div class="row" style="margin:0 auto !important;">
+						<div class="col-md-3 col-sm-3 col-xs-3">
+							<ul class="nav nav-tabs tabs-left">
+								<?php 
+									$old_module = "";
+									if(!empty($this->rows)){ 
+										foreach ($this->rows as $key=>$rs){
+											$index = $key+1;
+												if($index==1){
+													$active = 'active';
+												}else{
+													$active = '';
+												}
+										$tabId = $rs['module'];
+										if($old_module != $rs['module']){
+											
+											$title = $rs['module'];
+											if($rs['module']==1){
+												$title = "PARENT_MENU";
+											}
+								?>
+									<li class="<?php echo $active;?>" >
+										<a style="font-size:20px;" href="#<?php echo $tabId;?>" data-toggle="tab"><?php echo $tr->translate(strtoupper($title));?></a>
+									</li>
+								<?php }
+									$old_module = $rs['module'];
+								}}?>
+							</ul>
+						</div>
+						<div class="col-md-9 col-sm-9 col-xs-9">
+							<div class="tab-content">
+							<?php 
+							$old_module = "";
+							$count =1;
+							if(!empty($this->rows)){foreach ($this->rows as $key=>$rs){
+								$tabId = $rs['module'];
+								$index = $key+1;
+								if($index==1){
+									$active1='in';
+									$collapse='';
+								}else{
+									$active1='';
+									$collapse="collapsed";
+								}
+							?>
+								<?php 
+									if($old_module != $rs['module']){
+									   $count =1;
+								?>
+					
+								
+								<?php if($key==0){ ?>
+								<div class="tab-pane active" id="<?php echo $tabId;?>">
+									<div class="panel-group accordion" id="accordion3">
+										<div class="panel panel-default">
+											<div id="" class="panel-collapse in" >
+												<div class="panel-body">
+													<table width="100%" border="1" style="white-space: nowrap;border: 1px solid #ccc;border-collapse: collapse;">
+														<tr align="center" style="background: #bcd5f0;">
+															<td width="45%">
+																<?php echo $tr->translate("TITLE");?>
+															</td>
+															<td width="45%">
+																<?php echo $tr->translate("URL");?>
+															</td>
+															<td width="10%">
+																<?php echo $tr->translate("STATUS");?>
+															</td>
+														</tr>
+												<?php }?>
+												<?php  if($key>0){?>
+													</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="<?php echo $tabId;?>">
+										<div class="panel-group accordion" id="accordion3">
+											<div class="panel panel-default">
+												<div id="" class="panel-collapse " >
+													<div class="panel-body">
+														<table width="100%" border="1" style="white-space: nowrap;border: 1px solid #ccc;border-collapse: collapse;">
+															<tr align="center" style="background: #bcd5f0;">
+																<td width="45%">
+																	<?php echo $tr->translate("TITLE");?>
+																</td>
+																<td width="45%">
+																	<?php echo $tr->translate("URL");?>
+																</td>
+																<td width="10%">
+																	<?php echo $tr->translate("STATUS");?>
+																</td>
+															</tr>
+												<?php }?>
+											<?php }?>
+											<?php 
+												if($rs['is_menu'] == 1){
+													$space="";
+													$style="style='font-weight:bold;'";
+												}else{
+													$space="&nbsp;&nbsp;&nbsp;";
+													$style="";
+													}
+											?>
+											<style>
+												.hover:hover{background: #ccc;}
+											</style>
+											<tr class="hover">
+												<td <?php echo $style;?>>
+													<?php 
+													echo $count.".) ".$space.$tr->translate(($rs['label']));?>
+												</td>
+												<td>
+													&nbsp;&nbsp; <?php echo $rs['url']?>
+												</td>
+												<td align="center">
+													<?php echo $rs['img']?>
+												</td>
+											</tr>
+											
+										
+							
+							<?php
+										$old_module = $rs['module'];  $count++;
+								}}?>
+								
+								</table>
+												</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+					</div>
+				</div>
+				
+				
 		</div>
 	</div>
 </div>
+<div class="card pb-10 pt-10 pl-10 pr-10">
+	<div class="card-content collapse show">
+		<div class="card-box">
+               	<div class="col-sm-12 border-botom">
+		    		<div class="col-sm-8 pd-0">
+		    			<h4 class="m-b-0"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<?php echo $tr->translate('USER_ACCESS_EDIT');?></h4>
+    			</div>
+    			<div class="col-sm-4 text-right">
+    			</div>
+    		</div>
+    	</div>
+    	
+    	
+	<table style="margin: 0 auto; width: 100%">
+	<tr>
+		<td>
+			<?php 				
+			?>
+			<div dojoType="dijit.layout.TabContainer" style="width: 98%; height: 400px;" tabPosition="left-h" tabStrip="true">
+				<?php 
+				$old_module = "";
+				if(!empty($this->rows)){foreach ($this->rows as $key=>$rs){ ?>
+					<?php 
+					if($old_module != $rs['module']){
+					   if($key==0){
+					?>
+						<div dojoType="dijit/layout/ContentPane" title="<?php echo $tr->translate(strtoupper($rs['module']));?>" >
+							<table width="100%" border="1" style="white-space: nowrap;border: 1px solid #ccc;border-collapse: collapse;">
+								<tr align="center" style="background: #bcd5f0;">
+									<td width="45%">
+										<?php echo $tr->translate("USER_ACCESS");?>
+									</td>
+									<td width="45%">
+										<?php echo $tr->translate("URL");?>
+									</td>
+									<td width="10%">
+										<?php echo $tr->translate("STATUS");?>
+									</td>
+								</tr>
+						<?php }?>
+					<?php  if($key>0){?>
+							</table>
+					 	</div>
+					 	<div dojoType="dijit/layout/ContentPane" title="<?php echo $tr->translate(strtoupper($rs['module']));?>" >
+					 	<table width="100%" border="1" style="white-space: nowrap;border: 1px solid #ccc;border-collapse: collapse;">
+					 		<tr align="center" style="background: #bcd5f0;">
+								<td width="45%">
+									<?php echo $tr->translate("LABEL");?>
+								</td>
+								<td width="45%">
+									<?php echo $tr->translate("URL");?>
+								</td>
+								<td width="10%">
+									<?php echo $tr->translate("STATUS");?>
+								</td>
+							</tr>
+					<?php }}?>
+							<?php if($rs['is_menu'] == 1){
+										$space="";
+										$style="style='font-weight:bold;'";
+									}else{
+										$space="&nbsp;&nbsp;&nbsp;";
+										$style="";
+									}
+							?>
+							<style>
+								.hover:hover{background: #ccc;}
+							</style>
+							<tr class="hover">
+								<td <?php echo $style;?>>
+									<?php 
+									echo $space.$tr->translate(($rs['label']));?>
+								</td>
+								<td>
+									&nbsp;&nbsp; <?php echo $rs['url']?>
+								</td>
+								<td align="center">
+									<?php echo $rs['img']?>
+								</td>
+							</tr>
+					<?php 
+						$old_module = $rs['module'];
+					?>
+				<?php }}?>
+					</table>
+				</div>
+			</div>
+			
+		</td>
+	</tr>
+</table>
+</div>
+</div>	
+<style>
+	.pointer{
+		cursor: pointer;	
+	}
+</style>
+<script>
+					
+	$(function(){		
+		$('#fmod').val('<?php echo $df['fmod']?>');
+		$('#fcon').val('<?php echo $df['fcon']?>');
+		$('#fact').val('<?php echo $df['fact']?>');
+		$('#fstatus').val('<?php echo $df['fstatus']?>');
+	});
+	
+	function changeStatus(id, user_type){
+		url = "<?php echo BASE_URL;?>/rsvacl/useraccess/update-status";
+		status = "no";
+		none_src = "<?php echo BASE_URL?>/images/icon/none.png";
+		tick_src = "<?php echo BASE_URL?>/images/icon/tick.png";
+
+		if( $("#img_" + id).attr("src") == tick_src){
+			status = "yes";
+		}
+		
+		$.post( url, { 'acl_id': id, 'status': status, 'user_type_id':user_type},
+	      function( data ) {
+			 img_src = none_src;
+	         if(data == "yes"){
+				img_src = tick_src;
+	         }	         
+	         $("#img_" + id).attr("src", img_src);
+	      }
+	    );
+	}
+</script>

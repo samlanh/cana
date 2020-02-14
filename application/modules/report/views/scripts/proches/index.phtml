@@ -10,7 +10,10 @@
    $invoicecontrolling = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rptinvoicecontrolling'), null, true);
     $rpt_pol = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'pol'), null, true);
 	$rpt_pol_detail = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'poldetail'), null, true);
+	$rptPettycashPurchaseDetail = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rpt-pettycash-purchase-detail'), null, true);
+	$rptPettycashDetail = $this	->	url(array('module'=>'report','controller'=>'proches','action'=>'rpt-pettycash-detail'), null, true);
   ?>
+  <title><?php echo $tr->translate("MENU_REPORT_PROCHES");?></title>
   <div class="portlet box blue">						<div class="portlet-title">
 							<div class="caption">
 								<i class="fa fa-gift"></i><?php echo $tr->translate("MENU_REPORT_PROCHES");?>
@@ -257,6 +260,49 @@
 						</a>
 					</div>
 				</div>
+	</div>
+	<div class="row">
+		<br />
+		<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("PETTY_CASH");?></h3>
+		
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="dashboard-stat green-haze">
+				<a class="more" href="<?php echo $rptPettycashDetail;?>">
+				<div class="visual">
+					<i class="fa fa-shopping-cart"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+					</div>
+					<div class="desc">
+						<?php echo $tr->translate("RPT_PETTY_CASH_DETAIL");?>
+					</div>
+				</div>
+				</a>
+				<a class="more" href="<?php echo $rptPettycashDetail;?>">
+				<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+				</a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<div class="dashboard-stat green-haze">
+				<a class="more" href="<?php echo $rptPettycashPurchaseDetail;?>">
+				<div class="visual">
+					<i class="fa fa-shopping-cart"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+					</div>
+					<div class="desc">
+						<?php echo $tr->translate("RPT_PETTY_CASH_PURCHASE_DETAIL");?>
+					</div>
+				</div>
+				</a>
+				<a class="more" href="<?php echo $rptPettycashPurchaseDetail;?>">
+				<?php echo $tr->translate("VIEW_MORE");?> <i class="m-icon-swapright m-icon-white"></i>
+				</a>
+			</div>
+		</div>
 	</div>
 	<!--<div class="row">
 		<h3 class="form-section" style="border-bottom: 3px solid red;"><?php echo $tr->translate("MENU_PAYMENT_ORDER_LETTER");?></h3>

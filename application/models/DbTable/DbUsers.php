@@ -138,10 +138,20 @@ class Application_Model_DbTable_DbUsers extends Zend_Db_Table_Abstract
 	 * To get all acl of a user type
 	 * @param string $user_type_id
 	 */
+	/*public function getArrAcl($user_type_id){
+		$db = $this->getAdapter();
+		$sql = "SELECT aa.module, aa.controller, aa.action,aa.lable as label FROM tb_acl_user_access AS ua  
+		INNER JOIN tb_acl_acl AS aa ON (ua.acl_id=aa.acl_id) WHERE ua.user_type_id='".$user_type_id."'";
+		$rows = $db->fetchAll($sql);
+		return $rows;
+	}*/
+	
 	public function getArrAcl($user_type_id){
 		$db = $this->getAdapter();
-		$sql = "SELECT aa.module, aa.controller, aa.action FROM tb_acl_user_access AS ua  
-		INNER JOIN tb_acl_acl AS aa ON (ua.acl_id=aa.acl_id) WHERE ua.user_type_id='".$user_type_id."'";
+		$sql = "SELECT aa.module, aa.controller, aa.action,aa.lable AS label, aa.is_menu FROM tb_acl_user_access AS ua  INNER JOIN tb_acl_acl AS aa 
+		ON (ua.acl_id=aa.acl_id) WHERE ua.user_type_id='".$user_type_id."' 
+		GROUP BY  aa.module ,aa.controller,aa.action 
+		ORDER BY aa.module ,aa.rank ASC, aa.is_menu ASC ";
 		$rows = $db->fetchAll($sql);
 		return $rows;
 	}
