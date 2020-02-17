@@ -1,11 +1,7 @@
 <?php 
 	$url_new = $this->url(array('module'=>'product','controller'=>'category','action'=>'add',));
-	$url_edit = $this->url(array('module'=>'product','controller'=>'category','action'=>'edit'), null, true);
-	$url_delete = $this->url(array('module'=>'product','controller'=>'category','action'=>'delete',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
-	
-	$rs = $this->resulr;
 ?>
 <title><?php echo $tr->translate("CATEGORY_LIST");?></title>
 <div class="row">
@@ -19,9 +15,8 @@
 					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
 				</a>
 			</div>
-			
 			<div class="portlet-body form">
-				<form method="post" action="" >
+				<form method="post" autocomplete="off" >
 				<div class="form-group" style="padding-top: 6px;">
 					<label class="control-label col-md-3"><?php echo $formFilter->getElement('name');?></label>
 					<label class="control-label col-md-3"><?php echo $formFilter->getElement('parent');?></label>
@@ -32,9 +27,9 @@
 					</label>
 				</div>
 			</form>
-					<div class="contain_form" style="clear: both;">
-						<?php echo $this->list; ?>
-					</div>
+			<div class="contain_form" style="clear: both;">
+				<?php echo $this->list; ?>
+			</div>
 		   </div>
 		</div>
 	</div>

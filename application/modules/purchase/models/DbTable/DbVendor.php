@@ -32,7 +32,6 @@ class Purchase_Model_DbTable_DbVendor extends Zend_Db_Table_Abstract
 			$where .= " AND vendor_id = ".$search['suppliyer_id'];
 		}
 		$order=" ORDER BY v.vendor_id DESC";
-		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	function getvendorById($id){

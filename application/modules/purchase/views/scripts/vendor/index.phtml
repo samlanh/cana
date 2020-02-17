@@ -1,6 +1,5 @@
 <?php 					
 	$url_new = $this->url(array('module'=>'purchase','controller'=>'vendor','action'=>'add',));
-	$url_delete = $this->url(array('module'=>'purchase','controller'=>'vendor','action'=>'delete-vendor',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 ?>
@@ -20,7 +19,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-3"><?php echo $formFilter->getElement('suppliyer_id');?></label>

@@ -24,7 +24,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_CODE");?> <span class="required">
@@ -115,10 +115,6 @@
 								</button>
 							</label>
 							<label class="control-label col-md-8">
-								<!--<select data-placeholder="Select..." class="form-control select2me" id="add_item" name="add_item" Onchange="getItemOrder();"  style="width:100% ;margin:0 auto;">
-											<?php //echo $this->items; ?>
-								</select>-->
-								
 								<input type="hidden" class="form-control" id="add_item" name="add_item" Onchange="getItemOrder();" style="width:100%;" placeholder="<?php echo $tr->translate("SELECT_PRODUCT");?>"/>
 							</label>
 							<label class="control-label col-md-2 col-lg-2 col-sm-12">
@@ -144,7 +140,6 @@
 								</tr>
 							</table>
 							<input type="hidden" id="identity" name="identity" />
-							
 						</div>
 						<div class="form-group">
 							<div  class="col-md-12 col-md-offset-4 col-md-8">
@@ -188,7 +183,6 @@ $(document).ready(function() {
 function select2Speed(){
 	 $('#add_item').select2({
             data : _.map(_.range(0, itemss.length), function (i) {
-				//alert(itemss);
                   return {
                       id  : itemss[i].id,
                       text: itemss[i].item_code+"-"+itemss[i].item_name
@@ -196,9 +190,6 @@ function select2Speed(){
             }),
             dropdownCssClass : 'capitalize',
             containerCssClass: 'capitalize',
-            // configure as multiple select
-            //multiple         : true,
-            // text for loading more results
             formatLoadMore   : 'Loading more...',
             query            : function (q) {
             // pageSize is number of results to show in dropdown
@@ -230,7 +221,6 @@ function initList() {
 	var arrays = identity.split(',');
 	if(arrays!=""){
 		a = arrays.length;
-		//alert(a);
 		index= parseInt(a)+1;
 	}else{
 		index=1;
@@ -242,7 +232,6 @@ function initList() {
 	index5++; 
 	template='<tr id="row_order_'+index5+'" style="height:33px;">';
 	var inp = '';
-	
 	template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
 	template+='<td width="2%" class="center"><label id="lbno_'+index5+'">'+index+'<label></td>';
 	template+='<td style="text-align:center;"><?php echo $r["item_code"];?></td>';
@@ -254,7 +243,6 @@ function initList() {
 	template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" value="'+remark+'"/></span></td>';
 	template+="</tr>";
 	$('#table_order').append(template);
-	
 	$("#item_id_"+index5).val("<?php echo $r['pro_id'];?>");
 	$("#qty_"+index5).val("<?php echo $r['qty'];?>");
 	$("#old_qty_"+index5).val("<?php echo $r['qty'];?>");
@@ -277,7 +265,6 @@ function addRow(item_id) {
 	var arrays = identity.split(',');
 	if(arrays!=""){
 		a = arrays.length;
-		//alert(a);
 		index= parseInt(a)+1;
 	}else{
 		index=1;
@@ -287,7 +274,6 @@ function addRow(item_id) {
 		type:"post",
 		data:{'item_id':item_id},
 		success: function(data){
-			//alert(data);
 			rs = $.parseJSON(data);	
 			for(i=1; i<index5; i++){
 				new_item=parseInt(item_id);
@@ -301,7 +287,6 @@ function addRow(item_id) {
 			}
 			template='<tr id="row_order_'+index5+'" style="height:33px;">';
 			var inp = '';
-			
 			template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
 			template+='<td width="2%" class="center"><label id="lbno_'+index5+'">'+index+'<label></td>';
 			template+='<td width="2%" class="center">'+rs.item_code+'<input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" value="'+rs.item_id+'" /></td>';
@@ -312,7 +297,6 @@ function addRow(item_id) {
 			template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" /></span></td>';
 			template+="</tr>";
 			$('#table_order').append(template);
-			//$('#item_id_'index5).select2me();
 			if($('#identity').val()!="") {
 				var identity = $('#identity').val();
 				$('#identity').val(identity+','+index5);
@@ -324,7 +308,6 @@ function addRow(item_id) {
 			$("#row_order_0").remove();
 		},
 		error:function(e){
-							//alert(e);
 		}
 	});
 	
@@ -338,7 +321,6 @@ function getRequestCode(){
 		type:"post",
 		data:{'branch_id':branch_id},
 		success: function(data){
-			//alert(data);
 			rs = $.parseJSON(data);	
 			$('#request_no').val(rs);
 		},
@@ -373,7 +355,6 @@ function newNo(){
 	var arrays = identity.split(',');
 	for(var i=0;i<arrays.length;i++) { a++;
 		$('#lbno_'+arrays[i]).text(a);
-		//$('#lbno'+arrays[i]).append(a);
 	}
 }
 </script>

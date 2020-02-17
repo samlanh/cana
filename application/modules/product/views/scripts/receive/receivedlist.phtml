@@ -3,26 +3,24 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
 ?>
-<title><?php echo $tr->translate("MENU_MR_CHECK");?></title>
+<title><?php echo $tr->translate("RECEIVE_STOCK");?></title>
 <meta charset="utf-8" />
 <div class="row">
 	<div class="col-md-12">
 		<div class="portlet box blue">
 			<div class="portlet-title">
 				<div class="caption">
-					<i class="fa fa-globe"></i><?php echo $tr->translate("MENU_MR_CHECK");?>
+					<i class="fa fa-globe"></i><?php echo $tr->translate("RECEIVE_STOCK");?>
 				</div>
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
+				<form method="post" autocomplete="off" action="<?php echo $formFilter->getAction(); ?>">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('plan');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('po_pedding');?></label>
+						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
-						<label class="control-label col-md-2"><?php echo $formFilter->getElement('search_bydate');?></label>
 						<label class="control-label col-md-2">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
@@ -35,16 +33,14 @@
 								<thead>
 									<tr>
 										<th class="tdheader"><?php echo  $tr->translate("NUM");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("REQUEST_NO");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("REQUEST_DATE");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("CHECK_DATE");?></th>
+										<th class="tdheader"><?php echo  $tr->translate("PO_NO");?></th>
+										<th class="tdheader"><?php echo  $tr->translate("PURCHASE_DATE");?></th>
 										<th class="tdheader"><?php echo  $tr->translate("PLAN");?></th>
 										<th class="tdheader"><?php echo  $tr->translate("LOCATION_NAME");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("NUMBER_WORK_SPACE");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("DATE_REQUEST_WORK_PLACE");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("APP_STATUS");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("PEDDING");?></th>
-										<th class="tdheader"><?php echo  $tr->translate("STATUS");?></th>
+										<th class="tdheader"><?php echo  $tr->translate("RECEIVE_NO");?></th>
+										<th class="tdheader"><?php echo  $tr->translate("RECEIVE_DATE");?></th>
+										<th class="tdheader"><?php echo  $tr->translate("VENDOR");?></th>
+										<th class="tdheader"><?php echo  $tr->translate("TOTAL_AMOUNT");?></th>
 										<th class="tdheader"><?php echo  $tr->translate("USER");?></th>
 										<th class="tdheader"><?php echo  $tr->translate("ACTION");?></th>
 									</tr>
@@ -61,8 +57,9 @@
 												});
 										</script>
 										<div id="pagination_'.$id.'" class="pager" >
-													<form >
-														<table  style="width: 200px;"><tr>
+											<form>
+												<table  style="width: 200px;">
+													<tr>
 														<td><img src="'.BASE_URL.'/images/first.gif" class="first"/></td>
 														<td><img src="'.BASE_URL.'/images/previous.gif" class="prev"/></td>
 														<td><input type="text" class="pagedisplay"/></td>
@@ -81,34 +78,28 @@
 															<option value="100">100</option>
 															</select>
 														</td>
-														</tr>
-														</table>
-													</form>
-											</div>	';
+													</tr>
+												</table>
+											</form>
+									</div>';
 									$footer="";
 									if(!empty($this->rs)){
-										foreach ($this->rs as $key=>$rs){
-											$edit_status = '';
-											if($rs["pedding_stat"]>3 && $rs['re_edit']==1){ 
-												$edit_status = "style='pointer-events: none;cursor: default;color: #ccc;'";
-											}
+										foreach ($this->rs as $key=>$rs){		
 									?>
 										<tr class="normal">
 											<td class="items-no"><?php echo $key+1;?></td>
-											<td class="items" style="white-space: nowrap;"><?php echo $rs["re_code"];?></td>
-											<td class="items" style="white-space: nowrap;"><?php echo date('d-M-Y',strtotime($rs["date_request"]));?></td>
-											<td class="items" style="white-space: nowrap;"><?php echo !empty($rs["check_date"])?date('d-M-Y',strtotime($rs["check_date"])):"";?></td>
+											<td class="items"><?php echo $rs["po_no"];?></td>
+											<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_order"]));?></td>
 											<td class="items"><?php echo $rs["plan"];?></td>
 											<td class="items"><?php echo $rs["branch"];?></td>
-											<td class="items"><?php echo $rs["number_request"];?></td>
-											<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_from_work_space"]));?></td>
-											<td class="items"><?php echo $rs["app_status"];?></td>
-											<td class="items"><?php echo $rs["pedding"];?></td>
-											<td class="items"><?php echo $rs["pstatus"];?></td>
+											<td class="items"><?php echo $rs["recieve_number"];?></td>
+											<td class="items"><?php echo date('d-m-Y',strtotime($rs["dn_date"]));?></td>
+											<td class="items"><?php echo $rs["vendor_name"];?></td>
+											<td class="items">$<span style="float:right"><?php echo number_format($rs["all_total"],2);?></span></td>
 											<td class="items"><?php echo $rs["user_name"];?></td>
 											<td class="items-no" style="white-space: nowrap;">
-												<a <?php echo $edit_status;?> href="<?php echo $this->baseUrl();?>/purchase/mrcheck/approve/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("CHECK");?></a> | 
-												<a target="_blank" href="<?php echo $this->baseUrl();?>/purchase/purchaserequest/purproductdetail/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("PRINT");?></a>
+												<a href="<?php echo $this->baseUrl();?>/product/receive/edit/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("EDIT");?></a> |
+												<a target="_blank" href="<?php echo $this->baseUrl();?>/product/receive/receivenote/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("PRINT_RECEIVE_ORDER");?></a>​ 
 											</td>
 										</tr>
 									<?php $counter='<strong style="float:right;padding:5px">Number of record(s): '.count($this->rs).'</strong>'; 
@@ -116,17 +107,11 @@
 									}}?>
 								</tbody>
 							</table>
-						</div>
-					</form>
-					<?php echo $footer?>
-			    </div>
+					</div>
+				</form>
+				<?php echo $footer?>
+			  </div>
 		   </div>
 		</div>
 	</div>
 </div>
-<script>
-$( document ).ready(function() {
-    $("#plan").val('<?php echo $this->search['plan']?>');
-    $("#branch").val('<?php echo $this->search['branch']?>');
-});
-</script>

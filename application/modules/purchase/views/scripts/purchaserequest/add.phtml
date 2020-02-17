@@ -24,7 +24,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_CODE");?> <span class="required">
@@ -143,7 +143,6 @@
 								<a href="<?php echo $this->baseUrl();?>/purchase/purchaserequest/"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
 								<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								<button type="submit" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
-								<!--<button type="submit" name="save_print" class="btn btn-primary"><i class="fa fa-print"></i> <?php //echo $tr->translate("SAVE_PRINT")?></button>-->
 							</div>
 						</div>
 					</div>
@@ -294,7 +293,7 @@ function getItemOrder(){
 	addRow(item_ids);
 	$("#add_item").val("");
 }
-function deleteRecord(index) {	
+function deleteRecord(index){	
 	var identity = $('#identity').val();
 	var arrays = identity.split(',');
 	for(var i=0;i<arrays.length;i++) {

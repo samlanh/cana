@@ -181,12 +181,12 @@ class Purchase_Model_DbTable_DbRecieve extends Zend_Db_Table_Abstract
 				  pd.is_convertor,
 				  pd.convertor_measure,
 				  pd.sign,
-				  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=pd.`measure_id`) AS measure
+				  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=pd.`measure_id` LIMIT 1) AS measure
 				FROM
 				  `tb_purchase_order_item` AS p,
 				  `tb_product` AS pd 
 				WHERE p.`pro_id` = pd.`id` 
-				  AND p.`purchase_id` = $id";
+				  AND p.`purchase_id` = $id ";
 		return $db->fetchAll($sql);
 	}
 	
@@ -303,7 +303,7 @@ class Purchase_Model_DbTable_DbRecieve extends Zend_Db_Table_Abstract
 					'dn_date'			=>	date("Y-m-d",strtotime($data['dn_date'])),
 					"purchase_status"   => 	1,
 					"payment_method" 	=> 	$data['payment_name'],
-					"currency_id"    	=> 	$data['currency'],
+					"currency_id"    	=> 	1,
 					"remark"         	=> 	$data['remark'],
 					"all_total"      	=> 	$data['totalAmoun_after']+(($data['totalAmoun_after']*$data["vat"])/100),
 					"all_total_after"   => 	$data['totalAmoun_after']+(($data['totalAmoun_after']*$data["vat"])/100),
@@ -316,10 +316,9 @@ class Purchase_Model_DbTable_DbRecieve extends Zend_Db_Table_Abstract
 					"balance"        	=> 	$data['totalAmoun_after']+(($data['totalAmoun_after']*$data["vat"])/100),
 					"balance_after"		=>	$data['totalAmoun_after']+(($data['totalAmoun_after']*$data["vat"])/100),
 					"user_mod"       	=> 	$GetUserId,
-					"date"      		=> 		date("Y-m-d",strtotime($data["date_recieve"])),
-				    //"payment_number"    =>$data["payment_number"],
-				    "invoice_date"      => 		date("Y-m-d",strtotime($data["invoice_date"])),
-				    "receive_invoice_date" => 		date("Y-m-d",strtotime($data["invoice_recieve_date"])),
+					"date"      		=> 	date("Y-m-d",strtotime($data["date_recieve"])),
+				    "invoice_date"      => 	date("Y-m-d",strtotime($data["invoice_date"])),
+				    "receive_invoice_date" => date("Y-m-d",strtotime($data["invoice_recieve_date"])),
 				);
 				
 				$this->_name='tb_recieve_order';
@@ -1202,6 +1201,7 @@ class Purchase_Model_DbTable_DbRecieve extends Zend_Db_Table_Abstract
 				  ro.`dn_number`,
 				  ro.date_order,
 				  ro.date_in,
+				  ro.dn_date,
 				  (SELECT pl.name FROM `tb_sublocation` AS pl WHERE pl.id=ro.`LocationId` LIMIT 1) AS branch,
 				  (SELECT v.v_name FROM tb_vendor AS v WHERE v.vendor_id = ro.vendor_id LIMIT 1) AS vendor_name,
 				  ro.all_total,
@@ -1214,8 +1214,8 @@ class Purchase_Model_DbTable_DbRecieve extends Zend_Db_Table_Abstract
 				WHERE ro.`status` = 1 AND p.id=ro.`purchase_id` ";
 		$order=" ORDER BY ro.order_id DESC  ";
 		$where='';
-		$from_date =(empty($search['start_date']))? '1': "  ro.date_in >= '".$search['start_date']."'";
-		$to_date = (empty($search['end_date']))? '1': "   ro.date_in <= '".$search['end_date']."'";
+		$from_date =(empty($search['start_date']))? '1': "  ro.dn_date >= '".$search['start_date']."'";
+		$to_date = (empty($search['end_date']))? '1': "   ro.dn_date <= '".$search['end_date']."'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		if(!empty($search['text_search'])){
 			$s_where = array();

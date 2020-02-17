@@ -1,8 +1,6 @@
 <?php 
-	$url_new = $this->url(array('module'=>'product','controller'=>'branch','action'=>'add',));
 	$url_edit = $this->url(array('module'=>'product','controller'=>'branch','action'=>'edit',));
 	$url_close = $this->url(array('module'=>'product','controller'=>'branch','action'=>'index',));
-	$url_delete = $this->url(array('module'=>'product','controller'=>'branch','action'=>'delete',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->frmAdd;
 ?>
@@ -18,120 +16,95 @@
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<form class="form-horizontal" method="post" action="<?php //echo $url_edit;?>" enctype="multipart/form-data" >
-				<div class="form-body">
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php //echo $tr->translate("BRANCH_NAME");?></label>
-								<div class="col-md-4">
-									<?php //echo $formFilter->getElement('branch_name');?>
-								</div>
-												
-								<label class="col-md-2 control-label"><?php echo $tr->translate("LOCAT_NAME");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('location');?>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("BRANCH_NAME");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('branch_name');?>
-								</div>
-												
-								<label class="col-md-2 control-label"><?php echo $tr->translate("CODE");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('code');?>
-								</div>
-							</div>
-											
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_EN");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('title_en');?>
-								</div>
-								
-								<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_KH");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('title_kh');?>
-								</div>
-								
-							</div>
-							
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("CON_NAME");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('contact');?>
-								</div>
-								
-								<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('prefix');?>
-								</div>
-								
-								
-							</div>
-							
-							<div class="form-group">
-
-								<label class="col-md-2 control-label"><?php echo $tr->translate("PHONE_NUM");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('contact_num');?>
-								</div>
-								
-								<label class="col-md-2 control-label"><?php echo $tr->translate("EMAIL");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('email');?>
-								</div>
-								
-								
-							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("OFFICE_PHONE");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('office_num');?>
-								</div>
-								
-								<label class="col-md-2 control-label"><?php echo $tr->translate("FAX");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('fax');?>
-								</div>
-								
-								
-							</div>
-							
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("ADDRESS");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('address');?>
-								</div>
-								
-								<label class="col-md-2 control-label"><?php echo $tr->translate("LOGO");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('logo'); echo $formFilter->getElement('old_photo');?>
-								</div>
-								
-								
-							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('remark');?>
-								</div>
-								
-								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('status');?>
-								</div>
-							</div>
+				<form class="form-horizontal" method="post" enctype="multipart/form-data" >
+					<div class="form-body">
 						<div class="form-group">
-								<label  class="col-md-12 col-md-offset-4 col-md-8">
-									<a href="<?php echo $url_close;?>"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
-									<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("GO_EDIT")?></button>
-								</label>
+							<label class="col-md-2 control-label">
+							<div class="col-md-4">
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("LOCAT_NAME");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('location');?>
+							</div>
 						</div>
-						
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("BRANCH_NAME");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('branch_name');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("CODE");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('code');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_EN");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('title_en');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("TITLE_REPORT_KH");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('title_kh');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("CON_NAME");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('contact');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('prefix');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("PHONE_NUM");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('contact_num');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("EMAIL");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('email');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("OFFICE_PHONE");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('office_num');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("FAX");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('fax');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("ADDRESS");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('address');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("LOGO");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('logo'); echo $formFilter->getElement('old_photo');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('remark');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('status');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label  class="col-md-12 col-md-offset-4 col-md-8">
+								<a href="<?php echo $url_close;?>"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("GO_BACK")?></button></a>
+								<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("GO_EDIT")?></button>
+							</label>
+						</div>
 					</div>
-					</form>
-				</div>
+				</form>
+			</div>
 		</div>
-	</div>
 </div>

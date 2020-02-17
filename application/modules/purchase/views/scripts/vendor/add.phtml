@@ -21,18 +21,8 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form id="form_sample_2" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
-				
-				<div class="form-body">
-					<!--<div class="form-group">
-						<label class="control-label col-md-2"><?php echo $tr->translate("OVER_SEA_VENDOR");?> <span class="required"></span></label>
-						<div class="col-md-4" style="margin-top: 10px;">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<input type="checkbox" name="is_over_sea" id="is_over_sea" value="1" onClick="isOverSea()">
-								</div>
-							</div>
-					</div>-->
+				<form id="form_sample_2" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
+					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("COMPANY_NAME");?> <span class="required"></span></label>
 							<div class="col-md-4">

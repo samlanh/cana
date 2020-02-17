@@ -162,7 +162,7 @@
 		                </tr> 
 		                <?php if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){?>
 						<tr class=' tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;background: #FFFFFF;">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-M-Y',strtotime($rs["date_in"]))?></td>
+						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-M-Y',strtotime($rs["dn_date"]))?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty_receive"];?></td>

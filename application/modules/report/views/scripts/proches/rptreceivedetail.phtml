@@ -28,7 +28,7 @@ $formFilter = $this->formFilter;
 						</div>
 			</div>
             <div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" autocomplete="off" action="<?php echo $formFilter->getAction(); ?>">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
 						<label class="control-label col-md-2">
@@ -123,7 +123,7 @@ $formFilter = $this->formFilter;
 								<tr class="normal">
 									<td class="items-no"><?php echo $key+1;?></td>
 									<td class="items"><?php echo $rs["recieve_number"];?></td>
-									<td class="items"><?php echo date('d-M-Y',strtotime($rs["date_in"]));?></td>
+									<td class="items"><?php echo date('d-M-Y',strtotime($rs["dn_date"]));?></td>
 									<td class="items"><?php echo $rs["order_number"];?></td>
 									<td class="items"><?php echo $rs["branch_name"];?></td>
 									<td class="items"><?php echo $rs["item_code"];?></td>

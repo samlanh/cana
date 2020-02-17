@@ -50,63 +50,53 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 		                	<td colspan="3" valign="top">
 		                		<table width="100%" cellpadding="0" cellspacing="0" >
 		                			<tbody>
-		                			<tr>
-		                				<td style="font-size: 11px;">
-		                				    <span style="white-space: nowrap;"><?php //echo $tr->translate("ADDRESS_COMPANY");?></span>
-		                					<br><?php //echo $tr->translate("TEL_COMPANY");?> 
-		                				</td>
-		                				<td ></td>
-		                				<td width="65%"></td>
-		                			</tr>
-		                			<tr>
-								<td width="20%" valign="top">
-									<table width="100%" style="font-size: 12px; !important">
-										<tr>
-											<td style="text-align: left; white-space:nowrap;"><?php echo $tr->translate("PLAN");?> </td>
-											<td style="text-align: right; white-space:nowrap;">:</td>
-											<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['plan'];?><input type="hidden" name="check_reject_count" value="<?php echo $this->request['check_reject_count'];?>"/></td>
-										</tr>
-										<tr>
-											<td style="text-align: left; white-space:nowrap;"><?php echo $tr->translate("NUMBER_REQUEST");?> </td>
-											<td style="text-align: right; white-space:nowrap;">:</td>
-											<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['number_request'];?></td>
-										</tr>
-										
-										<tr>
-											<td style="text-align: left;white-space:nowrap;"><?php echo $tr->translate("DATE_REQUEST_WORK_SPACE");?> </td>
-											<td style="text-align: right; white-space:nowrap;">:</td>
-											<td style="text-align: right;white-space:nowrap;"><?php echo date("d-M-Y",strtotime($this->request['date_from_work_space']));?></td>
-										</tr>
-									</table>
-								</td>
-								<td width="60%" valign="top">
-									
-								</td>
-								<td width="20%" style="text-align: right;font-size: 12px;">
-									<table width="100%" style="font-size: 12px; !important">
-										<tr>
-											<td style="text-align: right; white-space:nowrap;"><?php echo $tr->translate("BRANCH_NAME");?> :</td>
-											<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['branch'];?></td>
-										</tr>
-										<tr>
-											<td style="text-align: right; white-space:nowrap;"><?php echo $tr->translate("REQUEST_NO");?> :</td>
-											<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['re_code'];?></td>
-										</tr>
-										<tr>
-											<td style="text-align: right;white-space:nowrap;"><?php echo $tr->translate("REQUEST_DATE");?> :</td>
-											<td style="text-align: right;white-space:nowrap;"><?php echo date("d-M-Y",strtotime($this->request['date_request']));?></td>
-										</tr>
-									</table>
-									<!--<ul class='pur_info'>
-			                					<li style="text-align: left;"><strong><?php echo $tr->translate("BRANCH_NAME");?> : </strong><?php echo $this->product[0]['branch'];?></li>
-			                					<li style="text-align: right;"><strong><?php echo $tr->translate("REQUEST_NO");?> : </strong><?php echo $this->product[0]['re_code'];?></li>
-			                					<li style="text-align: right;"><strong><?php echo $tr->translate("REQUEST_DATE");?> : </strong><?php echo date("d-M-Y",strtotime($this->product[0]['date_request']));?></li>
-												<li style="text-align: left;"><strong><?php echo $tr->translate("PEDDING");?> : </strong><?php echo $this->product[0]['pedding'];?></li>
-		                						<li style="text-align: left;"><strong><?php echo $tr->translate("PURCHASE_STATUS");?> : </strong><?php echo $this->product[0]['status'];?></li>
-		                			</ul>-->
-								</td>
-							</tr> 
-				                </tbody></table>
+			                			<tr>
+			                				<td style="font-size: 11px;">
+			                				</td>
+			                				<td ></td>
+			                				<td width="65%"></td>
+			                			</tr>
+			                			<tr>
+											<td width="20%" valign="top">
+												<table width="100%" style="font-size: 12px; !important">
+													<tr>
+														<td style="text-align: left; white-space:nowrap;"><?php echo $tr->translate("PLAN");?> </td>
+														<td style="text-align: right; white-space:nowrap;">:</td>
+														<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['plan'];?><input type="hidden" name="check_reject_count" value="<?php echo $this->request['check_reject_count'];?>"/></td>
+													</tr>
+													<tr>
+														<td style="text-align: left; white-space:nowrap;"><?php echo $tr->translate("NUMBER_REQUEST");?> </td>
+														<td style="text-align: right; white-space:nowrap;">:</td>
+														<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['number_request'];?></td>
+													</tr>
+													
+													<tr>
+														<td style="text-align: left;white-space:nowrap;"><?php echo $tr->translate("DATE_REQUEST_WORK_SPACE");?> </td>
+														<td style="text-align: right; white-space:nowrap;">:</td>
+														<td style="text-align: right;white-space:nowrap;"><?php echo date("d-M-Y",strtotime($this->request['date_from_work_space']));?></td>
+													</tr>
+												</table>
+											</td>
+											<td width="60%" valign="top"></td>
+											<td width="20%" style="text-align: right;font-size: 12px;">
+												<table width="100%" style="font-size: 12px; !important">
+													<tr>
+														<td style="text-align: right; white-space:nowrap;"><?php echo $tr->translate("BRANCH_NAME");?> :</td>
+														<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['branch'];?></td>
+													</tr>
+													<tr>
+														<td style="text-align: right; white-space:nowrap;"><?php echo $tr->translate("REQUEST_NO");?> :</td>
+														<td style="text-align: right;white-space:nowrap;"><?php echo $this->request['re_code'];?></td>
+													</tr>
+													<tr>
+														<td style="text-align: right;white-space:nowrap;"><?php echo $tr->translate("REQUEST_DATE");?> :</td>
+														<td style="text-align: right;white-space:nowrap;"><?php echo date("d-M-Y",strtotime($this->request['date_request']));?></td>
+													</tr>
+												</table>
+											</td>
+										</tr> 
+					                </tbody>
+				                </table>
 				              </td>
 				           </tr>   
 		            </tbody></table>
@@ -121,11 +111,8 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 							<th class="tdheader" width="15%"><?php echo $tr->translate("ITEM_CODE");?></th>
 							<th class="tdheader" width="15%"><?php echo $tr->translate("ITEM_NAME");?></th>
 							<th class="tdheader" width="10%"><?php echo $tr->translate("TYPE");?></th>
-							<!--<th width="5%"><?php //echo $tr->translate("SIZE");?></th>
-							<th width="5%"><?php //echo $tr->translate("LENGHT");?></th>-->
 							<th class="tdheader" width="10%"><?php echo $tr->translate("TOTAL_QTY");?></th>
 							<th class="tdheader" width="5%"><?php echo $tr->translate("MEASURE");?></th>
-							<!--<th width="10%"><?php //echo $tr->translate("SUPPLIER");?></th>-->
 							<th class="tdheader" width="10%"><?php echo $tr->translate("REQ_DATE_IN");?></th>
 							<th class="tdheader" width="25%"><?php echo $tr->translate("REMARK");?></th>
 		                </tr>
@@ -136,15 +123,13 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["type"];?></td>
-						   <!--<td style="white-space: nowrap;">&nbsp;<?php //echo $rs["size"];?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php​ //echo $rs["size"];?></td>-->
 						   <td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["qty"],2);?></td>
 						   <td style="white-space: nowrap;" align="center">&nbsp;<?php echo $rs["measure"];?></td>
 						   <td style="white-space: nowrap;" align="center">&nbsp;<?php echo date("d-M-Y",strtotime($rs["date_in"]));?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["remark"];?></td>
 						</tr>
 						   <?php 
-                    }?>
+                   		 }?>
 		            </tbody>
 		           </table>
 		              <br>
@@ -163,14 +148,12 @@ $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 						<textarea name="remark" id="notefrom_accountingk" style="width:100%;height: 50px;" ><?php echo $this->request["reject_check"]?></textarea>
 					</div>
 				</div>
-				
-				<label class="control-label col-md-1"><?php //echo $tr->translate("REJECT_FROM_APPROVE");?><span class="required">
+				<label class="control-label col-md-1"><span class="required">
 					</span>
 				</label>
 				<div class="col-md-5">
 					<div class="input-icon right">
 						<i class="fa"></i>
-						<!--<textarea name="reject_approve" id="notefrom_accountingk" style="width:100%;height: 50px;" ><?php echo $this->request["reject_approve"]?></textarea>-->
 						<select name="approve" id="approved_name" class="form-control select2me">
 				        	<option value="1"><?php echo $tr->translate("CHECKED");?></option>
 				        	<option value="2"><?php echo $tr->translate("REJECT");?></option>

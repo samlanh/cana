@@ -1,9 +1,7 @@
 <?php 
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$form=$this->form_purchase;
-	$url_submit = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'add'));
-	$url_cancel = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'index'));
-	//print_r($this->item);
+	$url_cancel = $this->url(array('module'=>'product','controller'=>'receive','action'=>'index'));
 ?>
 <title><?php echo $tr->translate("RECEIVE_STOCK");?></title>
 <style>
@@ -24,7 +22,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" autocomplete="off" class="form-horizontal" enctype="multipart/form-data" method="post">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php //echo $tr->translate("RECIEVE_NO");?> <span class="required">
@@ -68,8 +66,29 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="control-label col-md-2"><?php //echo $tr->translate("INVOICE_NO");?>   <span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<i class="fa"></i>
+									<?php //echo $form->getElement('invoice_no');?>
+								</div>
+							</div>
 							
-							<label class="control-label col-md-2"><?php echo $tr->translate("DN_NO");?> : <span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate("RECEIVE_INVOICE_FROM_STOCK_DATE");?> : <span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<i class="fa"></i>
+									<?php echo $form->getElement('invoice_recieve_date');?>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							
+							<label class="control-label col-md-2"><strong><?php echo $tr->translate("DN_NO");?></strong> : <span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
@@ -107,7 +126,7 @@
 									<?php echo $form->getElement('dn_date');?>
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("RECEIVE_DATE");?> : <span class="required">
+							<label class="control-label col-md-2"><strong><?php echo $tr->translate("RECEIVE_DATE");?></strong> : <span class="required">
 								</span>
 							</label>
 							<div class="col-md-4">
@@ -118,13 +137,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php //echo $tr->translate("DN_RECIEVE_DATE");?> : <span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate("PLAN");?> : <span class="required">
 								</span>
 							</label>
-							<div class="col-md-4">
+							<div class="col-md-4" >
 								<div class="input-icon right">
 									<i class="fa"></i>
-									<?php //echo $form->getElement('invoice_recieve_date');?>
+									<?php echo $form->getElement("plan");?>
 								</div>
 							</div>
 							
@@ -140,28 +159,6 @@
 							
 						</div>
 						<div class="form-group" style="pointer-events: none;cursor: default;">
-							<label class="control-label col-md-2"><?php echo $tr->translate("PLAN");?> : <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4" >
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("plan");?>
-								</div>
-							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("PURCHASE_DATE");?> : <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('date_order');?>
-								</div>
-							</div>
-							
-						</div>
-						<div class="form-group" style="pointer-events: none;cursor: default;">
-							
 							<label class="control-label col-md-2"><?php echo $tr->translate("PURCHASE_NO");?> : <span class="required">
 								</span>
 							</label>
@@ -172,6 +169,29 @@
 									<input type="hidden" name="branch_id" id="branch_id" />
 								</div>
 							</div>
+							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_NO");?> : <span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<i class="fa"></i>
+									<?php echo $form->getElement("re_code");?>
+								</div>
+							</div>
+							
+							
+							
+						</div>
+						<div class="form-group" style="pointer-events: none;cursor: default;">
+							<label class="control-label col-md-2"><?php echo $tr->translate("PURCHASE_DATE");?> : <span class="required">
+								</span>
+							</label>
+							<div class="col-md-4">
+								<div class="input-icon right">
+									<i class="fa"></i>
+									<?php echo $form->getElement('date_order');?>
+								</div>
+							</div>	
 							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_DATE");?> : <span class="required">
 								</span>
 							</label>
@@ -181,15 +201,16 @@
 									<?php echo $form->getElement('re_date');?>
 								</div>
 							</div>
+							
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_NO");?> : <span class="required">
+							<label class="control-label col-md-2"><?php echo $tr->translate("VENDOR_NAME");?> : <span class="required">
 								</span>
 							</label>
-							<div class="col-md-4">
+							<div class="col-md-4"  style="pointer-events: none;cursor: default;">
 								<div class="input-icon right">
 									<i class="fa"></i>
-									<?php echo $form->getElement("re_code");?>
+									<?php echo $form->getElement("vendor");?>
 								</div>
 							</div>
 							<label class="control-label col-md-2"><?php echo $tr->translate("REMARK");?> : <span class="required">
@@ -203,15 +224,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("VENDOR_NAME");?> : <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4"  style="pointer-events: none;cursor: default;">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("vendor");?>
-								</div>
-							</div>
+							
 							
 							
 							
@@ -281,70 +294,98 @@
 						</div>
 						</div>-->
 						<div class="portlet-body" style="">
-							<div class="col-md-8" style=" float:right;">
+							<div class="col-md-12" style=" float:right;">
 							<div class="form-group">
 								<div class="col-md-12">
-									<label class="control-label col-md-3">
+									<label class="control-label col-md-1">
+										<?php echo $tr->translate("PLATE_NO");?>
+									</label>
+									<div class="col-md-1">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input type="text" name="plat_no" value="0" id="plat_no" onKeyup=" CalcualteScale(1,2);" class="form-control" />
+										</div>
+									</div>
+									<label class="control-label col-md-2">
+										<?php echo $tr->translate("SU_SCALE_REFER");?>
+									</label>
+									<div class="col-md-1">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input type="text" name="su_scale_refer" value="0" id="su_scale_refer" onKeyup=" CalcualteScale(1,2);" class="form-control" />
+										</div>
+									</div>
+									<label class="control-label col-md-2">
 										<?php echo $tr->translate("SUPPLIER_SCALE");?>
 									</label>
-									<div class="col-md-2">
+									<div class="col-md-1">
 										<div class="input-icon right">
 											<i class="fa"></i>
 											<input type="text" name="supplier_scale" id="supplier_scale" value="0" onKeyup=" CalcualteScale(1,1);" class="form-control" />
 										</div>
 									</div>
 									<label class="control-label col-md-2">
-										<?php echo $tr->translate("TOTAL");?>
+										<?php echo $tr->translate("TOTAL_IN_M3");?>
 									</label>
-									<div class="col-md-2">
+									<div class="col-md-1">
 										<div class="input-icon right">
 											<i class="fa"></i>
-											<input type="text" name="supplier_scale_total" id="supplier_scale_total" value="0" class="form-control" />
+											<input type="text" name="supplier_scale_total" id="supplier_scale_total" readOnly="readOnly" value="0" class="form-control" />
 										</div>
 									</div>
 									
-									<label class="control-label col-md-2">
+									<label class="control-label col-md-1" style="padding:7px 0">
 										<?php echo $tr->translate("CHOOSE");?>
-									</label>
-									<div class="col-md-1" >
-										<div class="input-icon right">
-											<i class="fa"></i>
+									
 											<input type="radio" onClick="setValue();" value="1" name="choose" id="choose" />
-										</div>
-									</div>
+									</label>
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<div class="col-md-12">
-									<label class="control-label col-md-3">
+									<label class="control-label col-md-1"><?php echo $tr->translate("NO_CONVERT");?></label>
+									<div class="col-md-1" style="padding: 7px 0;">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input type="checkbox" name="unblock" id="unblock" onClick="unBlock()"/>
+										</div>
+									</div>
+									<label class="control-label col-md-2">
+										<?php echo $tr->translate("COM_SCALE_REFER");?>
+									</label>
+									<div class="col-md-1">
+										<div class="input-icon right">
+											<i class="fa"></i>
+											<input type="text" name="com_scale_refer" value="0" id="com_scale_refer" onKeyup=" CalcualteScale(1,2);" class="form-control" />
+										</div>
+									</div>
+									<label class="control-label col-md-2">
 										<?php echo $tr->translate("COMPANY_SCALE");?>
 									</label>
-									<div class="col-md-2">
+									<div class="col-md-1">
 										<div class="input-icon right">
 											<i class="fa"></i>
 											<input type="text" name="company_scale" value="0" id="company_scale" onKeyup=" CalcualteScale(1,2);" class="form-control" />
 										</div>
 									</div>
 									<label class="control-label col-md-2">
-										<?php echo $tr->translate("TOTAL");?>
-									</label>
-									<div class="col-md-2">
-										<div class="input-icon right">
-											<i class="fa"></i>
-											<input type="text" name="company_scale_total" id="company_scale_total" value="0" class="form-control" />
-										</div>
-									</div>
-									
-									<label class="control-label col-md-2">
-										<?php echo $tr->translate("CHOOSE");?>
+										<?php echo $tr->translate("TOTAL_IN_M3");?>
 									</label>
 									<div class="col-md-1">
 										<div class="input-icon right">
 											<i class="fa"></i>
-											<input type="radio" onClick="setValue();" value="2" checked name="choose" id="choose" />
+											<input type="text" name="company_scale_total" id="company_scale_total"​ readOnly="readOnly" value="0" class="form-control" />
 										</div>
 									</div>
+									
+									<label class="control-label col-md-1" style="padding: 7px 0;">
+										<?php echo $tr->translate("CHOOSE");?>
+									
+										<span>
+											<input type="radio" onClick="setValue();" value="2" checked name="choose" id="choose" />
+										</span>
+									</label>
 								</div>
 							</div>
 							</div>
@@ -401,7 +442,7 @@
 						
 						<div class="form-group">
 							<div  class="col-md-12 col-md-offset-4 col-md-8">
-								<a href="<?php echo $this->baseUrl();?>/purchase/receive/"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
+								<a href="<?php echo $this->baseUrl();?>/product/receive/"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
 								<button type="submit" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								<!--<button type="submit" name="save_print" class="btn btn-primary"><i class="fa fa-print"></i> <?php echo $tr->translate("SAVE_PRINT")?></button>-->
 							</div>
@@ -414,6 +455,15 @@
 </div>
 
 <script>
+$('#frm').submit(function() {
+	var r = confirm("សូមត្រួតពិនិត្យទិន្នន័យ អោយបានត្រឹមត្រូវ !\n តើលោកអ្នកពិតជាចង់រក្សាទុកទិន្នន័យនេះមែនឫទេ?");
+	if (r == true) {
+	    return true;
+	} else {
+	   return false;
+	    
+	}
+});
 $(document).ready(function() {
 	initList();
 	//initListTermcondition();
@@ -423,7 +473,7 @@ $(document).ready(function() {
 	//$("#vendor").select2();
 	//$('#invoice_no').attr("checked",true);
 	isInoice();
-	setValue();
+	//setValue();
 });
 
 function CalcualteScale(index,type){
@@ -437,7 +487,7 @@ function CalcualteScale(index,type){
 		conveted = $("#company_scale_total");
 	}
 	total = parseFloat(scale)/parseFloat(measure_convertor);
-	conveted.val(total);
+	conveted.val(total.toFixed(4));
 	setValue();
 }
 function setValue(){
@@ -451,6 +501,19 @@ function setValue(){
 		conveted = parseFloat($("#company_scale_total").val());
 	}
 	$("#qty_recieve_1").val(conveted);
+	calculatePrice(1);
+}
+
+function unBlock(){
+	if($("#unblock").is(':checked')){
+		if(is_convertorn==1){
+			$("#qty_recieve_1").attr("readOnly",false);
+		}
+	}else{
+		if(is_convertorn==1){
+			$("#qty_recieve_1").attr("readOnly",true);
+		}
+	}
 }
 index=0;
 function isInoice(){
@@ -462,11 +525,16 @@ function isInoice(){
 		$('#invoice_date').attr("required",true);
 		$('#invoice_date').attr("readOnly",false);
 		
+		$('#invoice_recieve_date').attr("required",true);
+		$('#invoice_recieve_date').attr("readOnly",false);
 	}else{
 		$('#invoice_no').attr("required",false);
 		$('#invoice_no').attr("readOnly",true);
 		$('#invoice_date').attr("required",false);
 		$('#invoice_date').attr("readOnly",true);
+		
+		$('#invoice_recieve_date').attr("required",false);
+		$('#invoice_recieve_date').attr("readOnly",true);
 	}
 }
 function initList() {
@@ -478,16 +546,18 @@ function initList() {
 	is_convertorn = '<?php echo $r["is_convertor"];?>';
 	if(is_convertorn==1){
 		readOnly = "readOnly='readOnly'";
+	}else{
+		readOnly="";
 	}
 	index5++; 
 	index=index+1;
 	template='<tr id="row_order_'+index5+'" style="height:33px;">';
 	var inp = '';
-	
+	    item_name='<?php echo preg_replace("/'/", "\&#39;", $r['item_name']);?>';
 		template+='<td  width="1%">'+index5+'</td>';
 		template+='<td width="15%"><?php echo $r['item_code'];?><input type="hidden" name="item_code_'+index5+'" id="item_code_'+index5+'" /></td>';
-		template+='<td width="30%"><?php echo $r['item_name'];?><input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" /></td>';
-		template+='<td width="7%"><?php echo $r['measure'];?></td>';
+		template+='<td width="30%">'+item_name+'<input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" /></td>';
+		template+='<td width="7%"><?php echo $r['measure'];?><input type="hidden" name="is_convertor_'+index5+'" id="is_convertor_'+index5+'" value="'+is_convertorn+'" /></td>';
 		template+='<td ><input type="text" class="form-control" required="1" readOnly="readOnly" value="" id="origin_qty_order_'+index5+'" name="origin_qty_order_'+index5+'" /></td>';
 		template+='<td ><input type="text" class="form-control" required="1" readOnly="readOnly" value="" id="qty_order_'+index5+'" name="qty_order_'+index5+'" /></td>';
 		template+='<td><input type="text" '+readOnly+' class="validate[required,custom[number]] input form-control" onkeypress="return isNumberKey(event)" required="required" onKeyup="calculatePrice('+index5+')" value="" id="qty_recieve_'+index5+'" name="qty_recieve_'+index5+'" /><input type="hidden" name="measure_convertor_'+index5+'" id="measure_convertor_'+index5+'" value="<?php echo $r["convertor_measure"]?>" /><input type="hidden" name="sign_'+index5+'" id="sign_'+index5+'" value="<?php echo $r["sign"]?>" /></td>';
@@ -498,12 +568,12 @@ function initList() {
 	$("#item_id_"+index5).val("<?php echo $r['pro_id'];?>");
 	$("#qty_order_"+index5).val("<?php echo $r['qty_after'];?>");
 	$("#origin_qty_order_"+index5).val("<?php echo $r['qty_order'];?>");
-	$("#qty_recieve_"+index5).val("<?php echo $r['qty_after'];?>");
+	// $("#qty_recieve_"+index5).val("<?php echo $r['qty_after'];?>");
 	
-	$("#total_after_"+index5).val("<?php echo $r['sub_total'];?>");
-	$("#sub_total_receive_"+index5).val("<?php echo $r['sub_total'];?>");
+	// $("#total_after_"+index5).val("<?php echo $r['sub_total'];?>");
+	// $("#sub_total_receive_"+index5).val("<?php echo $r['sub_total'];?>");
 	
-	$("#total_"+index5).val("<?php echo $r['sub_total'];?>");
+	$("#total_"+index5).val("<?php echo $r['qty_after']*$r['price'];?>");
 	$("#price_"+index5).val("<?php echo $r['price'];?>");
 	$("#oldprice_"+index5).val("<?php echo $r['price'];?>");
 	$("#dis_value"+index5).val("<?php echo $r['disc_value'];?>");
@@ -519,6 +589,10 @@ function initList() {
 	$("#row_order_0").remove();
 	
 	calculatePrice(index5);
+	if(is_convertorn==1){
+		setValue();
+	}
+	
 		<?php } }?>
 }
 
@@ -587,7 +661,7 @@ function getQtyById(index){//use
 							main_qty =$("#qty_unit_"+index).val();
 							detail_qty =  $("#qty_per_unit_"+index).val();
 							total_qty = parseFloat(main_qty) + parseFloat(detail_qty/(item_qty.qty_perunit));
-							$("#qty"+index).val(total_qty.toFixed(3));
+							$("#qty"+index).val(total_qty.toFixed(4));
 						},
 						error:function(e){
 							//alert(e);
@@ -666,35 +740,7 @@ function totalQty(index){
 	calculatePrice(index);
 	getQtyById(index);
 }
-function calculatePrice(index) {
-	var qty = $('#qty_recieve_'+index).val();
-	var price = $('#price_'+index).val();
-	var total = price * qty;
-	var ds = $('#dis_value'+index).val();
-	if(ds.length!=0){
-		if(ds.indexOf("%")!==-1){//if have %
-			var pds=ds.split("%");
-			if(!isNaN(pds[0])){
-				var discount=(total*parseFloat(pds[0]))/100;
-				after_discount = total - discount;
-				
-			}else{
-				after_discount = total - discount;
-			}
-			$('#total_after_'+index).val(after_discount.toFixed(2));
-		}else{
-			if(!isNaN(ds)&&ds!=0){
-				discount = parseFloat(ds).toFixed(2);
-				after_discount = total - discount;
-			}else{
-				discount=$('#dis_value'+index).val(0);
-				after_discount = total;
-			}
-			$('#total_after_'+index).val(parseFloat(after_discount).toFixed(2));
-		}
-		netTotal();
-	}
-}
+
  var record_id = 1;
 function ShowPopupProduct(product_id){
 	item_id = $("#item_id_"+ product_id).val();
@@ -718,32 +764,6 @@ function getCustomerInfo(){
 	if(v_id==-1){
 		$('#dialogvendor').modal('show');
 	}
-}
-<?php $url_add_new =  $this->url(array('module'=>'product','controller'=>'index','action'=>'add-newproudct')); ?>
-function addProduct(){
-	var pro_name = $("#txt_name").val();
-	var pro_code = $("#item_code").val();
-	var category_id = $("#category_id").val();
-	var brand_id = $("#brand_id").val();
-	var remark = $("#remark_order").val();
-	validate_text('#txt_name');
-	validate_text('#item_code');
-		$.ajax({
-	        url: "<?php echo $url_add_new;?>",
-	        type: "post",
-	        data: {'pro_name':pro_name,'pro_code':pro_code,'category_id':category_id,'brand_id':brand_id,'remark':remark},
-	        success: function(data){
-		        alert(data);
-	          // val = $.parseJSON(data);
-	           //$('#item_id_'+record_id).append($('<option></option>').attr('value',val['pid']).attr("selected",true).text(pro_name)); 
-	           //$('#item_id_'+record_id).trigger("liszt:updated");
-	           // document.getElementById("frm1").reset();
-	            //$('#productpopup').modal('hidden');
-	        },
-	        error:function(){
-	           alert('There is error while submit');
-	        }
-	    });	
 }
 
 <?php $url_add_vendor =  $this->url(array('module'=>'purchase','controller'=>'vendor','action'=>'addvendor')); ?>
@@ -842,9 +862,8 @@ function calculatePrice(index) {
 	qty_after = parseFloat($('#qty_order_'+index).val());
 	if(qty>qty_after){
 		alert("You can Receive Only Equal Remean QTY");
-		$('#qty_recieve_'+index).val(qty_after);
+		//$('#qty_recieve_'+index).val(qty_after);
 	}
-	//alert();
 	if(ds.length!=0){
 		if(ds.indexOf("%")!==-1){//if have %
 			var pds=ds.split("%");
@@ -855,16 +874,16 @@ function calculatePrice(index) {
 			}else{
 				after_discount = total - discount;
 			}
-			$('#total_after_'+index).val(after_discount.toFixed(2));
+			$('#total_after_'+index).val(after_discount.toFixed(4));
 		}else{
 			if(!isNaN(ds)&&ds!=0){
-				discount = parseFloat(ds).toFixed(2);
+				discount = parseFloat(ds).toFixed(4);
 				after_discount = total - discount;
 			}else{
 				discount=$('#dis_value'+index).val(0);
 				after_discount = total;
 			}
-			$('#total_after_'+index).val(parseFloat(after_discount).toFixed(2));
+			$('#total_after_'+index).val(parseFloat(after_discount).toFixed(4));
 		}
 		netTotal();
 	}
@@ -875,11 +894,21 @@ function netTotal() {//use
 	var rowId = $('#identity').val();
 	var rowIDArray = rowId.split(',');
 	var status = $('#status').val();
+	var all_total_amount = 0;
+	var all_total =0;
+	var total_tax =0;
 	for(var n = 0; n < rowIDArray.length; n++) {
 		netTotal += Number($('#total_after_'+rowIDArray[n]).val());
+		all_total_amount += Number($('#total_'+rowIDArray[n]).val());
+		all_total += Number($('#total_'+rowIDArray[n]).val());
 	}
+	total_tax = all_total_amount*(parseFloat($('#vat').val())/100);
+	$('#totalAmoun').val(all_total_amount);
+	$('#all_total').val(all_total+total_tax);
 	$('#totalAmoun_after').val(netTotal.toFixed(2));
 	$('#all_total_after').val(netTotal.toFixed(2));
+	$('#remain').val(netTotal.toFixed(2));
+	//$('#paid').val(netTotal.toFixed(2));
 	//calculateDiscount();
 	 doRemain();
 }
@@ -978,7 +1007,7 @@ function getItem(){
 						template+='<td width="30%">'+item_name+'<input type="hidden" name="item_id_'+num+'" id="item_id_'+num+'" /></td>';
 						template+='<td ><input type="text" class="validate[required,custom[number]] input form-control" required="1" readOnly="readOnly" value="'+qty_order+'" id="qty_order_'+num+'" name="qty_order_'+num+'" /></td>';
 						template+='<td ><input type="text" class="validate[required,custom[number]] input form-control" onKeyup="calculatePrice('+num+')" value="'+qty_order+'" id="qty_recieve_'+num+'" name="qty_recieve_'+num+'" /></td>';
-						template+='<td ><input type="text" class="form-control" id="remark_'+num+'" name="remark_'+num+'" /> <input type="hidden" name="price_'+num+'" id="price_'+num+'" value="'+price+'" /> <input type="hidden" name="total_after_'+num+'" id="total_after_'+num+'" value="'+sub_total+'" /><input type="hidden" name="total_'+num+'" id="total_'+num+'" value="'+sub_total+'" /><input type="hidden" value="'+disc_value+'" id="dis_value'+num+'" name="dis_value'+num+'" class="form-control" /><input type="hidden" name="sub_total_receive_'+num+'" id="sub_total_receive_'+num+'" /> </td>';
+						template+='<td ><input type="text" class="form-control" id="remark_'+num+'" name="remark_'+num+'" /> <input type="hidden" name="price_'+num+'" id="price_'+num+'" value="'+price+'" /><input type="hidden" name="total_after_'+num+'" id="total_after_'+num+'" value="'+sub_total+'" /><input type="hidden" name="total_'+num+'" id="total_'+num+'" value="'+sub_total+'" /><input type="hidden" value="'+disc_value+'" id="dis_value'+num+'" name="dis_value'+num+'" class="form-control" /><input type="hidden" name="sub_total_receive_'+num+'" id="sub_total_receive_'+num+'" /> </td>';
 						template+="</tr>";
 						$('#table_order').innerHTML = template;
 						if($('#identity').val()!="") {
@@ -999,7 +1028,7 @@ function doAmoutReceive(num){
 	qty = $('#qty_recieve_'+num).val();
 	price = $('#price'+num).val();
 	total_amount = parseFloat(qty)*parseFloat(price);
-	$('#sub_total_receive'+num).val(total_amount.toFixed(2));
+	$('#sub_total_receive'+num).val(total_amount.toFixed(4));
 }
 
 <?php $url_code =  $this->url(array('module'=>'purchase','controller'=>'receive','action'=>'get-receive-code')); ?>

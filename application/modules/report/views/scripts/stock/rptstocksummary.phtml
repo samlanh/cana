@@ -23,7 +23,6 @@
 								<i class="fa fa-print" aria-hidden="true"></i>&nbsp;&nbsp;<?php echo $tr->translate("PRINT");?>
 							</a>
 						</li>
-						<li><a href="#" onClick="exports()"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;&nbsp;Export Excel </a> </li>
 					 </ul>
 			 </div>
 			</div>
@@ -33,8 +32,17 @@
 						<label class="col-md-2"><?php echo $formFilter->getElement('ad_search');?></label>
 						<label class="col-md-2"><?php echo $formFilter->getElement('branch');?></label>
 						<label class="col-md-2"><?php echo $formFilter->getElement('category');?></label>
-						<label class="col-md-2"><?php echo $formFilter->getElement('start_date');?></label>
-						<label class="col-md-2"><?php echo $formFilter->getElement('end_date');?></label>
+						<label class="col-md-2">
+							<select name="closing_date" id="closing_date" class="form-control select2me">
+							    <option value="-1" >ជ្រើសរើសកាលបរិច្ឆេទបិទបញ្ជី</option>
+							    <?php if(!empty($this->rsClosingDate)){
+								    foreach($this->rsClosingDate as $rs){?>
+								    <option <?php if($this->search['closing_date']==$rs['id']){echo'selected';}?> value="<?php echo $rs['id'];?>"><?php echo date("d/m/Y",strtotime($rs['from_date']))."-".date("d/m/Y",strtotime($rs['to_date']));?></option>
+							    <?php }}?>
+							</select>
+						</label>
+						<!-- <label class="col-md-2"><?php //echo $formFilter->getElement('start_date');?></label>
+						<label class="col-md-2"><?php //echo $formFilter->getElement('end_date');?></label> -->
 						<label class="col-md-2 pull-right">
 							<button class="btn btn-primary col-md-12" value="" ><i class="fa fa-save"></i>&nbsp;<?php echo $tr->translate("REFRESH");?></button>
 						</label>
@@ -96,11 +104,7 @@
 			                			             }
 				                			       ?>
 				                			</li>
-											<li style="text-align:center; font-size:13px;">
-											<?php if(!empty($this->start_date)){
-													echo date("d-m-Y",strtotime($this->start_date));?> ដល់ <?php 
-												  } 
-														echo date("d-m-Y",strtotime($this->end_date));?></li>
+											<li style="text-align:center; font-size:13px;"><label id='lbl_closingdate'></label></li>
 				                		</ul>
 				                	</td>
 				                    <td width="20%"></td>
@@ -220,6 +224,12 @@
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
 <script>
+jQuery(document).ready(function() { 
+   if($('#closing_date').val()>0){
+	  closing_date = $("#closing_date option:selected").html();
+	  $('#lbl_closingdate').html(closing_date);
+   }
+ });   
 function doPrint() {
 	var printContents = document.getElementById('divPrint').innerHTML;
     var originalContents = document.body.innerHTML;

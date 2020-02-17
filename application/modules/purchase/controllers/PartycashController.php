@@ -8,7 +8,6 @@ class Purchase_PartycashController extends Zend_Controller_Action
     	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		$db = new Application_Model_DbTable_DbGlobal();
 		$rs = $db->getValidUserUrl();
-// 		echo $rs;
 		if(empty($rs)){
 			Application_Form_FrmMessage::Sucessfull("YOU_NO_PERMISION_TO_ACCESS_THIS_SECTION","/index/dashboad");
 		}
@@ -32,14 +31,6 @@ class Purchase_PartycashController extends Zend_Controller_Action
 		
 		$rows = $db->getAllRequest($search);
 		$this->view->rs = $rows;
-// 		$list = new Application_Form_Frmlist();
-// 		$columns=array("BRANCH_NAME","VENDOR_NAME","PURCHASE_ORDER","ORDER_DATE","DATE_IN",
-// 				 "CURRNECY_TYPE","TOTAL_AMOUNT","PAID","BALANCE","ORDER_STATUS","STATUS","BY_USER");
-// 		$link=array(
-// 				'module'=>'purchase','controller'=>'index','action'=>'edit',
-// 		);
-		
-// 		$this->view->list=$list->getCheckList(0, $columns, $rows, array('branch_name'=>$link,'vendor_name'=>$link,'order_number'=>$link,'date_order'=>$link));
 		$formFilter = new Application_Form_Frmsearch();
 		$this->view->formFilter = $formFilter;
 		Application_Model_Decorator::removeAllDecorator($formFilter);

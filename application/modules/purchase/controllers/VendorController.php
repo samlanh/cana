@@ -51,32 +51,23 @@ class Purchase_vendorController extends Zend_Controller_Action
 			try{
 				$vendor = new Purchase_Model_DbTable_DbVendor();
 				$vendor->addVendor($post);
-				
-				if(!empty($post['saveclose']))
-				{
-					//Application_Form_FrmMessage::Sucessfull('INSERT_SUCCESS', self::REDIRECT_URL . '/vendor/index');
-				}else{
-					//Application_Form_FrmMessage::message("INSERT_SUCCESS");
-				}
+				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message('INSERT_FAIL');
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		/////////////////for veiw form
 		$formStock = new Purchase_Form_FrmVendor(null);
 		$formStockAdd = $formStock->AddVendorForm(null);
 		Application_Model_Decorator::removeAllDecorator($formStockAdd);
 		$this->view->form = $formStockAdd;
-		//.end controller
 	}
 	public function editAction() {
 		$db = new Purchase_Model_DbTable_DbVendor();
 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
 		if($this->getRequest()->isPost())
 		{
-			
 			$post = $this->getRequest()->getPost();
 			$post["id"]=$id;
 			$db->addVendor($post);
@@ -99,5 +90,4 @@ class Purchase_vendorController extends Zend_Controller_Action
 		echo Zend_Json::encode($result);
 		exit();
 	}
-	
 }

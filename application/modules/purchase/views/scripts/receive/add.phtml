@@ -528,7 +528,6 @@ function isInoice(){
 		
 		$('#invoice_recieve_date').attr("required",true);
 		$('#invoice_recieve_date').attr("readOnly",false);
-		
 	}else{
 		$('#invoice_no').attr("required",false);
 		$('#invoice_no').attr("readOnly",true);
@@ -555,10 +554,10 @@ function initList() {
 	index=index+1;
 	template='<tr id="row_order_'+index5+'" style="height:33px;">';
 	var inp = '';
-	
+	    item_name='<?php echo preg_replace("/'/", "\&#39;", $r['item_name']);?>';
 		template+='<td  width="1%">'+index5+'</td>';
 		template+='<td width="15%"><?php echo $r['item_code'];?><input type="hidden" name="item_code_'+index5+'" id="item_code_'+index5+'" /></td>';
-		template+='<td width="30%"><?php echo $r['item_name'];?><input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" /></td>';
+		template+='<td width="30%">'+item_name+'<input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" /></td>';
 		template+='<td width="7%"><?php echo $r['measure'];?><input type="hidden" name="is_convertor_'+index5+'" id="is_convertor_'+index5+'" value="'+is_convertorn+'" /></td>';
 		template+='<td ><input type="text" class="form-control" required="1" readOnly="readOnly" value="" id="origin_qty_order_'+index5+'" name="origin_qty_order_'+index5+'" /></td>';
 		template+='<td ><input type="text" class="form-control" required="1" readOnly="readOnly" value="" id="qty_order_'+index5+'" name="qty_order_'+index5+'" /></td>';

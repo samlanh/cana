@@ -3,7 +3,6 @@
 	$url_ajax_add = $this->url(array('module'=>'','controller'=>'ajax','action'=>'add-ajax',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
-	//print_r($this->rs)."sfsgesd";
 ?>
 <title><?php echo $tr->translate("PURCHASE_INVOICE");?></title>
 <meta charset="utf-8" />
@@ -19,7 +18,7 @@
 				</a>
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>

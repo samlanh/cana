@@ -1,10 +1,7 @@
-
 <?php 
-$baseurl = Zend_Controller_Front::getInstance()->getBaseUrl();//new
-$url_submit =  $this->url(array('module'=>'purchase','controller'=>'vendor','action'=>'edit'));
-$url_edit =  $this->url(array('module'=>'purchase','controller'=>'vendor','action'=>'edit'));
-$form=$this->form;
-$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$url_submit =  $this->url(array('module'=>'purchase','controller'=>'vendor','action'=>'edit'));
+	$form=$this->form;
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <title><?php echo $tr->translate("EDIT_VENDOR");?></title>
 <div class="row">
@@ -16,17 +13,9 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form id="form_sample_2" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="form_sample_2" class="form-horizontal" enctype="multipart/form-data" method="post">
 				<div class="form-body">
 					<div class="form-group">
-						<!--<label class="control-label col-md-2"><?php echo $tr->translate("OVER_SEA_VENDOR");?> <span class="required"></span></label>
-						<div class="col-md-4" style="margin-top: 10px;">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<input type="checkbox" name="is_over_sea" id="is_over_sea" value="1" onClick="isOverSea()">
-								</div>
-							</div>
-					</div>-->
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("COMPANY_NAME");?> <span class="required"></span></label>
 							<div class="col-md-4">
@@ -108,23 +97,23 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 					</div>
 					<div class="form-group hides">
 						<label class="control-label col-md-2"><?php echo $tr->translate("BANK_ACCOUNT");?> <span class="required">
-								</span>
+							</span>
 						</label>
 						<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement('bank_name'); ?>
-								</div>
+							<div class="input-icon right">
+								<i class="fa"></i>
+								<?php echo $form->getElement('bank_name'); ?>
+							</div>
 						</div>
 						<label class="control-label col-md-2">
 							<?php echo $tr->translate("BANK_ACCOUNT_NO");?><span class="required">
-								</span>
+						</span>
 						</label>
 						<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("bank_acc_name");?>
-								</div>
+							<div class="input-icon right">
+								<i class="fa"></i>
+								<?php echo $form->getElement("bank_acc_name");?>
+							</div>
 						</div>
 					</div>
 					<div class="form-group hides">
@@ -134,13 +123,13 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 						</div>
 						<label class="control-label col-md-2">
 							<?php echo $tr->translate("REMARK");?><span class="required">
-								</span>
+							</span>
 						</label>
 						<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php echo $form->getElement("remark");?>
-								</div>
+							<div class="input-icon right">
+								<i class="fa"></i>
+								<?php echo $form->getElement("remark");?>
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -150,6 +139,7 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 							<button type="submit" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
 							
 						</div>
+					</div>
 					</div>
 				</div>
 				</form>

@@ -53,7 +53,6 @@ class Purchase_Model_DbTable_DbPurchaseOrder extends Zend_Db_Table_Abstract
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission();
 		$order=" ORDER BY is_recieved ASC,is_completed ASC ,id DESC ";
- 		//echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 
 	}

@@ -145,17 +145,17 @@ class Purchase_ReceiveController extends Zend_Controller_Action
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
 	}
-	public function receivenoteAction(){
-		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
-    	if(empty($id)){
-    		$this->_redirect("/report/index/rpt-purchase");
-    	}
-    	$query = new Purchase_Model_DbTable_DbRecieve();
-    	$this->view->product =  $query->getProductReceiveById($id);
-		$session_user=new Zend_Session_Namespace('auth');
-		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
-	}
+// 	public function receivenoteAction(){
+// 		$id = ($this->getRequest()->getParam('id'))? $this->getRequest()->getParam('id'): '0';
+//     	if(empty($id)){
+//     		$this->_redirect("/report/index/rpt-purchase");
+//     	}
+//     	$query = new Purchase_Model_DbTable_DbRecieve();
+//     	$this->view->product =  $query->getProductReceiveById($id);
+// 		$session_user=new Zend_Session_Namespace('auth');
+// 		$db = new Application_Model_DbTable_DbGlobal();
+// 		$this->view->title_reprot = $db->getTitleReport($session_user->location_id);
+// 	}
 	public function getPurchaseVendorAction(){		
 		if($this->getRequest()->isPost()){
 		    $db= new Purchase_Model_DbTable_DbRecieve();

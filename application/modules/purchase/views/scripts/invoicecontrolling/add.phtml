@@ -24,18 +24,9 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm a" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm a" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body">
 						<div class="form-group">
-							<!--  <label class="control-label col-md-2"><?php //echo $tr->translate("RECIEVE_NO");?> : <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php //echo $form->getElement('recieve_no');?>
-								</div>
-							</div>-->
 							<label class="control-label col-md-2"><?php echo $tr->translate("INVOICE_NO");?> : <span class="required">
 								</span>
 							</label>
@@ -45,15 +36,6 @@
 									<?php echo $form->getElement('invoice_no');?>
 								</div>
 							</div>
-							<!--<label class="control-label col-md-2"><?php echo $tr->translate("PAYMENT_NUMBER");?> : <span class="required">
-								</span>
-							</label>
-							<div class="col-md-4">
-								<div class="input-icon right">
-									<i class="fa"></i>
-									<?php //echo $form->getElement('payment_number');?>
-								</div>
-							</div>-->
 							<label class="control-label col-md-2"><?php echo $tr->translate("RECIEVE_NO");?> : <span class="required">
 								</span>
 							</label>
@@ -65,7 +47,6 @@
 							</div>
 						</div>
 						<div class="form-group">
-							
 							<label class="control-label col-md-2"><?php echo $tr->translate("INVOICE_DATE");?> : <span class="required">
 								</span>
 							</label>
@@ -105,7 +86,6 @@
 									<?php echo $form->getElement("branch");?>
 								</div>
 							</div>
-							
 						</div>
 						<div class="form-group" style="pointer-events: none;cursor: default;">
 							<label class="control-label col-md-2"><?php echo $tr->translate("PLAN");?> : <span class="required">
@@ -129,7 +109,6 @@
 							
 						</div>
 						<div class="form-group" style="pointer-events: none;cursor: default;">
-							
 							<label class="control-label col-md-2"><?php echo $tr->translate("PURCHASE_NO");?> : <span class="required">
 								</span>
 							</label>

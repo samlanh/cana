@@ -1,10 +1,8 @@
 ﻿<?php 
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$form=$this->form;
-	$url_submit = $this->url(array('module'=>'purchase','controller'=>'partycash','action'=>'add'));
 	$url_cancel = $this->url(array('module'=>'purchase','controller'=>'partycash','action'=>'index'));
 	$date_now = date("m/d/Y");
-	//echo $date_now;
 ?>
 <style>
       table.table-bordered tbody th, table.table-bordered tbody td{width:2px;}
@@ -25,7 +23,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_CODE");?> <span class="required">
@@ -116,17 +114,10 @@
 								</button>
 							</label>
 							<label class="control-label col-md-8">
-								<!--<select data-placeholder="Select..." class="form-control select2me" id="add_item" name="add_item" Onchange="getItemOrder();"  style="width:100% ;margin:0 auto;">
-											<?php //echo $this->items; ?>
-								</select>-->
-								
 								<input type="hidden" class="form-control" style="text-align:left;" id="add_item" name="add_item" Onchange="getItemOrder();" style="width:100%;" placeholder="<?php echo $tr->translate("SELECT_PRODUCT");?>"/>
 							</label>
 							<label class="control-label col-md-2 col-lg-2 col-sm-12">
 								<button type="button" class="btn red delete col-md-12">
-								<!-- 	<input type="checkbox" Onclick="Confirmmessage()" id="free" name="free" />
-									<span>&nbsp;&nbsp;Free</span>
-									-->
 								</button> 
 							</label>
 						</div>
@@ -165,7 +156,6 @@
 								<a href="<?php echo $this->baseUrl();?>/purchase/partycash/"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
 								<button type="submit" id="save_close" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
 								<button type="submit" id="save_close" name="btnsavenew" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
-								<!--<button type="submit" name="save_print" class="btn btn-primary"><i class="fa fa-print"></i> <?php //echo $tr->translate("SAVE_PRINT")?></button>-->
 							</div>
 						</div>
 					</div>
@@ -174,8 +164,6 @@
 		</div>
 	</div>
 </div>
-
-
 <script>
 $('#frm').submit(function() {
 	plan=$("#plan").val();
@@ -195,7 +183,6 @@ $('#frm').submit(function() {
 	    return true;
 	} else {
 	   return false;
-	    
 	}
 	
 });	
@@ -208,7 +195,6 @@ $( document ).ready(function() {
 function select2Speed(name){
 	 $('#add_item').select2({
             data : _.map(_.range(0, itemss.length), function (i) {
-				//alert(itemss);
                   return {
                       id  : itemss[i].id,
                       text: itemss[i].item_code+"-"+itemss[i].item_name
@@ -216,7 +202,6 @@ function select2Speed(name){
             }),
             dropdownCssClass : 'capitalize',
             containerCssClass: 'capitalize',
-            // configure as multiple select
             //multiple         : true,
             // text for loading more results
             formatLoadMore   : 'Loading more...',
@@ -252,7 +237,6 @@ function addRow(item_id) {
 	var arrays = identity.split(',');
 	if(arrays!=""){
 		a = arrays.length;
-		//alert(a);
 		index= parseInt(a)+1;
 	}else{
 		index=1;
@@ -262,7 +246,6 @@ function addRow(item_id) {
 		type:"post",
 		data:{'item_id':item_id},
 		success: function(data){
-			//alert(data);
 			rs = $.parseJSON(data);	
 			for(i=1; i<index5; i++){
 				new_item=parseInt(item_id);
@@ -281,11 +264,9 @@ function addRow(item_id) {
 			}
 			template='<tr id="row_order_'+index5+'" style="height:33px;">';
 			var inp = '';
-			
 			template+='<td width="2%" class="center"><img onClick="deleteRecord('+index5+')" src="<?php echo BASE_URL; ?>/images/icon/delete.gif" /></td>';
 			template+='<td width="2%" class="center"><label id="lbno_'+index5+'">'+index+'<label></td>';
 			template+='<td width="2%" class="center">'+rs.item_code+'<input type="hidden" name="item_id_'+index5+'" id="item_id_'+index5+'" value="'+rs.item_id+'" /></td>';
-			//template+='<td><select class="form-control select2me" Onchange="ShowPopupProduct('+ index5 + ');" id="item_id_'+index5+'" name="item_id_'+index5+'" >'+option5+'<option></option></select>'+inp+'</td>';
 			template+='<td width="2%" class="center">'+rs.item_name+'</td>';
 			measure=rs.measure;
 			if(measure==null){measure='';}
@@ -297,7 +278,6 @@ function addRow(item_id) {
 			template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" /></span></td>';
 			template+="</tr>";
 			$('#table_order').append(template);
-			//$('#item_id_'index5).select2me();
 			if($('#identity').val()!="") {
 				var identity = $('#identity').val();
 				$('#identity').val(identity+','+index5);
@@ -309,10 +289,8 @@ function addRow(item_id) {
 			$("#row_order_0").remove();
 		},
 		error:function(e){
-							//alert(e);
 		}
 	});
-	
 }
 function Calculatetotal(index){
 	qty = $("#qty_"+index).val();
@@ -338,12 +316,10 @@ function getRequestCode(){
 		type:"post",
 		data:{'branch_id':branch_id},
 		success: function(data){
-			//alert(data);
 			rs = $.parseJSON(data);	
 			$('#request_no').val(rs);
 		},
 		error:function(e){
-							//alert(e);
 		}
 	});
 }
@@ -373,10 +349,6 @@ function newNo(){
 	var arrays = identity.split(',');
 	for(var i=0;i<arrays.length;i++) { a++;
 		$('#lbno_'+arrays[i]).text(a);
-		//$('#lbno'+arrays[i]).append(a);
 	}
 }
-
-
-
 </script>

@@ -1136,5 +1136,12 @@ function getDnNo($completed=null,$opt=null){
   }
   return  $hours[$key];
  }
+ function getClosingDate(){
+ 	$db = $this->getAdapter();
+ 	$sql=" SELECT id,from_date,to_date FROM `tb_closing`
+  			ORDER BY id DESC ";
+ 	return $db->fetchAll($sql);
+ }
+ 
 }
 ?>

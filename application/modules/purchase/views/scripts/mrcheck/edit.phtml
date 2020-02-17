@@ -1,7 +1,6 @@
 ﻿<?php 
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$form=$this->form;
-	$url_submit = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'add'));
 	$url_cancel = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'index'),null,true);
 ?>
 <style>
@@ -23,7 +22,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("REQUEST_CODE");?> <span class="required">
@@ -80,9 +79,6 @@
 							</label>
 							<label class="control-label col-md-2 col-lg-2 col-sm-12">
 								<button type="button" class="btn red delete col-md-12">
-								<!-- 	<input type="checkbox" Onclick="Confirmmessage()" id="free" name="free" />
-									<span>&nbsp;&nbsp;Free</span>
-									-->
 								</button> 
 							</label>
 						</div>
@@ -98,9 +94,7 @@
 								</tr>
 							</table>
 							<input type="hidden" id="identity" name="identity" />
-							
 						</div>
-						
 						<div class="form-group">
 							<label  class="col-md-12 col-md-offset-4 col-md-8">
 								<a href="<?php echo $this->baseUrl();?>/purchase/purchaserequest/"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
@@ -118,7 +112,6 @@
 <script>
 $(document).ready(function() {
 	initList();
-	//initListTermcondition();
 });
 var index5 = 0;num=0;
 var option5 = '<?php echo $this->items; ?>';
@@ -152,7 +145,6 @@ function addRow(item_id) {
 	template+='<td><input type="text" class="form-control" id="remark_'+index5+'" name="remark_'+index5+'" /></span></td>';
 	template+="</tr>";
 	$('#table_order').append(template);
-	//$('#item_id_'index5).select2me();
 	if($('#identity').val()!="") {
 		var identity = $('#identity').val();
 		$('#identity').val(identity+','+index5);
@@ -185,10 +177,6 @@ function initList() {
 	
 	$("#item_id_"+index5).val("<?php echo $r['pro_id'];?>");
 	$("#qty_"+index5).val("<?php echo $r['qty'];?>");
-	
-	//getQtyById(index5);
-	
-
 	if($('#identity').val()!="") {
 		var identity = $('#identity').val();
 		$('#identity').val(identity+','+index5);

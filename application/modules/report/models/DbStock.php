@@ -30,7 +30,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 	
 	function getReceivedHistory($search){
 		$db= $this->getAdapter();
-		$sql="SELECT * FROM `v_receive_purchase_history` AS p WHERE p.date_in BETWEEN '".date("Y-m-d",strtotime($search["start_date"]))."' AND '".date("Y-m-d",strtotime($search["end_date"]))."'";
+		$sql="SELECT * FROM `v_receive_purchase_history` AS p WHERE p.dn_date BETWEEN '".date("Y-m-d",strtotime($search["start_date"]))."' AND '".date("Y-m-d",strtotime($search["end_date"]))."'";
 		$where='';
 		if(!empty($search['text_search'])){
 			$s_where = array();
@@ -63,7 +63,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			  pl.`qty`,
 			  pl.price,
 			  pl.`location_id`,
-			  (SELECT qty_begining FROM `tb_closing` AS c,`tb_closing_detail` AS cd WHERE c.id=cd.closing_id AND pro_id=p.id AND cd.branch_id =pl.`location_id` LIMIT 1) As qty_begining,
+			  (SELECT qty_begining FROM `tb_closing` AS c,`tb_closing_detail` AS cd WHERE c.id=cd.closing_id AND pro_id=p.id AND cd.branch_id =pl.`location_id` AND c.id=".$search['closing_date']." LIMIT 1) As qty_begining,
 			  (SELECT g.name FROM `tb_category` AS g WHERE g.id=p.`cate_id` LIMIT 1) AS cat_name,
 			  (SELECT m.name FROM `tb_measure` AS m WHERE m.id=p.`measure_id` LIMIT 1) AS measure,
 			  (SELECT   v.`date_order` FROM  v_receive_purchase AS v WHERE  v.`pro_id`=p.`id` LIMIT 1)AS date_order,
@@ -94,6 +94,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		if($search['branch']>0){
 		    $where .= " AND pl.`location_id` = ".$search['branch'];
 		}
+		if($search['closing_date']>0){
+// 			$where .= " AND pl.`location_id` = ".$search['closing_date'];
+		}
 		
 // 		if($search['product_id']>0){
 // 		    $where .= " AND p.`id` = ".$search['product_id'];
@@ -111,7 +114,9 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				$where.=' AND p.cate_id='.$category_id;
 			}
 		}
+		
 		$order=" GROUP BY p.`id` ORDER BY p.`item_code` ASC ";
+// 		echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	
@@ -141,8 +146,8 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$db= $this->getAdapter();
 		$user_info = $this->GetuserInfo();
 		$loc = $user_info["branch_id"];
-		$from_date =(empty($data['start_date']))? '1': "  r.`date_in` >= '".$data['start_date']."'";
-		$to_date = (empty($data['end_date']))? '1': "   r.`date_in` <= '".$data['end_date']."'";
+		$from_date =(empty($data['start_date']))? '1': "  r.`dn_date` >= '".$data['start_date']."'";
+		$to_date = (empty($data['end_date']))? '1': "   r.`dn_date` <= '".$data['end_date']."'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		$sql="SELECT 
 			  r.`date_in`,
@@ -255,8 +260,8 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$from_date =date("Y-m-d",strtotime($search['start_date']));
 		$to_date = date("Y-m-d",strtotime($search['end_date']));
 		
-		$from_date =(empty($search['start_date']))? '1': " r.`date_in` >= '".$from_date." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " r.`date_in` <= '".$to_date." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " r.`dn_date` >= DATE_FORMAT('".$from_date." 00:00:00','%Y-%m-%d')";
+		$to_date = (empty($search['end_date']))? '1': " r.`dn_date` <= DATE_FORMAT('".$to_date." 23:59:59','%Y-%m-%d')";
 		$where = " AND ".$from_date." AND ".$to_date;
 		
 		if(!empty($search['ad_search'])){
@@ -264,7 +269,6 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 			$s_search = trim(addslashes($search['ad_search']));
 			$s_where[] = " p.`item_code` LIKE '%{$s_search}%'";
 			$s_where[] = " p.`item_name` LIKE '%{$s_search}%'";
-			
 			$s_where[] = " p.`measure` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`po_no` LIKE '%{$s_search}%'";
 			$s_where[] = " r.`recieve_number` LIKE '%{$s_search}%'";
@@ -298,7 +302,8 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		}
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission('branch');
-		$order=" ORDER BY r.`date_in` ASC";
+		$order=" ORDER BY r.`date_in` ASC ";
+// 		echo $sql.$where.$order;exit();
 		return $db->fetchAll($sql.$where.$order);
 	}
 		
@@ -843,7 +848,7 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 				FROM
 				  `v_product` AS p,
 				  `v_receive_purchase` AS r 
-				  WHERE p.id=r.`pro_id` AND p.is_meterail!=1 AND r.`date_in` BETWEEN '$start_date' AND '$end_date'";
+				  WHERE p.id=r.`pro_id` AND p.is_meterail!=1 AND r.`dn_date` BETWEEN '$start_date' AND '$end_date'";
 			$where ='';
 			if(!empty($search['text_search'])){
 				$s_where = array();

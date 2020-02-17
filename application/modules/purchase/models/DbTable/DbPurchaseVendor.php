@@ -1651,15 +1651,14 @@ class purchase_Model_DbTable_DbPurchaseVendor extends Zend_Db_Table_Abstract
 	function getPurchaseById($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT 
-				 p.*,
-				 (SELECT pr.`re_code` FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id` LIMIT 1) AS re_code,
-				 (SELECT pr.`date_request` FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id` LIMIT 1) AS date_request,
-				 (SELECT pl.name FROM `tb_plan` AS pl WHERE pl.id=(SELECT pr.plan_id  FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id` LIMIT 1) LIMIT 1) AS plan 
+					 p.*,
+					 (SELECT pr.`re_code` FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id` LIMIT 1) AS re_code,
+					 (SELECT pr.`date_request` FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id` LIMIT 1) AS date_request,
+					 (SELECT pl.name FROM `tb_plan` AS pl WHERE pl.id=(SELECT pr.plan_id  FROM `tb_purchase_request` AS pr WHERE pr.id=p.`re_id` LIMIT 1) LIMIT 1) AS plan 
 				FROM
 				  `tb_purchase_order` AS p 
 				WHERE p.`id` = $id";
 		return $db->fetchRow($sql);
-		
 	}
 	function getPurchaseItem($id){
 		$db = $this->getAdapter();

@@ -16,57 +16,56 @@
 			</div>
 		</div>
 		<div class="portlet-body form">
-			<form class="form-horizontal" method="post" id="a" action="<?php echo $url_new;?>" >
+			<form class="form-horizontal" method="post" id="a" action="<?php echo $url_new;?>" autocomplete="off" >
 				<div class="form-body ">
 					<div>
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('parent');?>
-								</div>
-								<label class="col-md-2 control-label"><?php echo $tr->translate("CATEGORY_NAME");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('cat_name');?>
-								</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("PARENT");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('parent');?>
 							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('prifix');?>
-								</div>
-								<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('remark');?>
-								</div>
-												
+							<label class="col-md-2 control-label"><?php echo $tr->translate("CATEGORY_NAME");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('cat_name');?>
 							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("START_CODE");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('start_code');?>
-								</div>
-								<label class="col-md-2 control-label"><?php echo $tr->translate("IS_NONE_STOCK");?></label>
-								<div class="col-md-4" style="margin-top:10px">
-									<?php echo $formFilter->getElement('is_none_stock');?>
-								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("PREFIX");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('prifix');?>
 							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label"><?php echo $tr->translate("START_NUMBER");?></label>
-								<div class="col-md-4">
-									<?php echo $formFilter->getElement('start_nuumber');?>
-								</div>
-								<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
-								<div class="col-md-4" style="margin-top:10px">
-									<?php echo $formFilter->getElement('status');?>
-								</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("REMARK");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('remark');?>
 							</div>
-							<div class="form-group">
-								<div  class="col-md-12 col-md-offset-4 col-md-8">
-									<a href="<?php echo $this->baseUrl();?>/product/category/index"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
-									<button type="submit" name="saveclose" id="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
-									<button type="submit" name="btnsavenew" id="save_close" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
-								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("START_CODE");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('start_code');?>
 							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("IS_NONE_STOCK");?></label>
+							<div class="col-md-4" style="margin-top:10px">
+								<?php echo $formFilter->getElement('is_none_stock');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label"><?php echo $tr->translate("START_NUMBER");?></label>
+							<div class="col-md-4">
+								<?php echo $formFilter->getElement('start_nuumber');?>
+							</div>
+							<label class="col-md-2 control-label"><?php echo $tr->translate("STATUS");?></label>
+							<div class="col-md-4" style="margin-top:10px">
+								<?php echo $formFilter->getElement('status');?>
+							</div>
+						</div>
+						<div class="form-group">
+							<div  class="col-md-12 col-md-offset-4 col-md-8">
+								<a href="<?php echo $this->baseUrl();?>/product/category/index"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
+								<button type="submit" name="saveclose" id="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
+								<button type="submit" name="btnsavenew" id="save_close" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $tr->translate("SAVE_NEW")?> </button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</form>

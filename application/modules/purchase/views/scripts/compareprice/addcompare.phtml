@@ -2,7 +2,6 @@
 	$url_new = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'add',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
-	//print_r($this->rs);
 ?>
 <title><?php echo $tr->translate("MENU_MR_MAKE_PRICE_COMPARE");?></title>
 <meta charset="utf-8" />
@@ -13,12 +12,9 @@
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("MENU_MR_MAKE_PRICE_COMPARE");?>
 				</div>
-				<!--<a href="<?php echo $url_new;?>" class="btn btn-sm green  pull-right">
-					<i class="fa fa-plus"></i>&nbsp;<?php //echo $tr->translate("ADD_NEW");?>
-				</a>-->
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
@@ -118,20 +114,20 @@
 									<td class="items-no" style="white-space: nowrap;">
 									<?php if($rs["pedding_stat"]>3){?>
 										<a target="_blank" <?php echo $edit_status;?> href="<?php echo $this->baseUrl();?>/purchase/compareprice/edit/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("EDIT");?></a> | 
-										<a target="_blank" <?php //echo $edit_status;?> href="<?php echo $this->baseUrl();?>/purchase/compareprice/purproductdetail/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("PRINT");?></a>
+										<a target="_blank" href="<?php echo $this->baseUrl();?>/purchase/compareprice/purproductdetail/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("PRINT");?></a>
 									<?php }else{ ?>
 										<a target="_blank" <?php echo $add_status;?> href="<?php echo $this->baseUrl();?>/purchase/compareprice/add/id/<?php echo $rs["id"]?>"><?php echo  $tr->translate("ADD");?></a>
-										
 									<?php } ?>
-										
 									</td>
 								</tr>
 							<?php $counter='<strong style="float:right;padding:5px">Number of record(s): '.count($this->rs).'</strong>'; 
 								$footer = '<div class="footer_list">'.$stringPagination.$counter.'</div>';
 							}}?>
 						</tbody>
-					</table></div></form><?php echo $footer?>
-						<?php //echo $this->list; ?>
+						</table>
+						</div>
+					</form>
+					<?php echo $footer?>
 			    </div>
 		   </div>
 		</div>

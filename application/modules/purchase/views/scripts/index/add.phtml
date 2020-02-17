@@ -23,7 +23,7 @@
 			</div>
 			<div class="portlet-body form">
 				<!-- BEGIN FORM-->
-				<form id="frm a" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm a" action="<?php echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-2"><?php echo $tr->translate("VENDOR_INFO");?> <span class="required">
@@ -73,12 +73,12 @@
 									<?php echo $form->getElement("status");?>
 								</div>
 							</div>
-							<label class="control-label col-md-2"><?php echo $tr->translate("ORDER_NUMER");?><span class="required">
-							* </span>
+							<label class="control-label col-md-2"><?php echo $tr->translate("ORDER_NUMER");?><span class="required">* </span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
-									<?php echo $form->getElement("txt_order"); ?></div>
+									<?php echo $form->getElement("txt_order"); ?>
+								</div>
 							</div>
 						</div>
 						<div class="form-group" >
@@ -106,9 +106,6 @@
 							</label>
 							<label class="control-label col-md-2 col-lg-2 col-sm-12">
 								<button type="button" class="btn red delete col-md-12">
-								<!-- 	<input type="checkbox" Onclick="Confirmmessage()" id="free" name="free" />
-									<span>&nbsp;&nbsp;Free</span>
-									-->
 								</button> 
 							</label>
 						</div>
@@ -127,13 +124,12 @@
 							</tr>
 						 </table>
 						 <input type="hidden" id="identity" name="identity" />
-								<button class="btn btn-primary" type="button" id="new_item" onclick="addRow(1);" name= "new_followup" value="New">
-													&nbsp;<img src="<?php echo BASE_URL?>/images/icon/new-row.png" alt=""/><?php echo $tr->translate("ADD");?>
-								</button>
+							<button class="btn btn-primary" type="button" id="new_item" onclick="addRow(1);" name= "new_followup" value="New">
+								&nbsp;<img src="<?php echo BASE_URL?>/images/icon/new-row.png" alt=""/><?php echo $tr->translate("ADD");?>
+							</button>
 					</div>
 						<div class="form-group">
-							<label class="control-label col-md-2"><?php echo $tr->translate("PAYMENT_METHOD");?><span class="required">
-								 </span>
+							<label class="control-label col-md-2"><?php echo $tr->translate("PAYMENT_METHOD");?><span class="required"></span>
 							</label>
 							<div class="col-md-4">
 								<div class="input-icon right">
@@ -205,8 +201,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							
+						<dv class="form-group">
 							<label  class="col-md-12 col-md-offset-4 col-md-8">
 								<a href="<?php echo $this->baseUrl();?>/purchase/index/"><button type="button" class="btn red"><i class="fa fa-times"></i> <?php echo $tr->translate("EXIT")?></button></a>
 								<button type="submit" id="save_close" name="save_close" value="saveclose" class="btn btn-primary" ><i class="glyphicon glyphicon-log-in"></i> <?php echo $tr->translate("SAVE_CLOSE")?></button>
