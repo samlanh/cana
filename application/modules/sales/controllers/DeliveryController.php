@@ -154,6 +154,7 @@ class Sales_DeliveryController extends Zend_Controller_Action
 			$data = $this->getRequest()->getPost();
 			$data["id"] = $id;
 			try {
+// 				print_r($data);exit();
 				$dbq = new Sales_Model_DbTable_Dbdeliverys();				
 				$returnid = $dbq->addRequestDeliver($id);
 				Application_Form_FrmMessage::Sucessfull("DELIVERY_SUCCESS", "/sales/index/requestdelivery");

@@ -303,42 +303,84 @@ Class report_Model_DbStock extends Zend_Db_Table_Abstract{
 		$dbg = new Application_Model_DbTable_DbGlobal();
 		$where.=$dbg->getAccessPermission('branch');
 		$order=" ORDER BY r.`date_in` ASC ";
-// 		echo $sql.$where.$order;exit();
 		return $db->fetchAll($sql.$where.$order);
 	}
 		
 	public function getAllStockoutport($search){//1
 		$db= $this->getAdapter();
+// 		$sql=" SELECT 
+// 				  s.`date_sold`,
+// 				  p.`item_code`,
+// 				  p.`item_name`,
+// 				  p.`cattegory`,
+// 				  p.`measure`,
+// 				  s.request_byname,
+// 				  s.work_plan,
+// 				  s.work_type,
+// 				  s.`qty_order`,
+// 				  s.`price`,
+// 				  s.`sub_total`,
+// 				  s.`sale_no`,
+// 				  s.`user`,
+// 				  s.`customer`,
+// 				  s.type,
+// 				  s.note_sale 
+// 				FROM
+// 				  `v_product` AS p,
+// 				  `v_sale_order` AS s 
+// 				WHERE 
+// 				p.is_meterail=0
+// 				AND p.id = s.`pro_id`
+// 				AND s.pending_status=5 ";
+		
 		$sql=" SELECT 
-				  s.`date_sold`,
-				  p.`item_code`,
-				  p.`item_name`,
-				  p.`cattegory`,
-				  p.`measure`,
-				  s.request_byname,
-				  s.work_plan,
-				  s.work_type,
-				  s.`qty_order`,
-				  s.`price`,
-				  s.`sub_total`,
-				  s.`sale_no`,
-				  s.`user`,
-				  s.`customer`,
-				  s.type,
-				  s.note_sale 
-				FROM
-				  `v_product` AS p,
-				  `v_sale_order` AS s 
-				WHERE 
-				p.is_meterail=0
-				AND p.id = s.`pro_id`
-				AND s.pending_status=5 ";
+				deliver_no,
+				so_id,deli_date,
+				(SELECT
+				     `tb_work_type`.`name`
+				   FROM `tb_work_type`
+				   WHERE (`tb_work_type`.`id` = `si`.`work_type`)
+				   LIMIT 1) AS `work_type`,
+				 (SELECT
+				     `tb_staff`.`name`
+				   FROM `tb_staff`
+				   WHERE (`tb_staff`.`id` = `s`.`user_request_id`)
+				   LIMIT 1) AS `request_byname`,
+				  (SELECT
+				     `tb_work_plan`.`name`
+				   FROM `tb_work_plan`
+				   WHERE (`tb_work_plan`.`id` = `s`.`work_plan`)
+				   LIMIT 1) AS `work_plan`,
+				si.`qty_order`,
+				si.`price`,
+				si.`sub_total`,
+				s.`sale_no`,
+				s.type,
+				si.note AS note_sale,
+				p.`item_code`,
+				p.`item_name`,
+				p.`cate_id`,
+				(SELECT
+				     `m`.`name`
+				   FROM `tb_measure` `m`
+				   		WHERE (`m`.`id` = `p`.`measure_id`)
+				   		LIMIT 1) AS `measure`,
+				p.`measure_id`
+			FROM 
+				tb_deliverynote AS dn,
+				`tb_sales_order` AS s,
+				tb_salesorder_item AS si,
+				`tb_product` AS p
+			WHERE 
+				dn.so_id = s.id
+				AND s.id = si.saleorder_id 
+				AND p.id=si.pro_id ";
 
 		$from_date =date("Y-m-d",strtotime($search['start_date']));
 		$to_date = date("Y-m-d",strtotime($search['end_date']));
 		
-		$from_date =(empty($search['start_date']))? '1': " s.`date_sold` >= '".$from_date." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': " s.`date_sold` <= '".$to_date." 23:59:59'";
+		$from_date =(empty($search['start_date']))? '1': " dn.`deli_date` >= '".$from_date." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " dn.`deli_date` <= '".$to_date." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		
 		if(!empty($search['text_search'])){

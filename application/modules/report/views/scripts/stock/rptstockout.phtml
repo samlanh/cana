@@ -160,7 +160,7 @@ if(!empty($result)){
 		                </tr> 
 		                <?php if(!empty($this->stockout))foreach ($this->stockout AS $index => $rs){?>
 						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
-						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-m-Y',strtotime($rs["date_sold"]))?></td>
+						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo date('d-m-Y',strtotime($rs["deli_date"]))?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_code"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["item_name"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["qty_order"];?></td>

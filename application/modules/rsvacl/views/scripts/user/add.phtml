@@ -8,8 +8,7 @@
 		}
 </style>
 <script language="javascript">
-      var temp=-1;
-   
+     var temp=-1;
 	function validateUser(field)
 	{
 		if(temp==1) return '* User name already exist!';
@@ -26,7 +25,6 @@
 	$( document ).ready(function() {
 		addRow();
 		jQuery('#frm').validationEngine('attach', {promptPosition : "centerRight"});
-		
 	});
 </script>
 <?php 
@@ -54,8 +52,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<!-- BEGIN FORM-->
-				<form id="frm" action="<?php //echo $url_submit; ?>" class="form-horizontal" enctype="multipart/form-data" method="post">
+				<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" autocomplete="off">
 					<div class="form-body">
 					<h3 class="form-section"><?php echo $tr->translate("USER_INFO");?></h3>
 						<div class="form-group">

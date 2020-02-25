@@ -170,14 +170,14 @@
 		                </tr> 
 			         </thead>
 		                <?php 
-							if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){
-								$rs_re = $db->getReceiveByPro($rs["id"],$this->search);
-								$rs_deli = $db->getDeliByPro($rs["id"],$this->search);//ដក
-								$adj=$db->getAdjustPro($rs["id"],$this->search);
-								$pur_qty = $rs_re["qty_receive"];
-								$issuse_qty = $rs_deli["deli_qty"];
-								$begin_qty = $rs["qty_begining"];//($rs["qty"]+$rs_deli["deli_qty"])-$rs_re["qty_receive"];
-								$total_price = $total_price+$rs["price"];
+						if(!empty($this->stockin))foreach ($this->stockin AS $index => $rs){
+							$rs_re = $db->getReceiveByPro($rs["id"],$this->search);
+							$rs_deli = $db->getDeliByPro($rs["id"],$this->search);//ដក
+							$adj=$db->getAdjustPro($rs["id"],$this->search);
+							$pur_qty = $rs_re["qty_receive"];
+							$issuse_qty = $rs_deli["deli_qty"];
+							$begin_qty = $rs["qty_begining"];//($rs["qty"]+$rs_deli["deli_qty"])-$rs_re["qty_receive"];
+							$total_price = $total_price+$rs["price"];
 						?>
 						<tr class='tdborder row-format<?php echo $num; $num=1-$num;?> hover' style="border:1px solid #000;">
 						   <td align="center" style="white-space: nowrap;">&nbsp;<?php echo $index+1;?></td>
@@ -186,9 +186,9 @@
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $rs["measure"];?></td>
 						   <td style="white-space: nowrap;">&nbsp;$<span style="float:right;"><?php echo number_format($rs["price"],2);?></span></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php echo $begin_qty;?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo  $pur_qty;?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo  $issuse_qty;?></td>
-						   <td style="white-space: nowrap;">&nbsp;<?php echo  $adj['adjust_qty'];?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $pur_qty;?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $issuse_qty;?></td>
+						   <td style="white-space: nowrap;">&nbsp;<?php echo $adj['adjust_qty'];?></td>
 						   <td style="white-space: nowrap;">&nbsp;<?php 
 						   
 						   echo $begin_qty+$pur_qty-$issuse_qty-$adj['adjust_qty'];//$rs["qty"];?></td>

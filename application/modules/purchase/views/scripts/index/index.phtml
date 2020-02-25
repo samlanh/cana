@@ -2,7 +2,6 @@
 	$url_new = $this->url(array('module'=>'purchase','controller'=>'index','action'=>'add',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
-	//print_r($this->rs);
 ?>
 <title><?php echo $tr->translate("MENU_PURCHASE_ADVANCE_INDEX");?></title>
 <meta charset="utf-8" />
@@ -13,12 +12,9 @@
 				<div class="caption">
 					<i class="fa fa-globe"></i><?php echo $tr->translate("MENU_PURCHASE_ADVANCE_INDEX");?>
 				</div>
-				<!--<a href="<?php echo $url_new;?>" class="btn btn-sm green  pull-right">
-					<i class="fa fa-plus"></i>&nbsp;<?php echo $tr->translate("ADD_NEW");?>
-				</a>-->
 			</div>
 			<div class="portlet-body form frmfilter">
-				<form method="post" action="<?php echo $formFilter->getAction(); ?>">
+				<form method="post" action="<?php echo $formFilter->getAction(); ?>" autocomplete="off">
 					<div class="form-group" style="padding-top: 6px;">
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>

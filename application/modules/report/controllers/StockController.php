@@ -45,7 +45,7 @@ class report_StockController extends Zend_Controller_Action
     	}
 // 		$this->view->start_date = $data["start_date"];
 // 		$this->view->end_date = $data["end_date"];
-		$this->view->search = $data;
+		
     	$this->view->stockin = $db->getAllStockSummaryreport($data);
 	
     	$formFilter = new report_Form_FrmSearch();
@@ -64,6 +64,12 @@ class report_StockController extends Zend_Controller_Action
 		$this->view->cat=$row_cat;
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->rsClosingDate = $db->getClosingDate();
+		$search_date = $db->getClosingDatebyId($data['closing_date']);
+		if(!empty($search_date)){
+			$data['start_date'] = $search_date['from_date'];
+			$data['end_date'] = $search_date['to_date'];
+		}
+		$this->view->search = $data;
     }
     
     public function rptstockinAction()

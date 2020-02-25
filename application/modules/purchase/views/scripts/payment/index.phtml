@@ -4,7 +4,6 @@
 	$edit = $this->url(array('module'=>'purchase','controller'=>'payment','action'=>'edit',));
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$formFilter = $this->formFilter;
-	//print_r($this->rs);
 ?>
 <meta charset="utf-8" />
 <div class="row">
@@ -19,8 +18,8 @@
 				</a>
 			</div>
 			<div class="portlet-body form">
-				<form method="post" action="">
-					<div class="form-group" style="padding-top: 6px;">
+				<form method="post" action="" autocomplete="off">
+					<div class="form-group" style="padding-top: 6px;" >
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('text_search');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('branch');?></label>
 						<label class="control-label col-md-2"><?php echo $formFilter->getElement('suppliyer_id');?></label>

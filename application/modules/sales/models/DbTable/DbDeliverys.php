@@ -328,6 +328,7 @@ $db->getProfiler()->setEnabled(false);
 								'is_invoice'			=> 1,
 							);
 							$this->_name="tb_deliverynote";//if delevery existing update
+// 							print_r($arr);exit();
 							$deliver_id = $this->insert($arr);
 							
 							$arr_invoice = array(
@@ -411,15 +412,15 @@ $db->getProfiler()->setEnabled(false);
 							$this->update($arr_pro, $where);
 						}
 						
-						$this->_name="tb_sales_order";
-						$data_to = array(
-									'pending_status'	=>	5,
-									'appr_status'		=>	1,
-									'is_deliver'		=>	1,
-									'is_toinvocie'		=>	1,
-									);
-						$where=" id = ".$id;
-						$this->update($data_to, $where);
+					$this->_name="tb_sales_order";
+					$data_to = array(
+							'pending_status'	=>	5,
+							'appr_status'		=>	1,
+							'is_deliver'		=>	1,
+							'is_toinvocie'		=>	1,
+								);
+					$where=" id = ".$id;
+					$this->update($data_to, $where);
 				}
 			}
 		}
